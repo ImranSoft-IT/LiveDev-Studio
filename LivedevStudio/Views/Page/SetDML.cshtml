@@ -1,0 +1,136 @@
+﻿
+@using System.Data
+@model DataSet
+
+
+@{
+    var L = ViewBag.DmlList;
+    var tableId = ViewBag.tableId;
+}
+<form action="" method="post" id="DML">
+    <input type="hidden" id="dmlhf" name="dmlhf" value="" />
+    <table style="width:80%; font-size:12px; color:black;border:0px solid #CCD5F0 ; background-color:white; " border="1" id="set-dml">
+
+        <tr style="background-color:#003366; color:white;height:28px;">
+
+            <th style="text-align:center;">ID</th>
+            <th style="text-align:center;">Field Caption </th>
+            <th style="text-align:center;">Insert</th>
+            <th style="text-align:center;">Update</th>
+            <th style="text-align:center;">Edit After Approval?</th>
+            <th style="text-align:center;">Grid View?</th>
+            <th style="text-align:center;">LOV View?</th>
+        </tr>
+
+        @{
+            int k = 0;
+        }
+
+        @foreach (DataRow l in L.Tables[0].Rows)
+         {
+
+    <tr>
+        
+        <td style="padding:0px; width:70px;">
+            <input type="text" style="border: 0px none; outline: none; width: 100%;" name="columnid[@k]" value="@l["ColumnId"]" readonly />
+        </td>
+        <td style="padding:0px; width:160px;">
+            <input type="text" style="border: 0px none; outline: none; width: 100%;" name="columndisplayname[@k]" value="@l["ColumnDisplayName"]" />
+        </td>
+
+        @if (Convert.ToBoolean(l["IsFvInsert"]))
+        {
+            <td class="ml-2" style="text-align:center; vertical-align:middle;width:80px;">
+                <input type="checkbox" name="isfvinsert[@k]" value="1" class="border-0" checked />
+            </td>
+
+        }
+        else
+        {
+            <td class="ml-2" style="text-align:center; vertical-align:middle;width:80px;">
+                <input type="checkbox" name="isfvinsert[@k]" value="1" class="border-0" />
+
+            </td>
+        }
+
+        @if (Convert.ToBoolean(l["IsFvUpdate"]))
+        {
+            <td class="ml-2" style="text-align:center; vertical-align:middle;width:80px;">
+                <input type="checkbox" name="isfvupdate[@k]" value="1" class="border-0" checked />
+            </td>
+
+        }
+        else
+        {
+            <td class="ml-2" style="text-align:center; vertical-align:middle; width:80px;">
+                <input type="checkbox" name="isfvupdate[@k]" value="1" class="border-0" />
+            </td>
+        }
+
+        @if (Convert.ToBoolean(l["IsFvForceEdit"]))
+        {
+            <td class="ml-2" style="text-align:center; vertical-align:middle; width:100px;">
+                <input type="checkbox" name="isfvforceedit[@k]" value="1" class="border-0" checked />
+            </td>
+
+        }
+        else
+        {
+            <td class="ml-2" style="text-align:center; vertical-align:middle; width:100px;">
+                <input type="checkbox" name="isfvforceedit[@k]" value="1" class="border-0" />
+            </td>
+        }
+
+        @if (Convert.ToBoolean(l["IsModuleSelect"]))
+        {
+            <td class="ml-2" style="text-align:center; vertical-align:middle; width:80px;">
+                <input type="checkbox" name="ismoduleselect[@k]" value="1" class="border-0" checked />
+            </td>
+
+        }
+        else
+        {
+            <td class="ml-2" style="text-align:center; vertical-align:middle; width:80px;">
+                <input type="checkbox" name="ismoduleselect[@k]" value="1" class="border-0" />
+            </td>
+        }
+
+
+        @if (Convert.ToBoolean(l["IsForeignTable"]))
+        {
+            <td class="ml-2" style="text-align:center; vertical-align:middle; width:80px;">
+                <input type="checkbox" name="isforeigntable[@k]" value="1" class="border-0" checked />
+            </td>
+        }
+        else
+        {
+            <td class="ml-2" style="text-align:center; vertical-align:middle; width:80px;">
+                <input type="checkbox" name="isforeigntable[@k]" value="1" class="border-0" />
+            </td>
+        }
+
+    </tr>
+
+
+             k = k + 1;
+         }
+
+
+
+    </table>
+
+</form>
+
+<script>
+    $('#set-dml td').click(function () {
+        $('#set-dml tr').css({ "background-color": "white", "color": "black" });
+        $('#set-dml th').css({ "background-color": "#003366", "color": "white" });
+        $(this).parent().css({ "background-color": "#0066ff", "color": "white" });
+        //$(this).parent().css("background-color", "green");
+
+
+
+
+    });
+
+</script>

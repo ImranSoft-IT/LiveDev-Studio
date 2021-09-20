@@ -1,0 +1,27 @@
+﻿
+@{
+
+    int r = ViewBag.RowCount;
+    string rmid = "RemoveRow"+r;
+    string Rowno = ViewBag.Id;
+
+}
+
+<tr>
+    @* INSERT INTO utl_dynamic_table_column (tableid,columnname,selectcolumnname,foreignkeyname,controltype,columnproperty,columndisplayname,columnwidth,ismoduleselect,isfvinsert,
+        isfvupdate,isfvforceedit,isforeigntable,globalparamid,globalparamvalue,defaultvalue,filterby,transpolicyid,user_privilege,linktype,linkpageid,linktableid,linkcolumnname,
+        reportcolumn,slno,columnid,isshow,isgvselect,isfvselect,*@
+
+
+
+
+    <td style="text-align:center;padding:0px;">
+
+        <a href="#" id=@rmid class=" " style="font-size:18px; margin-left:5px; color: crimson; " onclick="RemoveRow('@rmid','@Rowno',@ViewBag.TableId )"><i class="fa fa-times-circle" aria-hidden="true"></i> </a>
+    </td>
+
+
+
+    <td style="text-align: center; padding: 0px;"><input type="text" name="columnname[@r]" style="width: 100%;outline:none;border:0px none;" value=@Rowno  /></td>
+
+</tr>

@@ -1,0 +1,246 @@
+﻿
+
+@using System.Data
+@model DataSet
+
+
+@{
+    var L = ViewBag.FunctionList;
+    var tableId = ViewBag.tableId;
+}
+<form action="" method="post" id="Function">
+    <input type="hidden" id="functionhf" name="functionhf" value="" />
+
+    <table style="width:98%; font-size:12px; color:black;border:0px solid #CCD5F0 ; background-color:white; " border="1" id="set-function">
+
+
+        <tr style="background-color:#003366; color:white;height:28px;">
+
+            <th>ID</th>
+            <th>Function Column</th>
+            <th>Field Caption</th>
+            <th>Action</th>
+            @*<th style="text-align: center;">Aggregate Function</th>*@
+            @*<th style="text-align: center;">Evaluate Expression</th>
+                <th style="text-align: center;">Effect Fields</th>*@
+            @*<th style="text-align: center;">Data Sort?</th>
+                <th style="text-align: center;">Decending?</th>*@
+
+
+
+        </tr>
+        @{
+            int f = 0;
+        }
+
+        @foreach (DataRow l in L.Tables[0].Rows)
+        {
+            <tr>
+                <td style="padding:0px;width:80px;">
+                    <input type="text" style="width: 100%; border: 0px none; outline: none;" name="columnid[@f]" value="@l["ColumnId"]" readonly />
+                </td>
+                <td style="padding:0px;width:200px;">
+                    <input type="text" style="width: 100%; border: 0px none; outline: none;" name="columnname[@f]" value="@l["ColumnName"]" readonly />
+                </td>
+                <td style="padding:0px;width:200px;">
+                    <input type="text" style="width: 100%; border: 0px none; outline: none;" name="columndisplayname[@f]" value="@l["ColumnDisplayName"]" />
+                </td>
+                <td>
+                    <a onclick="AddFunctionById(@l["ColumnId"],'@l["ColumnName"]',@tableId, @ViewBag.moduleid)" data-toggle="modal" data-target="#setFunction" class="ml-2 btn btn-sm btn-primary" style="width: 28px; height: 24px; margin-bottom: 3px; padding-bottom: 19px; padding-top: 0px;">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </a>
+                    <a onclick="ShowFunctionById(@l["ColumnId"],'@l["ColumnName"]',@tableId)" class="ml-2 btn btn-sm btn-success" style="width: 29px; height: 24px; margin-bottom: 3px; padding-bottom: 19px; padding-top: 0px;">
+                        <i class="fa fa-eye" aria-hidden="true"></i>
+                    </a>
+                </td>
+
+
+            
+
+
+
+            </tr>
+
+            f = f + 1;
+        }
+
+
+
+    </table>
+
+</form>
+
+
+<div class="modal fade" id="setFunction" role="dialog">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-light m-0 p-0" style="height:38px;">
+                <div class="text-left">
+                    <h6 class="modal-title mt-1 ml-2 ">Set Function</h6>
+                </div>
+                <div class="text-right">
+                    <button type="button" class="close mr-0" data-dismiss="modal" @*style="float:right;"*@>&times;</button>
+                </div>
+
+            </div>
+            <div class="modal-body" style="height: 166px;">
+
+                <div id="sfunction">
+
+
+                </div>
+
+            </div>
+            <div class="modal-footer bg-primary text-light p-0 m-0" style="height:45px;">
+                <a class="ml-2 text-white btn btn-dark btn-sm  " href="#" onclick="SaveFunctionById()" data-dismiss="modal">&nbsp &nbsp Save &nbsp &nbsp</a>
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">&nbsp &nbsp Close &nbsp &nbsp</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    function AddFunctionById(columnid,columnname,tableid,moduleid) {
+
+        var parameter = { columnid: columnid, columnname, tableid: tableid, ModuleId: moduleid }
+
+
+         $.ajax({
+                type: "POST",
+                url: '@Url.Action("AddFunctionById", "Page")',
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(parameter),
+                success: function (result) {
+                    $('#sfunction').html(result);
+
+                }
+
+         });
+
+    }
+
+
+    function ShowFunctionById(columnid,columnname,tableid) {
+
+        var parameter = { columnid: columnid,ColumnName:columnname,tableid: tableid }
+
+
+         $.ajax({
+                type: "POST",
+                url: '@Url.Action("ShowFunctionById", "Page")',
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(parameter),
+                success: function (result) {
+                    $('#showfunction').html(result);
+
+                }
+
+         });
+
+    }
+
+    function SaveFunctionById() {
+
+        var form = $('#add-function').serialize();
+        $.ajax({
+            type: 'POST',
+            url: "/Submodule/CreateFunction",
+            data: form,
+            dataType: 'json',
+            success: function (data) {
+                //alert(data.message);
+                if (data.message == "Save Successfully!") {
+                    swal(data.message, "You clicked the button!", "success");
+                } else {
+                    swal("Failed to Save!", data.message, "warning");
+                }
+            }
+        });
+    }
+
+    function EditFunctionById(FunctionId,TableId,ColumnId,ColumnName)
+    {
+
+        var parameter = { FunctionId: FunctionId, TableId: TableId, ColumnId: ColumnId, ColumnName: ColumnName}
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("EditFunctionById", "Page")',
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+
+            data: JSON.stringify(parameter),
+            success: function (result) {
+
+                $('#efunction').html(result);
+            }
+        });
+    }
+
+    function EditFunction(tid,cid) {
+
+        var form = $('#editfunctionform').serialize();
+        $.ajax({
+            type: 'POST',
+            url: "/Page/UpdateFunctionById",
+            data: form,
+            dataType: 'json',
+            success: function (result) {
+
+                if (result.message == "Update Successfully!") {
+                    swal(result.message, "You clicked the button!", "success");
+                } else {
+                    swal("Failed to Save!", result.message, "warning");
+                }
+                ShowFunctionById(cid,tid);
+
+                //$('#editpanelmodal').modal('hide');
+                //$('.modal-backdrop').remove()
+                //$(document.body).removeClass("modal-open");
+            }
+        });
+
+    }
+
+    function DeleteFunctionById(fid,tid,cid)
+    {
+
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this  file!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+
+                    var parameter = { FunctionId: fid }
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("DeleteFunctionById", "Page")',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+
+                            data: JSON.stringify(parameter),
+                            success: function (result) {
+
+                                swal(result.message, {
+                                    icon: "success",
+                                });
+                                ShowFunctionById(cid, tid);
+                            }
+
+                        });
+
+                } else {
+                    swal("Your  file is safe!");
+                }
+            });
+
+
+    }
+
+
+</script>

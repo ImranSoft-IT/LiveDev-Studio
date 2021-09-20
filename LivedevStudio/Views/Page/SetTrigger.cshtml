@@ -1,0 +1,225 @@
+﻿@using System.Data
+@model DataSet
+
+@{
+
+    var tableId = ViewBag.TableId;
+}
+<div class="row mb-1">
+    <div class="col-6">
+        <h5 class="text-info">Trigger List</h5>
+    </div>
+    <div class="col-6 text-right" style="padding-right:50px;">
+        <a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="#addtrigger"> <i class="fa fa-plus"></i> &nbsp;Create Trigger</a>
+    </div>
+</div>
+<form action="" method="post">
+    @*<input type="hidden" id="triggerhf" name="triggerhf" value="" />*@
+    <table style="width:98%; font-size:12px; color:black;border:0px solid #CCD5F0 ; background-color:white; " border="1">
+
+        <tr style="background-color:#003366; color:white;height:28px;">
+            <th style="text-align:center;">No.</th>
+            <th style="text-align:center;">Action</th>
+            <th style="text-align:center;">Trigger Type</th>
+            <th style="text-align:center;">Caption</th>
+            <th style="text-align:center;">Source</th>
+            <th style="text-align:center;">AutoExecute?</th>
+            <th style="text-align:center;">Sl.No.</th>
+
+        </tr>
+        @{
+            int x = 1;
+            var trigger = ViewBag.tblTrigger;
+        }
+
+        @foreach (DataRow tri in trigger.Tables[0].Rows)
+        {
+
+            <tr>
+                <td style="width:70px; text-align:center;">@x </td>
+                <td style="width:100px; text-align:center;">
+                    @*<a href="#" class="btn m-0" style="padding:0px 2.2px 0px 2.2px; background-color:#CCD5F0; font-weight:200; color:black; font-size:12px; border:1px solid #5d6b99; border-radius:50%;" onclick="SelectPanelById(@im["PanelId"],@tableId)">
+                        <i class="fa fa-chevron-down"></i>
+                    </a>*@
+                    <a href="#" class="btn m-0" style="padding:0px 2.2px 0px 2px; background-color:#CCD5F0; font-weight:200; color:black; font-size:12px; border:1px solid #5d6b99; border-radius:50%;" onclick="EditTriggerById(@tri["TriggerId"],@tableId)" data-toggle="modal" data-target="#edittriggermodal">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                    <a href="#" class="btn m-0" style="padding:0px 2.2px 0px 2px; background-color:#CCD5F0; font-weight:200; color:red; font-size:12px; border:1px solid #5d6b99; border-radius:50%;" onclick="DeleteTriggerById(@tri["TriggerId"],@tableId)">
+                        <i class="fa fa-trash"></i>
+                    </a>
+
+                </td>
+
+
+                @if (tri["TriggerTypeId"].ToString() == "1")
+                {
+                    <td style="width:250px; padding-right:5px;">Trigger</td>
+                }
+                else if (tri["TriggerTypeId"].ToString() == "2")
+                {
+                    <td style="width:250px; padding-right:5px;">DML Validation</td>
+                }
+                else if (tri["TriggerTypeId"].ToString() == "3")
+                {
+                    <td style="width:250px; padding-right:5px;">Batch DML</td>
+                }
+                else if (tri["TriggerTypeId"].ToString() == "4")
+                {
+                    <td style="width:250px; padding-right:5px;">Data Import</td>
+                }
+                else if (tri["TriggerTypeId"].ToString() == "5")
+                {
+                    <td style="width:250px; padding-right:5px;">HTML Report</td>
+                }
+                else if (tri["TriggerTypeId"].ToString() == "6")
+                {
+                    <td style="width:250px; padding-right:5px;">Crystal Report</td>
+                }
+                else if (tri["TriggerTypeId"].ToString() == "")
+                {
+                    <td style="width:250px; padding-right:5px;"></td>
+                }
+
+                <td style="width:300px; padding-right:5px;">@tri["TriggerCaption"]</td>
+
+                <td style="width:500px; padding-right:5px;">@tri["TriggerName"]</td>
+
+
+
+                @if (Convert.ToBoolean(tri["IsAutoExecute"]))
+                {
+                    <td style="width:120px; padding-right:5px;"><input type="checkbox" name="IsAutoExecute" value="1" class="border-0" style="width:100%;" checked /></td>
+                }
+                else
+                {
+                    <td style="width:120px; padding-right:5px;"><input type="checkbox" name="IsAutoExecute" value="1" class="border-0" style="width:100%;" /></td>
+                }
+
+                <td style="width:120px; text-align:center;">@tri["SlNo"]</td>
+
+
+            </tr>
+
+
+            x = x + 1;
+         }
+
+
+    </table>
+
+</form>
+
+<div class="modal fade" id="edittriggermodal" role="dialog">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-light m-0 p-0" style="height:38px;">
+                <div class="text-left">
+                    <h6 class="modal-title mt-1 ml-2 ">Edit Trigger</h6>
+                </div>
+                <div class="text-right">
+                    <button type="button" class="close mr-0" data-dismiss="modal" style="float:right;">&times;</button>
+                </div>
+
+            </div>
+
+            <div class="modal-body" style="height:242px;">
+
+                <div id="editTrigger">
+
+                </div>
+
+            </div>
+            <div class="modal-footer bg-primary text-light p-0 m-0" style="height:45px;">
+                <a class="ml-2 text-white btn btn-dark btn-sm  " href="#" onclick="EditTrigger(@ViewBag.TableId)" data-dismiss="modal">&nbsp &nbsp Save &nbsp &nbsp</a>
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">&nbsp &nbsp Close &nbsp &nbsp</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="addtrigger" role="dialog">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-light m-0 p-0" style="height:38px;">
+                <div class="text-left">
+                    <h6 class="modal-title mt-1 ml-2 ">Add Trigger</h6>
+                </div>
+                <div class="text-right">
+                    <button type="button" class="close mr-0" data-dismiss="modal" @*style="float:right;"*@>&times;</button>
+                </div>
+
+            </div>
+            <div class="modal-body" style="height:242px;">
+
+                <form method="post" action="" id="trigger">
+
+                    <input type="hidden" name="hfpkid" id="hfpkid" value="0" />
+                    <input type="hidden" name="hffkid" id="hffkid" value="0" />
+
+                    <input type="hidden" name="entry_user_id" id="entry_user_id" value="1" />
+                    <input type="hidden" name="entry_by" id="entry_by" value="Imran" />
+                    <input type="hidden" name="entry_date" id="entry_date" value="GETDATE()" />
+
+                    <input type="hidden" name="is_approved" id="is_approved" value="0" />
+                    @*<input type="hidden" name="Is_Active" id="Is_Active" value="0" />*@
+                    <input type="hidden" name="is_deleted" id="is_deleted" value="0" />
+                    <input type="hidden" name="is_cancel" id="is_cancel" value="0" />
+                    <input type="hidden" name="work_follow_position" id="work_follow_position" value="1" />
+                    <input type="hidden" name="moduleid" value="@ViewBag.ModuleId" />
+
+
+                    <table class="ml-0 pl-0" style="width:99%;background-color:white; border:1px  solid #CCD5F0;  font-size:13px; color: black;" border="1">
+                        <tr>
+                            <td>Table Id <a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget "><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                            <td> <input type="text" name="tableid" value="@tableId" class="border-0" style="width:100%; outline:none;" readonly /></td>
+                        </tr>
+
+                        @*<tr>
+            <td>Application <a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+            <td> <input type="text" name="ApplicationId" value="" class="border-0" style="width:100%;outline:none;" /></td>
+
+        </tr>*@
+                        <tr>
+                            <td>Trigger Type <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                            <td class="ml-2">
+                                <select name="TriggerTypeId" class="border-0" style="width:100%;outline:none;">
+                                    <option value="0" selected></option>
+                                    <option value="1">Trigger</option>
+                                    <option value="2">DML Validation</option>
+                                    <option value="3">Batch DML</option>
+                                    <option value="4">Data Import</option>
+                                    <option value="5">HTML Report</option>
+                                    <option value="6">Crystal Report</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Caption <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                            <td> <input type="text" name="TriggerCaption" value="" class="border-0" style="width:100%;outline:none;" /></td>
+                        </tr>
+                        <tr>
+                            <td>Source <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                            <td> <input type="text" name="TriggerName" value="" class="border-0" style="width:100%;outline:none;" /></td>
+
+                        </tr>
+                        <tr>
+                            <td>AutoExecute? <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                            <td> <input type="checkbox" name="IsAutoExecute" value="1" class="border-0" style="width:100%;outline:none;" /></td>
+                        </tr>
+                        <tr>
+                            <td>SL. <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                            <td> <input type="text" name="SlNo" value="" class="border-0" style="width:100%;outline:none;" /></td>
+                        </tr>
+
+                    </table>
+                </form>
+
+            </div>
+            <div class="modal-footer bg-primary text-light p-0 m-0" style="height:45px;">
+                <a class="ml-2 text-white btn btn-dark btn-sm  " href="#" onclick="AddTrigger('trigger',@tableId, @ViewBag.ModuleId)" data-dismiss="modal">&nbsp &nbsp Save &nbsp &nbsp</a>
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">&nbsp &nbsp Close &nbsp &nbsp</button>
+            </div>
+        </div>
+    </div>
+</div>

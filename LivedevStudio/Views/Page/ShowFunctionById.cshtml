@@ -1,0 +1,106 @@
+﻿@using System.Data
+@model DataSet
+
+<table style="width:98%; font-size:12px; color:black;border:0px solid #CCD5F0 ; background-color:white; " border="1" id="set-function">
+
+
+    <tr style="background-color:#003366; color:white;height:28px;">
+
+        <th>ID</th>
+        <th>Function Column</th>
+        <th>Evaluate Expression</th>
+        <th>Effect Fields</th>
+        <th>SL.</th>
+        <th>Active</th>
+        <th style="width:153px;">Action</th>
+
+
+
+
+    </tr>
+
+    @{
+        var fn = ViewBag.FunctionList;
+    }
+
+    @foreach (DataRow l in fn.Tables[0].Rows)
+    {
+        <tr>
+            <td style="padding:0px;width:80px;">
+                @l["ColumnId"]
+            </td>
+            <td style="padding:0px;width:200px;">
+                @l["ColumnName"]
+            </td>
+            <td style="padding:0px;width:200px;">
+                @l["EvaluateValue"]
+            </td>
+            <td style="padding:0px;width:200px;">
+                @l["EffectColumn"]
+            </td>
+            <td style="padding:0px;width:200px;">
+                @l["SlNo"]
+            </td>
+
+
+
+
+
+
+            @if (Convert.ToBoolean(l["Is_Active"]))
+            {
+                <td> <input type="checkbox" name="Is_Active" value="1" class="border-0" style="width:100%;" checked /></td>
+
+            }
+            else
+            {
+                <td> <input type="checkbox" name="Is_Active" value="1" class="border-0" style="width:100%;" /></td>
+            }
+
+
+            <td>
+                <a onclick="EditFunctionById(@l["TableFunctionId"],@ViewBag.tableId,@l["ColumnId"],'@l["ColumnName"]')" data-toggle="modal" data-target="#edit-func" class="ml-2 btn btn-sm btn-success" style="width: 28px; height: 24px; margin-bottom: 3px; padding-bottom: 19px; padding-top: 0px;">
+                    <i class="fa fa-edit" aria-hidden="true"></i>
+                </a>
+                <a onclick="DeleteFunctionById(@l["TableFunctionId"],@ViewBag.tableId,@l["ColumnId"])" class="ml-2 btn btn-sm btn-danger" style="width: 29px; height: 24px; margin-bottom: 3px; padding-bottom: 19px; padding-top: 0px;">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                </a>
+            </td>
+
+        </tr>
+
+
+    }
+
+
+
+</table>
+
+<div class="modal fade" id="edit-func" role="dialog">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-light m-0 p-0" style="height:38px;">
+                <div class="text-left">
+                    <h6 class="modal-title mt-1 ml-2 ">Set Function</h6>
+                </div>
+                <div class="text-right">
+                    <button type="button" class="close mr-0" data-dismiss="modal" @*style="float:right;"*@>&times;</button>
+                </div>
+
+            </div>
+            <div class="modal-body" style="height: 166px;">
+
+                <div id="efunction">
+
+
+                </div>
+
+            </div>
+            <div class="modal-footer bg-primary text-light p-0 m-0" style="height:45px;">
+                <a class="ml-2 text-white btn btn-dark btn-sm  " href="#" onclick="EditFunction(@ViewBag.tableId,@ViewBag.ColumnId)" data-dismiss="modal">&nbsp &nbsp Save &nbsp &nbsp</a>
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">&nbsp &nbsp Close &nbsp &nbsp</button>
+            </div>
+        </div>
+    </div>
+</div>
+  

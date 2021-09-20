@@ -1,0 +1,214 @@
+﻿
+
+@using System.Data
+@model DataSet
+
+<div class="ml-0 mt-2" style="width:710px; background-color:#CCD5F0"><a class="ml-1 font-weight-bold text-dark" href="#">Edit Page</a> </div>
+<div class=" mt-2" id="EditPage">
+
+    <form method="post" action="" id="CP">
+        <input type="hidden" name="TableIds" value="1" />
+        <input type="hidden" name="hfpkid" id="hfpkid" value="0" />
+        <input type="hidden" name="hffkid" id="hffkid" value="0" />
+
+
+        <input type="hidden" name="update_by" id="update_by" value="Shabuj" />
+        <input type="hidden" name="update_date" id="update_date" value="Getdate()" />
+
+        <input type="hidden" name="is_active" id="is_active" value="1" />
+        <input type="hidden" name="is_approved" id="is_approved" value="0" />
+        <input type="hidden" name="is_deleted" id="is_deleted" value="0" />
+        <input type="hidden" name="is_cancel" id="is_cancel" value="0" />
+        <input type="hidden" name="work_follow_position" id="work_follow_position" value="1" />
+        @{
+            var page = ViewBag.EditPage;
+            var module = ViewBag.Module;
+        }
+        <table style="width:98%;background-color:white; border:1px  solid #CCD5F0;  font-size:13px; color: black;" border="1">
+
+            @foreach (DataRow p in page.Tables[0].Rows)
+            {
+                <tr>
+                    <td>Page Id</td>
+                    <td> <input type="text" name="moduleid" value="@p["ModuleId"]" class="border-0" style="width:100%;" readonly /></td>
+
+
+                </tr>
+                <tr>
+                    <td>Sub-module</td>
+                    <td> @p["ModuleCategory"]<input type="hidden" name="categoryid" value="@p["CategoryId"]" class="border-0" style="width:100%;" readonly /></td>
+                </tr>
+                <tr>
+                    <td>Module</td>
+                    <td>
+                        <input type="hidden" name="name" value=@p["ApplicationId"] id="appid" />
+                        <select style="width:100%; " name="applicationid" id="applicationid" class="editpageapplicationid">
+
+                            @foreach (DataRow mod in module.Tables[0].Rows)
+                            {
+                                <option value="@mod["DatabaseId"]"> @mod["ModuleAlis"] </option>
+                            }
+
+
+                        </select>
+                    </td>
+
+                </tr>
+                @*INSERT INTO utl_dynamic_module (moduleid,categoryid,applicationid,moduletype,modulename,modulecaption,reporttitle,existingmoduleid,isdrilldownreport,
+                isnewcopy,imagepath,slno,isactive,entry_user_id,entry_by,entry_date,is_active,is_approved,is_deleted,work_follow_position)
+                values('475','85','0','0','0','0','0','0','0','0','0','0','0','0','0',GETDATE(),'0','0','0','0')*@
+                <tr>
+                    <td>Page Template</td>
+                    <td class="ml-2">
+                        <input type="hidden" name="name" value=@p["ModuleType"] id="pagetemp" />
+                        <select style="width:100%; " name="moduletype" id="moduletype" class="editmodule-type">
+                            <option value="0">Select Module</option>
+                            <option value="1">Transaction</option>
+                            <option value="2">Setup</option>
+                            <option value="3">Report</option>
+                            <option value="4">Application</option>
+                        </select>
+                    </td>
+                </tr>
+
+
+
+                <tr>
+                    <td>Page Name</td>
+                    <td> <input type="text" name="modulename" value="@p["ModuleName"]" class="border-0" style="width:100%;" /></td>
+
+                </tr>
+                <tr>
+                    <td>Page Caption</td>
+                    <td> <input type="text" name="modulecaption" value="@p["ModuleCaption"]" class="border-0" style="width:100%;" /></td>
+                </tr>
+                <tr>
+                    <td>Report Title</td>
+                    <td> <input type="text" name="reporttitle" value="@p["ReportTitle"]" class="border-0" style="width:100%;" /></td>
+
+                </tr>
+                <tr>
+                    <td>Drilldown Report</td>
+
+                    @if (Convert.ToBoolean(@p["IsDrilldownReport"]))
+                    {
+                        <td class="ml-2"> <input type="checkbox" name="isdrilldownreport" value="1" class="border-0" checked /></td>
+
+                    }
+                    else
+                    {
+                        <td class="ml-2"> <input type="checkbox" name="isdrilldownreport" value="1" class="border-0" /></td>
+                    }
+
+                </tr>
+                <tr>
+                    <td>Existing Page</td>
+                    <td>
+                        <input type="hidden" name="name" value=@p["ExistingModuleId"] id="existingpage" />
+                        <select style="width:100%; " name="existingmoduleid" id="existingmoduleid" class="editexistmodule">
+                            @{
+                                var ep = ViewBag.ExitingPage;
+                            }
+                            <option value="0">Select Module</option>
+
+
+
+                            @foreach (DataRow exp in ep.Tables[0].Rows)
+                            {
+                                <option value="@exp["ModuleId"]"> @exp["ModuleCaption"] </option>
+                            }
+                        </select>
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>New Copy</td>
+                    @if (Convert.ToBoolean(@p["IsNewCopy"]))
+                    {
+                        <td> <input type="checkbox" name="isnewcopy" value="1" class="border-0" style="" checked /></td>
+
+                    }
+                    else
+                    {
+                        <td> <input type="checkbox" name="isnewcopy" value="1" class="border-0" style="" /></td>
+                    }
+
+
+                </tr>
+
+                <tr>
+                    <td>Image Path</td>
+                    <td> <input type="text" name="imagepath" value="@p["ImagePath"]" class="border-0" style="width:100%;" /></td>
+                </tr>
+                <tr>
+                    <td>SL No.</td>
+                    <td> <input type="text" name="slno" value="@p["SlNo"]" class="border-0" style="width:100%;" /></td>
+
+                </tr>
+                <tr>
+                    <td>Active?</td>
+                    @if (Convert.ToBoolean(p["IsActive"]))
+                    {
+                        <td> <input type="checkbox" name="isactive" value="1" class="border-0" style="" checked /></td>
+
+                    }
+                    else
+                    {
+                        <td> <input type="checkbox" name="isactive" value="1" class="border-0" style="" /></td>
+                    }
+
+
+                </tr>
+
+            }
+        </table>
+        <div class="row">
+            <div class="col-sm-2">
+                <a href="#" class="btn btn-sm  mt-1 font-weight-bold btn-success " style="width:100%;  color:white;" onclick="UpdatePage('CP')">Update</a>
+            </div>
+
+        </div>
+
+    </form>
+
+
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        var sid = $('#appid').val();
+
+        //$('#applicationid option:eq(' + sid + ')').prop('selected', true);
+
+        $('#applicationid option[value=' + sid + ']').attr("selected", "selected");
+
+        var pagetem = $('#pagetemp').val();
+        $('#moduletype option[value=' + pagetem + ']').attr("selected", "selected");
+
+        var pageid = $('#existingpage').val();
+        $('#existingmoduleid option[value=' + pageid + ']').attr("selected", "selected");
+    });
+
+    function EditPageIcon() {
+
+        if ($('#EditPageIcon').hasClass("fa fa-caret-down")) {
+            $('#EditPageIcon').removeClass("fa fa-caret-down").addClass("fa fa-caret-right").ready(function () {
+                $('#EditPage').hide();
+            });
+        }
+        else {
+            $('#EditPageIcon').removeClass("fa fa-caret-right").addClass("fa fa-caret-down").ready(function () {
+                $('#EditPage').show();
+            });
+        }
+    }
+</script>
+
+
+
+
+
+

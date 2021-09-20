@@ -1,0 +1,73 @@
+﻿
+
+
+@using System.Data
+@model DataSet
+
+
+
+
+<form method="post" action="" id="add-function">
+
+    <input type="hidden" name="hfpkid" id="hfpkid" value="0" />
+    <input type="hidden" name="hffkid" id="hffkid" value="0" />
+
+    <input type="hidden" name="entry_user_id" id="entry_user_id" value="1" />
+    <input type="hidden" name="entry_by" id="entry_by" value="Shabuj" />
+    <input type="hidden" name="entry_date" id="entry_date" value="Getdate()" />
+
+
+    <input type="hidden" name="is_approved" id="is_approved" value="0" />
+    <input type="hidden" name="is_deleted" id="is_deleted" value="0" />
+    <input type="hidden" name="is_cancel" id="is_cancel" value="0" />
+    <input type="hidden" name="work_follow_position" id="work_follow_position" value="1" />
+    <input type="hidden" name="TableIds" value="21" />
+    <input type="hidden" name="tableid" value="@ViewBag.TableId" />
+    <input type="hidden" name="columnid" value="@ViewBag.ColumnId" />
+    <input type="hidden" name="moduleid" value="@ViewBag.moduleid" />
+
+    <table class="ml-0 pl-0" style="width:99%;background-color:white; border:1px  solid #CCD5F0;  font-size:13px; color: black;" border="1">
+
+        <tr>
+            <td>Dml Column <a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+            <td> <input type="text" name="columnname" value="@ViewBag.ColumnName" class="border-0" style="width:100%;outline:none;" /></td>
+
+        </tr>
+        @*<td style="width:200px;"><input type="text" style="width: 100%; border: 0px none; outline: none;" name="evaluatevalue[@f]" value="@l["EvaluateValue"]" /></td>
+            <td style="width:200px;"><input type="text" style="width: 100%; border: 0px none; outline: none;" name="effectcolumn[@f]" value="@l["EffectColumn"]" /></td>*@
+
+        <tr>
+            <td>Evaluate Expression <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+            <td class="ml-2"> <input type="text" name="evaluatevalue" value="" class="border-0" style="width:100%;outline:none;" /></td>
+        </tr>
+        <tr>
+            <td>Effect Field <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+            <td> <input type="text" name="effectcolumn" value="" class="border-0" style="width:100%;outline:none;" /></td>
+
+        </tr>
+
+        <tr>
+            <td>SL. <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+            <td> <input type="text" name="SlNo" value="" class="border-0" style="width:100%;outline:none" /></td>
+        </tr>
+        <tr>
+            <td>Active? <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+
+            <td> <input type="checkbox" name="is_active" value="1" class="border-0" style="width:100%;" checked /></td>
+
+        </tr>
+
+
+
+
+    </table>
+</form>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,134 @@
+﻿
+
+@using System.Data
+@model DataSet
+
+
+<div class="border border-left-0 border-right-0 border-top-0  border-dark pb-2 mr-3">
+    <div id="page2" class=" font-weight-bold ml-4 ">
+        <a href="#" onclick="PageIconToggle()"><i id="PageIcon" class="fa fa-caret-down" aria-hidden="true"></i> Page </a>
+
+        <div class="btn-group btn-sm   " style="margin-left:64px;">
+            <input type="hidden" name="name" value="@ViewBag.SubModName" id="subname" />
+            <input type="hidden" name="name" value="@ViewBag.SubmoduleId" id="subid" />
+            <button type="button" class="btn btn-info btn-sm  text-white mt-1 border  " id="col1" onclick="CreateSubModule('Page')"><i class="fa fa-plus " aria-hidden="true"></i></button>
+            <button type="button" class="btn btn-info btn-sm text-dark mt-1 border " id="col1" onclick="EditPageList(@ViewBag.SubmoduleId,'@ViewBag.SubModName')"><i class="fa fa-list " aria-hidden="true"></i></button>
+        </div>
+
+    </div>
+
+    <div class="p-0 m-1 ml-4" id="p1">
+        <table class="p-0 m-0 table-hover" style="border: 1px solid #CCD5F0; width:98%; background-color:white; font-size: 12px;" border="1">
+
+            <thead>
+                <tr style="background-color:white; color:black">
+                    <th>Action</th>
+                    <th>Page Name</th>
+                    <th>Page Template</th>
+                    <th>Page Caption</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var pageList = ViewBag.Pages;
+                    foreach (DataRow p in pageList.Tables[0].Rows)
+                    {
+                        <tr>
+                            <td>
+                                <a href="#" class="btn m-0" style="padding:0px 2.2px 0px 2.2px; background-color:#CCD5F0; font-weight:200; color:black; font-size:12px; border:1px solid #5d6b99; border-radius:50%;" onclick="SelectTableById(@p["ModuleId"],'@p["ModuleName"]')">
+                                    <i class="fa fa-chevron-down"></i>
+                                </a>
+
+                                <a href="#" class="btn m-0" style="padding:0px 2.2px 0px 2px; background-color:#CCD5F0; font-weight:200; color:black; font-size:12px; border:1px solid #5d6b99; border-radius:50%;" onclick="EditPageById(@p["ModuleId"],'@p["ModuleName"]')">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <a href="#" class="btn m-0 text-danger" style="padding:0px 2.2px 0px 2px; background-color:#CCD5F0; font-weight:200; color:black; font-size:12px; border:1px solid #5d6b99; border-radius:50%;" onclick="DeletePageById(@p["ModuleId"],'@ViewBag.SubModName',@ViewBag.SubmoduleId)">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                            <td> @p["ModuleName"]</td>
+
+                            @{
+                                var mtype = (p["ModuleType"]).ToString();
+                            }
+                            @if (mtype == "1")
+                            {
+                                <td>Transaction</td>
+                            }
+                            else if (mtype == "2")
+                            {
+                                <td>Setup</td>
+                            }
+                            else if (mtype == "3")
+                            {
+                                <td>Report</td>
+                            }
+                            else if (mtype == "4")
+                            {
+                                <td>Application</td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
+
+                            <td>@p["ModuleCaption"]</td>
+
+
+                        </tr>
+                    }
+                }
+                
+
+
+
+
+            </tbody>
+
+        </table>
+        @*<nav aria-label="...">
+            <ul class="pagination">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item active" aria-current="page">
+                    <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            </ul>
+        </nav>*@
+    </div>
+</div>
+
+<script>
+
+    function EditPageList(sid, sn) {
+
+        var parameter = { pageId: sid, SubModName: sn }
+
+        $('#col2').hide().ready(function () {
+
+            $('#col3').removeClass("col-md-6").addClass("col-md-12").ready(function () {
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("EditPageList", "Page")',
+                            dataType: "html",
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify(parameter),
+                            success: function (result) {
+                                $('#sm').html(result);
+
+
+                            }
+
+                        });
+            });
+        });
+    }
+
+</script>

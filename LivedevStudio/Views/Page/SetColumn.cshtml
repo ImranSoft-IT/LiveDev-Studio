@@ -1,0 +1,837 @@
+﻿
+
+@using System.Data
+@model DataSet
+
+@{
+    var L = ViewBag.Layout;
+    var tableId = ViewBag.tableId;
+    
+}
+<div id="hideTable">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card border  mt-2  mb-0" @*style="width:75%;"*@>
+                <nav>
+                    <div class="nav nav-tabs p-0 m-0 " id="nav-tab" role="tablist" style="height:35px; background-color: whitesmoke; font-size:15px; ">
+
+                        <a class="nav-item nav-link p-0 pr-2 pl-2 border-right" style="color:black" data-toggle="tab" href="#nav-dbfield" role="tab" aria-controls="nav-profile" aria-selected="false" onclick="DbField(@tableId,'@ViewBag.tableName',@ViewBag.ModuleId)">DB Field</a>
+                        <a class="nav-item nav-link p-0 pr-2 pl-2 border-right" style="color:black" data-toggle="tab" href="#nav-setup" role="tab" aria-controls="nav-setup" aria-selected="false" onclick="Setup(@tableId)">Setup</a>
+                        <a class="nav-item nav-link p-0 pr-2 pl-2 border-right" style="color:black" data-toggle="tab" href="#nav-panel" role="tab" aria-controls="nav-panel" aria-selected="false" onclick="Panel(@tableId)">Panel</a>
+
+                        <a class="nav-item nav-link p-0 pr-2 pl-2 border-right" style="color:black" data-toggle="tab" href="#nav-layout" role="tab" aria-controls="nav-layout" aria-selected="false" onclick="Layouts(@tableId)">Layout</a>
+                        <a class="nav-item nav-link p-0 pr-2 pl-2 border-right" style="color:black" data-toggle="tab" href="#nav-dml" role="tab" aria-controls="nav-dml" aria-selected="false" onclick="DML(@tableId)">DML</a>
+                        <a class="nav-item nav-link p-0 pr-2 pl-2 border-right" style="color:black" data-toggle="tab" href="#nav-autocode" role="tab" aria-controls="nav-autocode" aria-selected="false" onclick="Autocode(@tableId,@ViewBag.ModuleId)">Autocode</a>
+                        <a class="nav-item nav-link p-0 pr-2 pl-2 border-right" style="color:black" data-toggle="tab" href="#nav-variable" role="tab" aria-controls="nav-variable" aria-selected="false" onclick="Variable(@tableId)">Variable</a>
+                        <a class="nav-item nav-link p-0 pr-2 pl-2 border-right" style="color:black" data-toggle="tab" href="#nav-hyperlink" role="tab" aria-controls="nav-hyperlink" aria-selected="true" onclick="HyperLink(@tableId)">Hyperlink</a>
+                        <a class="nav-item nav-link p-0 pr-2 pl-2 border-right" style="color:black" data-toggle="tab" href="#nav-role" role="tab" aria-controls="nav-role" aria-selected="false" onclick="Role(@tableId)">Role</a>
+
+                        <a class="nav-item nav-link p-0 pr-2 pl-2 border-right" style="color:black" data-toggle="tab" href="#nav-fieldvalidation" role="tab" aria-controls="nav-fieldvalidation" aria-selected="false" onclick="FieldValidation(@tableId)">Field Validation</a>
+                        <a class="nav-item nav-link p-0 pr-2 pl-2 border-right" style="color:black" data-toggle="tab" href="#nav-ddlsource" role="tab" aria-controls="nav-ddlsource" aria-selected="false" onclick="DdlSource(@tableId)">DDL Source</a>
+                        @*<a class="nav-item nav-link p-0 pr-2 pl-2 border-right" style="color:black" data-toggle="tab" href="#nav-fieldmapping" role="tab" aria-controls="nav-home" aria-selected="true" onclick="FieldMapping()">Field Mapping</a>*@
+                        <a class="nav-item nav-link p-0 pr-2 pl-2 border-right" style="color:black" data-toggle="tab" href="#nav-function" role="tab" aria-controls="nav-function" aria-selected="false" onclick="Function(@tableId, @ViewBag.ModuleId)">Function</a>
+                        <a class="nav-item nav-link p-0 pr-2 pl-2 border-right" style="color:black" data-toggle="tab" href="#nav-sorting" role="tab" aria-controls="nav-sorting" aria-selected="false" onclick="Sorting(@tableId)">Sorting</a>
+
+                        <a class="nav-item nav-link p-0 pr-2 pl-2 border-right" style="color:black" data-toggle="tab" href="#nav-expression" role="tab" aria-controls="nav-expression" aria-selected="false" onclick="Expression(@tableId)">Expression</a>
+                        <a class="nav-item nav-link p-0 pr-2 pl-2 border-right" style="color:black" data-toggle="tab" href="#nav-image" role="tab" aria-controls="nav-image" aria-selected="false" onclick="Image(@tableId)">Image</a>
+                        <a class="nav-item nav-link p-0 pr-2 pl-2 border-right" style="color:black" data-toggle="tab" href="#nav-Trigger" role="tab" aria-controls="nav-systemField" aria-selected="false" onclick="Triggers(@tableId, @ViewBag.ModuleId)">Trigger</a>
+
+                    </div>
+
+                </nav>
+
+
+                <div class="card-body " style="height:548px; overflow:auto">
+                    <div id="setColumn">
+                        <div class="tab-content" id="nav-tabContent">
+
+                            <div class="tab-pane fade show active" id="nav-dbfield" role="tabpanel" aria-labelledby="nav-profile-tab">
+
+                                <div class="row">
+                                    <div class="col-md-4" style="border:1px solid #CCD5F0; height:529px; overflow:auto;">
+                                        <table class="p-0 m-0 table-hover mt-2 " style="width:98%; font-size:12px; color:black;border:0px solid #CCD5F0 ; background-color:white; " border="1" id="dbfield">
+                                            <tr style="background-color:#003366; color:white; height:28px;">
+
+                                                <th style="text-align:center;">Action</th>
+                                                <th>DML Column</th>
+
+                                            </tr>
+                                            @{
+                                                var df = ViewBag.Df;
+                                                int i = 0;
+                                            }
+                                            @foreach (DataRow d in df.Tables[0].Rows)
+                                            {
+
+                                                <tr>
+                                                    @{
+
+                                                        string rmid = "Remove" + i;
+                                                        string Rowno = d["ColumnName"].ToString();
+
+                                                    }
+
+                                                    <td style="text-align:center;width:60px;padding:0px;">
+
+                                                        <a href="#" id=@rmid class=" " style="font-size:18px; margin-left:5px; color: crimson; " onclick="RemoveRow('@rmid','@Rowno',@tableId)"><i class="fa fa-times-circle" aria-hidden="true"></i> </a>
+                                                    </td>
+                                                    <td style="padding:0px;">
+                                                        <input type="text" style="border:0px none; outline:none; width:100%;" name="t" value="@d["ColumnName"]" readonly />
+                                                    </td>
+
+                                                </tr>
+                                                i = i + 1;
+                                            }
+
+
+                                        </table>
+                                    </div>
+                                    <div class="col-md-4" style="border:1px solid #CCD5F0; height:529px; overflow:auto;">
+                                        <table class="p-0 m-0 table-hover mt-2 " style="border: 1px solid #CCD5F0; width:98%; background-color:white; font-size: 12px;" border="1" id="selecttable">
+                                            <tr style="background-color:#003366; color:white;height:28px;">
+
+                                                <th style="text-align: center;">
+                                                    Action
+                                                </th>
+                                                <th>
+                                                    Dml Column
+                                                </th>
+                                            </tr>
+                                            @{
+                                                var mn = ViewBag.Data;
+                                            }
+                                            @foreach (DataRow item in mn.Tables[0].Rows)
+                                            {
+                                                <tr>
+                                                    <td style="width:60px;text-align:center;padding:0px;">
+                                                        <a href="#" class="btn m-0  " style="padding:0px 2.2px 0px 2.2px; background-color:forestgreen; font-weight:200; color:white; font-size:12px; border:1px solid #5d6b99; border-radius:50%;" id=@item["DataField"] onclick="SelectDmlColumn('@item["DataField"]',@tableId,@ViewBag.ModuleId)">
+                                                            <i class="fa fa-plus" aria-hidden="true"></i>
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        @item["DataField"]
+                                                    </td>
+                                                </tr>
+                                            }
+
+
+
+                                        </table>
+                                    </div>
+                                    <div class="col-md-4 m-0">
+                                        
+                                        <div class="row" style="padding-left:120px; background-color:#003366; color:white;">
+                                            UI Existing Table
+                                        </div>
+                                        <div class="row p-0" style="border:1px solid #CCD5F0;">
+                                            <div class="col-3 p-0" style="border:1px solid #CCD5F0;width:100%;">
+                                                <label>Existing Table: </label>
+                                            </div>
+                                            <div class="col-6 p-0" style="border:1px solid #CCD5F0;width:100%;">
+                                                @{
+                                                    var ExsitingTableList = ViewBag.ExsitingTableList;
+                                                }
+                                                <select style="width:100%;border:0px none;outline:none;" name="exeistigTableid" onmouseover="DropdownSearch('exeistigtbl')" id="exeistigtbl">
+                                                    <option value="0"></option>
+                                                    @foreach (DataRow ptl in ExsitingTableList.Tables[0].Rows)
+                                                    {
+                                                        <option value="@ptl["TableId"]"> @ptl["TableCaption"] </option>
+                                                    }
+                                                </select>
+
+                                            </div>   
+                                            <a class="btn btn-info btn-sm text-white border p-1" style="width:67px;height:100%;" onclick="CopyExsitingTable(@tableId,'@ViewBag.tableName',@ViewBag.ModuleId)">Copy</a>
+                                            <a class="btn btn-danger btn-sm text-white border p-1" style="width:67px;height:100%;" onclick="DeleteExistingCol(@tableId,'@ViewBag.tableName',@ViewBag.ModuleId)">Delete</a>
+                                        </div><br />
+
+                                        <a class="btn btn-info btn-sm  text-white mt-1 border" style="" onclick="saveSystemColumn(@tableId,'@ViewBag.tableName',@ViewBag.ModuleId)">Save System Column</a>
+                                        <a class="btn btn-info btn-sm  text-white mt-1 border" style="" onclick="saveAllColumn(@tableId,'@ViewBag.tableName',@ViewBag.ModuleId)">Save All Column</a>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="tab-pane fade" id="nav-setup" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                <div id="setup">
+
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="nav-panel" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                <div id="setpanel">
+
+                                </div>
+
+
+                            </div>
+                            <div class="tab-pane fade" id="nav-layout" role="tabpanel" aria-labelledby="nav-contact-tab">
+                                <div id="setlayout">
+
+                                </div>
+
+                            </div>
+
+                            <div class="tab-pane fade" id="nav-dml" role="tabpanel" aria-labelledby="nav-contact-tab">
+                                <div id="setdml">
+
+                                </div>
+
+                            </div>
+                            <div class="tab-pane fade" id="nav-autocode" role="tabpanel" aria-labelledby="nav-contact-tab">
+                                <div id="setauto">
+
+                                </div>
+
+                            </div>
+
+                            <div id="setautocode">
+
+                            </div>
+                            <!-- Modal -->
+
+
+                            <div class="tab-pane fade" id="nav-variable" role="tabpanel" aria-labelledby="nav-contact-tab">
+
+                                <div id="setvariable">
+
+                                </div>
+
+                            </div>
+
+                            <div class="tab-pane fade" id="nav-hyperlink" role="tabpanel" aria-labelledby="nav-contact-tab">
+
+
+                                <div id="sethyperlink">
+
+                                </div>
+
+
+                            </div>
+                            <div class="tab-pane fade" id="nav-role" role="tabpanel" aria-labelledby="nav-contact-tab">
+
+                                <div id="setrole">
+
+                                </div>
+
+                            </div>
+                            <div class="tab-pane fade" id="nav-fieldvalidation" role="tabpanel" aria-labelledby="nav-contact-tab">
+
+                                <div id="setfieldvalidation">
+
+                                </div>
+
+                            </div>
+                            <div class="tab-pane fade" id="nav-ddlsource" role="tabpanel" aria-labelledby="nav-contact-tab">
+
+                                <div id="setddlsource">
+
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="nav-function" role="tabpanel" aria-labelledby="nav-contact-tab">
+                                <div class="row">
+                                    <div class="col-md-5 ">
+                                        <div id="setfunction">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 ">
+                                        <div id="showfunction">
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+                            <div class="tab-pane fade" id="nav-sorting" role="tabpanel" aria-labelledby="nav-contact-tab">
+                                <div id="setsorting">
+
+                                </div>
+
+                            </div>
+                            <div class="tab-pane fade" id="nav-expression" role="tabpanel" aria-labelledby="nav-contact-tab">
+                                <div id="setexpression">
+
+                                </div>
+
+                            </div>
+                            <div class="tab-pane fade" id="nav-image" role="tabpanel" aria-labelledby="nav-contact-tab">
+
+                                <div id="setimage">
+
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="nav-Trigger" role="tabpanel" aria-labelledby="nav-contact-tab">
+
+                                <div id="settrigger">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-footer" style="background-color:whitesmoke; height:55px;">
+                    <input type="hidden" id="SaveSetColumnProperty" name="" value="" />
+
+                    <input type="hidden" id="SortVariable" name="" value="globalparamid desc" />
+                    <input type="hidden" id="SortLayouts" name="" value="PanelId, RowPosition, ColPosition" />
+                    <input type="hidden" id="systemFieldFilter" name="" value="" />
+
+                    <input type="hidden" id="tblid" name="" value="@tableId" />
+
+                    <a class="ml-2 text-white btn btn-info btn-sm" href="#" id="btnSystem" onclick="SystemFd(@tableId)"> System </a>
+                    <a class="ml-2 text-white btn btn-info btn-sm" href="#" id="btnUnmap" onclick="Unmap(@tableId, '@ViewBag.tableName')"> Un-Map </a>
+
+                    &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+
+                    <a class="ml-2 text-white btn btn-info btn-sm pl-4 pr-4" href="#" id="setColumnSave" onclick="SetColumnSave()"> Save </a>
+                    <a class="ml-2 text-white btn btn-danger btn-sm pl-4 pr-4" href="#" id="closecolumn" onclick="CloseTable()"> Close </a>
+
+                    &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+                    @*<a class="ml-2 text-white btn btn-info btn-sm" id="SortingBtn" href="#" onclick="SortingProperty(@tableId)"> Sorting </a>*@
+                    <a class="ml-2 text-white btn btn-info btn-sm" id="SortingBtn" href="#" onclick="DefaultColumnProperty(@tableId)"> Default </a>
+
+                    <select class="ml-2" style="border: 0px none; outline: none;" name="FilterCondition" id="FilterCondition">
+                        <option value="">Filter</option>
+                    </select>
+                    <select class="ml-2" style="border: 0px none; outline: none;" name="SortingCondition" id="SortingCondition">
+                        <option value="">Sorting</option>
+                    </select>
+
+
+                </div>
+
+            </div>
+
+        </div>
+        @*<div class="col-md-3 mr-0 mt-0  " style="border:1px solid #CCD5F0; height:630px; overflow:auto;" id="ColumnList">
+
+
+
+         </div>*@
+
+    </div>
+
+
+</div>
+
+<script>
+
+    function Unmap(tableId, tableName) {
+
+        //$('#SaveSetColumnProperty').val('');
+        //$('#SaveSetColumnProperty').val('unmap');
+
+        var parameter = { TableId: tableId, TableName: tableName}
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("ShowUnmapColumn", "Page")',
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(parameter),
+            success: function (result) {
+                $('#setup').html(result);
+
+            }
+        });
+    }
+
+    function SystemFd(tableId) {
+        var ColumnProperty = $("#SaveSetColumnProperty").val();
+        $('#systemFieldFilter').val(' and IsSystem = 1 ');
+
+        if (ColumnProperty == "DF") {
+            var parameter = { TableId: tableId, Filter: " and IsSystem = 1 ", Sort: "SlNo" }
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Setup", "Page")',
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(parameter),
+                success: function (result) {
+                    $('#setup').html(result);
+                }
+            });
+        }
+        else if (ColumnProperty == "DML") {
+            var parameter = { TableId: tableId, IsSyatem: " and IsSystem = 1" }
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("SetDML", "Page")',
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(parameter),
+                success: function (result) {
+                    $('#setdml').html(result);
+                }
+            });
+        }
+        else if (ColumnProperty == "Variable") {
+            var parameter = { TableId: tableId, SystemField: " and IsSystem = 1", Sort: 'SlNo' }
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("SetVariable", "Page")',
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(parameter),
+                success: function (result) {
+                    $('#setvariable').html(result);
+                }
+            });
+        }
+        else if (ColumnProperty == "HyperLink") {
+            var parameter = { TableId: tableId, SystemField: " and IsSystem = 1", Sort: "SlNo" }
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("SetHyperLink", "Page")',
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(parameter),
+                success: function (result) {
+                    $('#sethyperlink').html(result);
+                }
+            });
+        }
+        else if (ColumnProperty == "Role") {
+            var parameter = { TableId: tableId, SystemField: " and IsSystem = 1", Sort: "SlNo" }
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("SetRole", "Page")',
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(parameter),
+                success: function (result) {
+                    $('#setrole').html(result);
+                }
+            });
+        }
+        else if (ColumnProperty == "FieldValidation") {
+            var parameter = { TableId: tableId, SystemField: " and IsSystem = 1", Sort:"SlNo"}
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("SetFieldValidation", "Page")',
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(parameter),
+                success: function (result) {
+                    $('#setfieldvalidation').html(result);
+                }
+            });
+        }
+    }
+
+    function DefaultColumnProperty(tableId) {
+        var ColumnProperty = $("#SaveSetColumnProperty").val();
+
+        if (ColumnProperty == "DF") {
+            var parameter = { TableId: tableId, Filter: " and IsSystem = 0 ", Sort: "SlNo" }
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Setup", "Page")',
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(parameter),
+                success: function (result) {
+                    $('#setup').html(result);
+                }
+            });
+        }
+        else if (ColumnProperty == "DML") {
+            var parameter = { TableId: tableId, IsSyatem: " and IsSystem = 0" }
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("SetDML", "Page")',
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(parameter),
+                success: function (result) {
+                    $('#setdml').html(result);
+                }
+            });
+        }
+        else if (ColumnProperty == "Layouts") {
+            var parameter = { TableId: tableId, Sort: "SlNo asc" }
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("SetLayout", "Page")',
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(parameter),
+                success: function (result) {
+                    $('#setlayout').html(result);
+                }
+            });
+        }
+        else if (ColumnProperty == "Variable") {
+            var parameter = { TableId: tableId, SystemField: " and IsSystem = 0", Sort: 'SlNo' }
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("SetVariable", "Page")',
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(parameter),
+                success: function (result) {
+                    $('#setvariable').html(result);
+                }
+            });
+        }
+        else if (ColumnProperty == "HyperLink") {
+            var parameter = { TableId: tableId, SystemField: " and IsSystem = 0", Sort: "SlNo" }
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("SetHyperLink", "Page")',
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(parameter),
+                success: function (result) {
+                    $('#sethyperlink').html(result);
+                }
+            });
+        }
+        else if (ColumnProperty == "Role") {
+            var parameter = { TableId: tableId, SystemField: " and IsSystem = 0", Sort: "SlNo" }
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("SetRole", "Page")',
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(parameter),
+                success: function (result) {
+                    $('#setrole').html(result);
+                }
+            });
+        }
+        else if (ColumnProperty == "FieldValidation") {
+            var parameter = { TableId: tableId, SystemField: " and IsSystem = 0", Sort:"SlNo"}
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("SetFieldValidation", "Page")',
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(parameter),
+                success: function (result) {
+                    $('#setfieldvalidation').html(result);
+                }
+            });
+        }
+    }
+
+    $("#FilterCondition").change(function () {
+
+        var sc = $("#SortingCondition").val();
+        var ColumnProperty = $("#SaveSetColumnProperty").val();
+        var tableid = $("#tblid").val();
+
+        var fc = $("#FilterCondition").val();
+        if (fc == "FDDMLC") {
+            fc = " and ColumnName = (select ColumnName from Utl_Dynamic_Table_Column where TableId = " + tableid + " group by ColumnName having COUNT(columnName) > 1)";
+        }
+        else if (fc == "FDVC") {
+            fc = " and SelectColumnName = (select SelectColumnName from Utl_Dynamic_Table_Column where TableId = " + tableid + " group by SelectColumnName having COUNT(SelectColumnName) > 1)";
+        }
+        else if (fc == "FDFC") {
+            fc = " and ColumnDisplayName = (select ColumnDisplayName from Utl_Dynamic_Table_Column where TableId = " + tableid + " group by ColumnDisplayName having COUNT(ColumnDisplayName) > 1)";
+        }
+
+        if (ColumnProperty == "DF") {
+            var parameter = { TableId: tableid, Filter:fc, Sort: sc }
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Setup", "Page")',
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(parameter),
+                success: function (result) {
+                    $('#setup').html(result);
+
+                }
+
+            });
+        }
+
+    });
+
+    $("#SortingCondition").change(function () {
+
+
+        var sc = $("#SortingCondition").val();
+        var fc = $("#FilterCondition").val();
+        var ColumnProperty = $("#SaveSetColumnProperty").val();
+        var tableid = $("#tblid").val();
+
+        var systemField = $('#systemFieldFilter').val();
+        //alert("Handler for .change() called. ColumnProperty: " + ColumnProperty + " filterconditon: " + fc + tableid);
+
+        if (ColumnProperty == "DF") {
+
+            var fc = $("#FilterCondition").val();
+            if (fc == "FDDMLC") {
+                fc = " and ColumnName = (select ColumnName from Utl_Dynamic_Table_Column where TableId = " + tableid + " group by ColumnName having COUNT(columnName) > 1)";
+            }
+            else if (fc == "FDVC") {
+                fc = " and SelectColumnName = (select SelectColumnName from Utl_Dynamic_Table_Column where TableId = " + tableid + " group by SelectColumnName having COUNT(SelectColumnName) > 1)";
+            }
+            else if (fc == "FDFC") {
+                fc = " and ColumnDisplayName = (select ColumnDisplayName from Utl_Dynamic_Table_Column where TableId = " + tableid + " group by ColumnDisplayName having COUNT(ColumnDisplayName) > 1)";
+            } else if (fc == "") {
+                fc = systemField;
+            }
+
+            var parameter = { TableId: tableid, Filter: fc, Sort: sc }
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Setup", "Page")',
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(parameter),
+                success: function (result) {
+                    $('#setup').html(result);
+
+                }
+
+            });
+        }
+        else if (ColumnProperty == "Layouts") {
+            var parameter = { TableId: tableid, Sort: sc }
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("SetLayout", "Page")',
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(parameter),
+                success: function (result) {
+                    $('#setlayout').html(result);
+                }
+            });
+        }
+        else if (ColumnProperty == "Variable") {
+            var parameter = { TableId: tableid, SystemField: systemField, Sort: sc}
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("SetVariable", "Page")',
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(parameter),
+                success: function (result) {
+                    $('#setvariable').html(result);
+
+                }
+            });
+        }
+        else if (ColumnProperty == "HyperLink") {
+            var parameter = { TableId: tableid, SystemField: systemField, Sort:sc}
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("SetHyperLink", "Page")',
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(parameter),
+                success: function (result) {
+                    $('#sethyperlink').html(result);
+                    $('#ShowMessage').text('');
+                }
+            });
+        }
+        else if (ColumnProperty == "Role") {
+            var parameter = { TableId: tableid, SystemField: systemField, Sort: sc }
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("SetRole", "Page")',
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(parameter),
+                success: function (result) {
+                    $('#setrole').html(result);
+                }
+            });
+        }
+        else if (ColumnProperty == "FieldValidation") {
+            var parameter = { TableId: tableid, SystemField: systemField, Sort: sc }
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("SetFieldValidation", "Page")',
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(parameter),
+                success: function (result) {
+                    $('#setfieldvalidation').html(result);
+                }
+            });
+        }
+    });
+
+    function DdlFill(linkid,linktabid) {
+
+        var linkId = "#" + linkid;
+        var LinkTabId = "#" + linktabid;
+
+        var linkPageIds = $(linkId).val();
+        var parameter = { linkPageId: linkPageIds }
+        $(LinkTabId).empty();
+        $(LinkTabId).append('<option value="0">Link Grid</option>');
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetGridById","Page")',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(parameter),
+            success: function (gridList) {
+                $.each(gridList,
+                    function (key, value) {
+                        $(LinkTabId).append('<option value=' + value.TableId + '>' + value.TableCaption + '</option>');
+                    }
+                );
+            }
+        });
+    }
+
+    function DropdownSearch(id) {
+        var vc = "#" + id;
+        $(vc).select2();
+    }
+
+    function CopyExsitingTable(tableId,TableName, ModuleId) {
+
+        var exsitingTableId = $('#exeistigtbl').val();
+
+        var parameter = { TableId: tableId, ExsitionTableId: exsitingTableId }
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("CopyExsitingTable", "Submodule")',
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(parameter),
+            success: function (result) {
+                Resize1(tableId, TableName, ModuleId);
+
+                swal(result.message, {
+                    icon: "success",
+                });
+            }
+        });
+    }
+
+    function DeleteExistingCol(tableId, TableName, ModuleId) {
+
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this  file!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+
+                var parameter = { TableId: tableId }
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("DeleteExistingCol", "Submodule")',
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+
+                    data: JSON.stringify(parameter),
+                    success: function (result) {
+                        Resize1(tableId, TableName, ModuleId);
+                        swal(result.message, {
+                            icon: "success",
+                        });
+                        //SelectTableById(mid,mn);
+                    }
+                });
+            } else {
+                swal("Your  file is safe!");
+            }
+        });
+    }
+
+   @*function DdlColumnFill(linktabid,linkcolid) {
+
+       var LinkTabId = "#" + linktabid;
+       var LinkColId = "#" + linkcolid;
+
+
+       var linkTabIds = $(LinkTabId).val();
+       var parameter = { linkTabId: linkTabIds }
+       $(LinkColId).empty();
+       $(LinkColId).append('<option value="">Select Link Param </option>');
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetColumnById","Page")',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(parameter),
+                    success: function (columnList) {
+                        $.each(columnList,
+                            function (key, value) {
+                                $(LinkColId).append('<option value=' + value.ColumnId + '>' + value.ColumnDisplayName + '</option>');
+                            });
+                    }
+
+                });
+
+    }*@
+
+    function FillValueText(dbtabid,colvalid,coltextid) {
+
+        var DbTabId = "#" + dbtabid;
+        var ColValId = "#" + colvalid;
+        var ColTextId = "#" + coltextid;
+
+        var TabName = $(DbTabId).val();
+        var parameter = { TabName: TabName }
+        $(ColValId).empty();
+        $(ColTextId).empty();
+        $(ColValId).append('<option value=""> -Select Value -</option>');
+        $(ColTextId).append('<option value=""> -Select Text-</option>');
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetColValByName","Page")',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(parameter),
+            success: function (colvalList) {
+                $.each(colvalList,
+                    function (key, value) {
+                        $(ColValId).append('<option value=' + value.ColumnDisplayName + '>' + value.ColumnDisplayName + '</option>');
+                        $(ColTextId).append('<option value=' + value.ColumnDisplayName + '>' + value.ColumnDisplayName + '</option>');
+                    });
+            }
+
+        });
+
+    }
+
+
+    function SetAutoCode(ColId,ColName,moduleId,tableId) {
+
+        var parameter = { colId: ColId, ColumnName: ColName, ModuleId: moduleId, TableId: tableId }
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SetupAutocode", "Page")',
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+
+            data: JSON.stringify(parameter),
+            success: function (result) {
+
+                $('#sacode').html(result);
+                //jQuery.noConflict();
+                //$('#myModal').modal('show');
+            }
+
+        });
+    }
+
+
+
+
+
+
+</script>

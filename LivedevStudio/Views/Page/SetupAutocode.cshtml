@@ -1,0 +1,75 @@
+﻿
+
+
+
+<form method="post" action="" id="SaveAuto">
+    
+    <input type="hidden" name="hfpkid" id="hfpkid" value="0" />
+    <input type="hidden" name="hffkid" id="hffkid" value="0" />
+
+    <input type="hidden" name="entry_user_id" id="entry_user_id" value="1" />
+    <input type="hidden" name="entry_by" id="entry_by" value="Shabuj" />
+    <input type="hidden" name="entry_date" id="entry_date" value="Getdate()" />
+   
+    <input type="hidden" name="is_approved" id="is_approved" value="0" />
+    <input type="hidden" name="is_deleted" id="is_deleted" value="0" />
+    <input type="hidden" name="is_cancel" id="is_cancel" value="0" />
+    <input type="hidden" name="work_follow_position" id="work_follow_position" value="1" />
+    
+    <input type="hidden" name="TableIds" value="9" />
+    <input type="hidden" name="moduleid" value="@ViewBag.ModuleId" id="mid" />
+    <input type="hidden" name="tableid" value="@ViewBag.TableId" id="tid" />
+
+    <table class="ml-0 pl-0" style="width:99%;background-color:white; border:1px  solid #CCD5F0;  font-size:13px; color: black;" border="1">
+        <tr>
+            <td>Column Id<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget.."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a> </td>
+            <td> <input type="text" name="columnid" value="@ViewBag.ColumnId" class="border-0" style="width:100%; outline:none; " readonly /></td>
+        </tr>
+        <tr>
+            <td>Column Name<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget.."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a> </td>
+            <td> <input type="text" name="columnname" value="@ViewBag.ColumnName" class="border-0" style="width:100%; outline:none; " readonly /></td>
+        </tr>
+        <tr>
+            <td>Format Type	<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget "><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+            <td>
+                <select name="formattype" style="width:100%; outline:none; border:0px none;">
+                    <option value="">Select Format Type</option>
+                    <option value="year">Year (Formate must be 2 or 4)</option>
+                    <option value="month">Month (Formate must be 2 or 3)</option>
+                    <option value="sequence">Sequence (Formate must be within 1 to 9)</option>
+                    <option value="expression">Expression (Expression  must be Database SQL)</option>
+                    <option value="constant">Constant (Formate may be any character or number)</option>
+                    <option value="identity">Identity Increment ( Column value must be numeric )</option>
+
+
+                </select>
+            </td>
+
+        </tr>
+
+        <tr>
+            <td>Format Value<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget.."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a> </td>
+            <td> <input type="text" name="format" value="" class="border-0" style="width:100%; outline:none;" /></td>
+        </tr>
+        <tr>
+            <td>Expression <a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+            @*<td> <input type="text" name="expression" value="" class="border-0" style="width:100%;outline:none;" /></td>*@
+            <td><textarea name="expression" rows="2" cols="33" class="border-0" style="width:100%;outline:none;"></textarea></td>
+
+        </tr>
+        <tr>
+            <td>Sl <a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+            <td> <input type="text" name="slno" value="" class="border-0" style="width:100%;outline:none;" /></td>
+
+        </tr>
+        <tr>
+            <td>Active <a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+            <td> <input type="checkbox" name="isactive" value="1" class="border-0" style="width:100%;outline:none;" /></td>
+
+        </tr>
+
+
+
+
+    </table>
+</form>

@@ -1,0 +1,204 @@
+﻿
+
+@using System.Data
+@model DataSet
+<style>
+    select {
+        outline: none;
+    }
+</style>
+@*<div class="ml-0 " style="width:671px; background-color:#CCD5F0"><a class="ml-1 font-weight-bold text-dark" href="#" onclick="CreatePageIcon()"><i id="CreatePageIcon" class="fa fa-caret-down" aria-hidden="true"></i> Create New Page</a> </div>*@
+<div class="ml-0 mt-2" style="width:710px; background-color:#CCD5F0"><a class="ml-1 font-weight-bold text-dark" href="#">Create New Page</a> </div>
+<div class=" " id="CreatePg">
+
+
+    <form method="post" action="/Submodule/Create" id="CP">
+        
+        <input type="hidden" name="TableIds" value="1" />
+
+        <input type="hidden" name="hfpkid" id="hfpkid" value="0" />
+        <input type="hidden" name="hffkid" id="hffkid" value="0" />
+
+        <input type="hidden" name="entry_user_id" id="entry_user_id" value="1" />
+        <input type="hidden" name="entry_by" id="entry_by" value="Shabuj" />
+        <input type="hidden" name="entry_date" id="entry_date" value="Getdate()" />
+
+        @*<input type="hidden" name="update_by" id="update_by" value="Shabuj" />
+        <input type="hidden" name="update_date" id="update_date" value="Getdate()" />*@
+
+
+        <input type="hidden" name="is_approved" id="is_approved" value="0" />
+        <input type="hidden" name="is_deleted" id="is_deleted" value="0" />
+        <input type="hidden" name="is_cancel" id="is_cancel" value="0" />
+        <input type="hidden" name="work_follow_position" id="work_follow_position" value="1" />
+        @{
+           
+            var module = ViewBag.Module;
+        }
+        <table style="width:98%;background-color:white; border:1px  solid #CCD5F0;  font-size:13px; color: black;" border="1" id="create-page">
+
+          
+                <tr>
+                    <td>Page Id</td>
+                    <td> <input type="text" name="moduleid" value="" class="border-0" style="width:100%;" readonly /></td>
+
+
+                </tr>
+                <tr>
+                    <td>Sub-module</td>
+                    <td>@ViewBag.SubmoduleName <input type="hidden" name="categoryid" value="@ViewBag.SubmoduleId " class="border-0" style="width:100%;" placeholder="" readonly /></td>
+                </tr>
+                <tr>
+                    <td>Module</td>
+                    <td>
+                      
+                        <select style="width:100%; " name="applicationid" id="pageapplicationid" >
+                            <option value="0">Select Module </option>
+                            @foreach (DataRow mod in module.Tables[0].Rows)
+                            {
+                                <option value="@mod["DatabaseId"]"> @mod["ModuleAlis"] </option>
+                            }
+
+                        </select>
+                    </td>
+
+                </tr>
+                @*INSERT INTO utl_dynamic_module (moduleid,categoryid,applicationid,moduletype,modulename,modulecaption,reporttitle,existingmoduleid,isdrilldownreport,
+                    isnewcopy,imagepath,slno,isactive,entry_user_id,entry_by,entry_date,is_active,is_approved,is_deleted,work_follow_position)
+                    values('475','85','0','0','0','0','0','0','0','0','0','0','0','0','0',GETDATE(),'0','0','0','0')*@
+                <tr>
+                    <td>Page Template</td>
+                    <td class="ml-2">
+               
+                        <select style="width:100%; " name="moduletype" id="moduletype" class="module-type">
+                            <option value="0">Select Module Type</option>
+                            <option value="1" selected>Transaction</option>
+                            <option value="2">Setup</option>
+                            <option value="3">Report</option>
+                            <option value="4">Application</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Page Name</td>
+                    <td> <input type="text" name="modulename" value="" class="border-0" style="width:100%;" /></td>
+
+                </tr>
+                <tr>
+                    <td>Page Caption</td>
+                    <td> <input type="text" name="modulecaption" value="" class="border-0" style="width:100%;" /></td>
+                </tr>
+                <tr>
+                    <td>Report Title</td>
+                    <td> <input type="text" name="reporttitle" value="" class="border-0" style="width:100%;" /></td>
+
+                </tr>
+                <tr>
+                    <td>Drilldown Report</td>
+
+                   
+                        <td class="ml-2"> <input type="checkbox" name="isdrilldownreport" value="1" class="border-0"  /></td>
+
+                
+                 
+
+                </tr>
+                <tr>
+                    <td>Existing Page</td>
+                    <td>
+
+                        <select style="width:100%; " name="existingmoduleid" @*id="existingmoduleid"*@ class="existmodule">
+                            @{
+                                var ep = ViewBag.ExitingPage;
+                            }
+                            <option value="0">Select Existing Page</option>
+
+
+
+                            @foreach (DataRow exp in ep.Tables[0].Rows)
+                            {
+                                <option value="@exp["ModuleId"]"> @exp["ModuleCaption"] </option>
+                            }
+                        </select>
+
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>New Copy</td>
+                  
+                    <td> <input type="checkbox" name="isnewcopy" value="1" class="border-0" style=""  /></td>
+
+                  
+
+
+                </tr>
+
+                <tr>
+                    <td>Image Path</td>
+                    <td> <input type="text" name="imagepath" value="" class="border-0" style="width:100%;" /></td>
+                </tr>
+                <tr>
+                    <td>SL No.</td>
+                    <td> <input type="text" name="slno" value="" class="border-0" style="width:100%;" /></td>
+
+                </tr>
+                <tr>
+                    <td>Active?</td>
+                   
+                        <td> <input type="checkbox" name="isactive" value="1" class="border-0" style=""  /></td>
+
+                    
+
+
+                </tr>
+
+        
+        </table>
+        <div class="row">
+            <div class="col-sm-2">
+                <a href="#" class="btn btn-sm  mt-1 font-weight-bold " style="width:100%; background-color:#CCD5F0; color:black;" onclick="Create('CP')">Save</a>
+            </div>
+
+        </div>
+
+    </form>
+
+
+</div>
+
+
+<script>
+    function CreatePageIcon() {
+
+
+
+        if ($('#CreatePageIcon').hasClass("fa fa-caret-down")) {
+            $('#CreatePageIcon').removeClass("fa fa-caret-down").addClass("fa fa-caret-right").ready(function () {
+                $('#CreatePg').hide();
+            });
+        }
+        else {
+            $('#CreatePageIcon').removeClass("fa fa-caret-right").addClass("fa fa-caret-down").ready(function () {
+                $('#CreatePg').show();
+            });
+        }
+    }
+
+
+
+    $('#create-page td').click(function () {
+        $('#create-page tr').css({ "background-color": "white", "color": "black" });
+        $(this).parent().css({ "background-color": "#0066ff", "color": "white" });
+        //$(this).parent().css("background-color", "green");
+
+
+
+
+    });
+</script>
+

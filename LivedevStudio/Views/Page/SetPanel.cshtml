@@ -1,0 +1,211 @@
+﻿
+
+
+
+@using System.Data
+@model DataSet
+
+
+@{
+
+    var tableId = ViewBag.tableId;
+}
+
+
+<div class="row mb-1">
+    <div class="col-6">
+        <h5 class="text-info">Panel List</h5>
+    </div>
+    <div class="col-6 text-right ">
+        <a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myPanel"> <i class="fa fa-plus"></i> &nbsp;Create Panel</a>
+    </div>
+</div>
+<form action="" method="post">
+    @*<input type="hidden" id="panelhf" name="panelhf" value="" />*@
+    <table style="width:100%; font-size:12px; color:black;border:0px solid #CCD5F0 ; background-color:white; " border="1">
+        <tr style="background-color:#003366; color:white;height:28px;">
+            <th>No.</th>
+            <th>Action</th>
+            <th>Panel Caption</th>
+            <th>Panel Name</th>
+            <th>Row Position</th>
+            <th>Column Position</th>
+            <th>Row Column No.</th>
+            <th>Is Vertically</th>
+            <th>Sl. </th>
+
+        </tr>
+        @{
+            int x = 1;
+            var panel = ViewBag.PanelList;
+        }
+
+        @foreach (DataRow im in panel.Tables[0].Rows)
+        {
+
+    <tr>
+        <td>@x </td>
+        <td>
+            <a href="#" class="btn m-0" style="padding:0px 2.2px 0px 2.2px; background-color:#CCD5F0; font-weight:200; color:black; font-size:12px; border:1px solid #5d6b99; border-radius:50%;" onclick="SelectPanelById(@im["PanelId"],@tableId)">
+                <i class="fa fa-chevron-down"></i>
+            </a>
+            <a href="#" class="btn m-0" style="padding:0px 2.2px 0px 2px; background-color:#CCD5F0; font-weight:200; color:black; font-size:12px; border:1px solid #5d6b99; border-radius:50%;" onclick="EditPanelById(@im["PanelId"],@tableId)" data-toggle="modal" data-target="#editpanelmodal">
+                <i class="fa fa-edit"></i>
+            </a>
+            <a href="#" class="btn m-0" style="padding:0px 2.2px 0px 2px; background-color:#CCD5F0; font-weight:200; color:red; font-size:12px; border:1px solid #5d6b99; border-radius:50%;" onclick="DeletePanelById(@im["PanelId"],@tableId)">
+                <i class="fa fa-trash"></i>
+            </a>
+
+        </td>
+        <td>@im["PanelCaption"] </td>
+        <td>@im["PanelName"]</td>
+        <td>@im["RowPosition"]</td>
+        <td>@im["ColPosition"]</td>
+        <td>@im["PnlColNo"]</td>
+
+        @if (Convert.ToBoolean(im["IsVertically"]))
+        {
+            <td> <input type="checkbox" name="IsVertically" value="1" class="border-0" style="width:100%;" checked /></td>
+
+        }
+        else
+        {
+            <td> <input type="checkbox" name="IsVertically" value="1" class="border-0" style="width:100%;" /></td>
+        }
+       
+        <td>@im["SlNo"]</td>
+
+
+    </tr>
+
+
+            x = x + 1;
+        }
+
+
+    </table>
+
+</form>
+
+<div id="paneldbfield" style="margin-left: 16px;margin-top: 10px;" >
+
+
+</div>
+
+<div class="modal fade" id="editpanelmodal" role="dialog">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-light m-0 p-0" style="height:38px;">
+                <div class="text-left">
+                    <h6 class="modal-title mt-1 ml-2 ">Edit Panel</h6>
+                </div>
+                <div class="text-right">
+                    <button type="button" class="close mr-0" data-dismiss="modal" @*style="float:right;"*@>&times;</button>
+                </div>
+
+            </div>
+
+            <div class="modal-body" style="height:242px;">
+
+                <div id="ep">
+
+                </div>
+
+            </div>
+            <div class="modal-footer bg-primary text-light p-0 m-0" style="height:45px;">
+                <a class="ml-2 text-white btn btn-dark btn-sm  " href="#" onclick="EditPanel(@ViewBag.TableId)" data-dismiss="modal">&nbsp &nbsp Save &nbsp &nbsp</a>
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">&nbsp &nbsp Close &nbsp &nbsp</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myPanel" role="dialog">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-light m-0 p-0" style="height:38px;">
+                <div class="text-left">
+                    <h6 class="modal-title mt-1 ml-2 ">Add Panel</h6>
+                </div>
+                <div class="text-right">
+                    <button type="button" class="close mr-0" data-dismiss="modal" @*style="float:right;"*@>&times;</button>
+                </div>
+
+            </div>
+            <div class="modal-body" style="height:242px;">
+
+                <form method="post" action="" id="CPanel">
+                   
+                    <input type="hidden" name="hfpkid" id="hfpkid" value="0" />
+                    <input type="hidden" name="hffkid" id="hffkid" value="0" />
+
+                    <input type="hidden" name="entry_user_id" id="entry_user_id" value="1" />
+                    <input type="hidden" name="entry_by" id="entry_by" value="Shabuj" />
+                    <input type="hidden" name="entry_date" id="entry_date" value="GETDATE()" />
+                    
+                    <input type="hidden" name="is_approved" id="is_approved" value="0" />
+                    @*<input type="hidden" name="Is_Active" id="Is_Active" value="0" />*@
+                    <input type="hidden" name="is_deleted" id="is_deleted" value="0" />
+                    <input type="hidden" name="is_cancel" id="is_cancel" value="0" />
+                    <input type="hidden" name="work_follow_position" id="work_follow_position" value="1" />
+                    <input type="hidden" name="TableIds" value="21" />
+
+
+
+                    <table class="ml-0 pl-0" style="width:99%;background-color:white; border:1px  solid #CCD5F0;  font-size:13px; color: black;" border="1">
+                        <tr>
+                            <td>Table Id <a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget "><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                            <td> <input type="text" name="tableid" value="@tableId" class="border-0" style="width:100%; outline:none;" readonly /></td>
+                        </tr>
+
+                        <tr>
+                            <td>Panel Name <a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                            <td> <input type="text" name="PanelName" value="" class="border-0" style="width:100%;outline:none;" /></td>
+
+                        </tr>
+                        <tr>
+                            <td>Panel Caption <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                            <td class="ml-2"> <input type="text" name="PanelCaption" value="" class="border-0" style="width:100%;outline:none;" /></td>
+                        </tr>
+                        <tr>
+                            <td>Row Position <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                            <td> <input type="text" name="RowPosition" value="" class="border-0" style="width:100%;outline:none;" /></td>
+
+                        </tr>
+                        <tr>
+                            <td>Column Position <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                            <td> <input type="text" name="ColumnPosition" value="" class="border-0" style="width:100%;outline:none;" /></td>
+                        </tr>
+                        <tr>
+                            <td>Panel Column No. <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                            <td> <input type="text" name="PnlColNo" value="" class="border-0" style="width:100%;outline:none;" /></td>
+
+                        </tr>
+                        <tr>
+                            <td>Vertical? <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                            <td> <input type="checkbox" name="IsVertically" value="1" class="border-0" style="width:100%;outline:none;" /></td>
+                        </tr>
+
+                        <tr>
+                            <td>SL. <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                            <td> <input type="text" name="SlNo" value="" class="border-0" style="width:100%;outline:none;" /></td>
+                        </tr>
+
+                    </table>
+                </form>
+
+            </div>
+            <div class="modal-footer bg-primary text-light p-0 m-0" style="height:45px;">
+                <a class="ml-2 text-white btn btn-dark btn-sm  " href="#" onclick="AddPanel('CPanel',@tableId)" data-dismiss="modal">&nbsp &nbsp Save &nbsp &nbsp</a>
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">&nbsp &nbsp Close &nbsp &nbsp</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*<div id="editpanel">
+
+
+
+</div>*@

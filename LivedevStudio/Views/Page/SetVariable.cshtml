@@ -1,0 +1,135 @@
+﻿
+@using System.Data
+@model DataSet
+
+
+@{
+    var L = ViewBag.VariableList;
+    var tableId = ViewBag.tableId;
+}
+
+<form action="" method="post" id="Variable">
+    <input type="hidden" id="variablehf" name="variablehf" value="" />
+    <table style="width:80%; font-size:12px; color:black;border:0px solid #CCD5F0 ; background-color:white; " border="1" id="set-variable" >
+        <tr style="background-color:#003366; color:white;height:28px;">
+            <th style="text-align:center;">ID</th>
+            <th style="text-align:center;">Field Caption</th>
+            <th style="text-align:center;">Global Variable</th>
+            <th style="text-align:center;">Variable Method</th>
+            <th style="text-align:center;">Default Value</th>
+            <th style="text-align:center;">Grid Filter</th>
+
+        </tr>
+        @{
+            int m = 0;
+        }
+
+        @foreach (DataRow l in L.Tables[0].Rows)
+        {
+            <tr>
+                <td style="padding:0px; width:80px;">
+                    <input type="text" style="border: 0px none; outline: none; width: 100%;" name="columnid[@m]" value="@l["ColumnId"]" readonly/>
+                </td>
+
+                <td style="padding:0px; width:200px;">
+                    <input type="text" style="border: 0px none; outline: none; width: 100%;" name="columndisplayname[@m]" value="@l["ColumnDisplayName"]" />
+                </td>
+                <td style="padding:0px; width:200px;">
+
+                    @{ 
+                        var global = ViewBag.GlobalVaribleList;
+                    }
+                    <select style="width:100%;border: 0px none; outline: none;" name="globalparamid[@m]">
+                        <option value="0"></option>
+                        @foreach (DataRow t1 in global.Tables[0].Rows)
+                        {
+                            <option value="@t1["ParamId"]"
+                                     @if (l["GlobalParamId"].ToString() == t1["ParamId"].ToString()) { @: selected
+
+                                        }
+                                    > @t1["ParamName"] </option>
+                        }
+
+                    </select>
+                </td>
+                <td style="padding:0px; width:200px;">
+                    <select style="width:100%; border: 0px none; outline: none;" name="globalparamvalue[@m]">
+
+                        @if (l["GlobalParamValue"].ToString() == "1")
+                        {
+                            <option value="0"></option>
+                            <option value="1"selected>Get</option>
+                            <option value="2" >Set </option>
+                        }
+                        else if (l["GlobalParamValue"].ToString() == "2")
+                        {
+                            <option value="0"></option>
+                            <option value="1">Get</option>
+                            <option value="2" selected>Set </option>
+                        }
+                        else
+                        {
+                            <option value="0" selected></option>
+                            <option value="1">Get</option>
+                            <option value="2">Set </option>
+                        }
+
+                    </select>
+                </td>
+                <td style="padding:0px; width:150px;">
+                    <input type="text" style="text-align:center;width:100%;border:0px none;outline:none;" name="defaultvalue[@m]" value="@l["DefaultValue"]" />
+                </td>
+
+                <td style="padding:0px; width:200px;">
+                    <select style="width:100%; border: 0px none; outline: none;" name="filterby[@m]">
+
+
+
+                        @if (l["FilterBy"].ToString() == "1")
+                        {
+                            <option value="0"></option>
+                            <option value="1" selected>Public Variable Value</option>
+                            <option value="2">Default Value</option>
+                        }
+                        else if (l["FilterBy"].ToString() == "2")
+                        {
+                            <option value="0"></option>
+                            <option value="1">Public Variable Value</option>
+                            <option value="2" selected>Default Value</option>
+                        }
+                        else
+                        {
+                            <option value="0" selected></option>
+                            <option value="1">Public Variable Value</option>
+                            <option value="2">Default Value</option>
+                        }
+
+                    </select>
+                </td>
+
+
+
+            </tr>
+
+
+
+
+            m = m + 1;
+        }
+    </table>
+
+</form>
+
+<script>
+    $('#set-variable td').click(function () {
+        $('#set-variable tr').css({ "background-color": "white", "color": "black" });
+        $('#set-variable th').css({ "background-color": "#003366", "color": "white" });
+        $(this).parent().css({ "background-color": "#0066ff", "color": "white" });
+        //$(this).parent().css("background-color", "green");
+
+
+
+
+    });
+
+</script>

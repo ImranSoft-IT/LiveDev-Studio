@@ -1,0 +1,93 @@
+﻿
+
+
+@using System.Data
+@model DataSet
+
+
+@{ 
+    var fun = ViewBag.EditFunction;
+}
+
+
+<form method="post" action="" id="editfunctionform">
+
+
+ 
+        <input type="hidden" name="update_by" id="update_by" value="Shabuj" />
+        <input type="hidden" name="update_date" id="update_date" value="Getdate()" />
+        <input type="hidden" name="is_approved" id="is_approved" value="0" />
+        <input type="hidden" name="is_deleted" id="is_deleted" value="0" />
+        <input type="hidden" name="is_cancel" id="is_cancel" value="0" />
+        <input type="hidden" name="work_follow_position" id="work_follow_position" value="1" />
+        <input type="hidden" name="TableIds" value="21" />
+        <input type="hidden" name="tableid" value="@ViewBag.TableId" />
+        <input type="hidden" name="columnid" value="@ViewBag.ColumnId" />
+
+        <table class="ml-0 pl-0" style="width:99%;background-color:white; border:1px  solid #CCD5F0;  font-size:13px; color: black;" border="1">
+
+
+
+            @foreach (DataRow l in fun.Tables[0].Rows)
+            {
+                <tr>
+
+                    <td>Function ID <a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                    <td> <input type="text" name="TableFunctionId" value="@l["TableFunctionId"]" class="border-0" style="width:100%;outline:none;" readonly /></td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Function Column <a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                    <td> <input type="text" name="columnname" value="@ViewBag.ColumnName" class="border-0" style="width:100%;outline:none;" readonly /></td>
+
+                </tr>
+
+                <tr>
+                    <td>Evaluate Expression <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                    <td class="ml-2"> <input type="text" name="evaluatevalue" value="@l["EvaluateValue"]" class="border-0" style="width:100%;outline:none;" /></td>
+                </tr>
+                <tr>
+                    <td>Effect Field <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                    <td> <input type="text" name="effectcolumn" value="@l["EffectColumn"]" class="border-0" style="width:100%;outline:none;" /></td>
+
+                </tr>
+
+                <tr>
+                    <td>SL. <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                    <td> <input type="text" name="SlNo" value="@l["SlNo"]" class="border-0" style="width:100%;outline:none" /></td>
+                </tr>
+                <tr>
+                    <td>Active? <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+
+                    @if (Convert.ToBoolean(l["Is_Active"]))
+                    {
+                        <td> <input type="checkbox" name="is_active" value="1" class="border-0" style="width:100%;" checked /></td>
+
+                    }
+                    else
+                    {
+                        <td> <input type="checkbox" name="is_active" value="1" class="border-0" style="width:100%;" /></td>
+                    }
+
+
+
+                </tr>
+
+
+            }
+
+        </table>
+
+    </form>
+
+
+
+
+
+
+
+
+
+

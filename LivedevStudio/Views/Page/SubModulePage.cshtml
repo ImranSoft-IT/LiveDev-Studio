@@ -1,0 +1,2315 @@
+﻿@using System.Data
+@model DataSet
+@{
+    ViewBag.Title = "SubModulePage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .modal-xl {
+        max-width: 97% !important;
+    }
+
+    tr th:first-child {
+        padding-left: 6px;
+    }
+
+    tr td:first-child {
+        padding-left: 6px;
+    }
+    /* tr td:first-child {
+        padding-left: 6px;
+    }*/
+</style>
+@{
+    var perpage = 10;
+    var sm = ViewBag.SubModule;
+    var total_rows = sm.Tables[0].Rows.Count;
+    int m = 1;
+    var total_pages = Math.Ceiling(Convert.ToDecimal(total_rows / perpage));
+   
+}
+<div class="border border-left-0 border-right-0 mt-2  border-dark pb-2 mr-3">
+
+    <div class="ml-4 font-weight-bold">
+        <a href="#" onclick="IconToggle()"><i id="SmIcon" class="fa fa-caret-down " aria-hidden="true"></i> Sub Module </a>
+        <div class="btn-group btn-sm ml-2  ">
+            <a class="btn btn-info btn-sm  text-white mt-1 border mr-1  " id="" onclick="CreateSubModule('Sub Module')"><i class="fa fa-plus " aria-hidden="true"></i></a>
+            
+
+
+            <input type="search" id="subsearch" class="form-control-sm mt-1" placeholder="Search" value="" />
+
+
+            <button type="button" class="btn btn-primary btn-sm text-white mt-1  mr-1 " onclick="SearchSubModule()">
+                <i class="fa fa-search"></i>
+            </button>
+
+        </div>
+
+    </div>
+    <div class="p-0 m-1 ml-4" id="s1">
+        <div id="tabpage">
+            <table class="p-0 m-0 table-hover " style="border: 1px solid #CCD5F0; width:98%; background-color:white; font-size: 12px;" border="1">
+                <thead>
+                    <tr style="background-color:white; color:black">
+                        <th>Action</th>
+                        <th>Module</th>
+                        <th>Submodule</th>
+                        <th>System</th>
+                        <th>SL No.</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @{
+
+
+                        foreach (DataRow s in sm.Tables[0].Rows)
+                        {
+
+                            if (m <= 10)
+                            {
+                                <tr>
+                                    <td>
+                                        <a href="#" class="btn m-0" style="padding:0px 2.2px 0px 2.2px;  background-color:#CCD5F0; font-weight:200; color:black; 
+                                            font-size:12px; border:1px solid #5d6b99; border-radius:50%;" onclick="SelectById(@s["CategoryId"],'@s["ModuleCategory"]')">
+                                            <i class="fa fa-chevron-down"></i>
+                                        </a>
+
+                                        <a href="#" class="btn m-0 text-primary" style="padding:0px 2.2px 0px 2.2px; background-color:#CCD5F0; font-weight:200; color:black; font-size:12px; border:1px solid #5d6b99; border-radius:50%;" onclick="EditSubModuleById(@s["CategoryId"],@s["ApplicationId"],'@s["ModuleCategory"]')">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <a href="#" class="btn m-0 text-danger" style="padding:0px 2.2px 0px 2.2px; background-color:#CCD5F0; font-weight:200; color:black; font-size:12px; border:1px solid #5d6b99; border-radius:50%;" onclick="DeleteSubModuleById(@s["CategoryId"])">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </td>
+                                    <td style="font-size: 12px;">@s["ModuleAlis"]</td>
+                                    <td style="font-size: 12px;">@s["ModuleCategory"]</td>
+                                    @{
+
+
+                                        var system = Convert.ToBoolean(s["IsSystem"]);
+                                    }
+                                    @if (system)
+                                    {
+                                        <td style="font-size: 12px;">
+                                            <input type="checkbox" name="issystem" id="system" class="border-0" value="1" checked />
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td style="font-size: 12px;">
+                                            <input type="checkbox" name="issystem" id="system" class="border-0" value="1" />
+                                        </td>
+                                    }
+
+                                    <td style="font-size: 12px;">@s["Sl"]</td>
+                                </tr>
+                            }
+                            else
+                            {
+                                break;
+                            }
+                            m = m + 1;
+                        }
+                    }
+
+
+
+
+                </tbody>
+
+            </table>
+        </div>
+
+
+        <span class='pagination btn btn-group' id="tpaginate" style="width:50%">
+            <a href="#" class="btn btn-sm btn-primary" onclick="TablePagination(1)">First</a>
+            @for (int i = 2; i < total_pages; i++)
+            {
+                <a class="btn btn-sm btn-primary" href="#" onclick="TablePagination(@i)">@i</a>
+            }
+            <a class="btn btn-sm btn-primary" href="#" onclick="TablePagination(@total_pages)">Last</a>
+        </span>
+
+
+    </div>
+</div>
+
+
+<div id="page1"> </div>
+<div id="table1"></div>
+<div id="column1"></div>
+
+
+
+
+<script>
+
+    //$(function () {
+    //    'use strict'
+
+    //    if ($(".js-example-basic-single").length) {
+    //        $(".js-example-basic-single").select2();
+    //    }
+    //    if ($(".js-example-basic-multiple").length) {
+    //        $(".js-example-basic-multiple").select2();
+    //    }
+    //});
+
+
+    function SearchableDropdown(id) {
+        var vc = "." + id;
+        $(vc).select2();
+
+    }
+
+    function SearchSubModule() {
+
+
+        var subval = $('#subsearch').val();
+        var SubModuleval = subval.toString();
+        @*if (SubModuleval == "") {
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("SubModulePage", "Page")',
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+
+                //data: JSON.stringify(parameter),
+                success: function (result) {
+                    $('#tabpage').html(result);
+
+                }
+
+            });
+
+        } else {*@
+
+
+        var parameter = { SubmoduleVal: SubModuleval}
+          $.ajax({
+                type: "POST",
+                url: '@Url.Action("SearchSubModule", "Page")',
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+
+                data: JSON.stringify(parameter),
+                success: function (result) {
+                    $('#tabpage').html(result);
+
+                }
+
+            });
+
+
+
+    }
+
+
+
+    function TablePagination(page) {
+
+        var parameter = { page: page }
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("TablePagination", "Page")',
+                            dataType: "html",
+                            contentType: "application/json; charset=utf-8",
+
+                            data: JSON.stringify(parameter),
+                            success: function (result) {
+                                $('#tabpage').html(result);
+
+
+
+
+                            }
+
+                        });
+
+
+
+    }
+
+    function RemoveRow(rmid,rowNo,tabId) {
+        var rid = "#" + rowNo;
+        var RmId = "#" + rmid;
+
+        //$(rmid).click(function () {
+
+            //var h = $(rmid).closest("tr");
+            //alert(h);
+
+        //var ind = $(RmId).closest("tr").prevAll().length;
+        //alert(ind)
+
+        var parameter = { DmlColumn: rowNo, tableId: tabId }
+
+        $(RmId).closest("tr").remove().ready(function () {
+            $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("RemoveRow", "Page")',
+                            dataType: "html",
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify(parameter),
+                            success: function (result) {
+                                $('#selecttable').append(result);
+
+                            }
+
+                        });
+            //if (!$(rid).closest("tr").is(':visible')) {
+            //    $(rid).closest("tr").show();
+            //}
+
+
+        });
+
+
+
+
+
+
+    }
+    function RemoveRow1(rmid, rowNo, tabId, ColumnId, PanelId) {
+        var rid = "#" + rowNo;
+        var RmId = "#" + rmid;
+
+        //$(rmid).click(function () {
+
+            //var h = $(rmid).closest("tr");
+            //alert(h);
+
+        //var ind = $(RmId).closest("tr").prevAll().length;
+        //alert(ind)
+
+        var parameter = { DmlColumn: rowNo, tableId: tabId, ColumnId: ColumnId, PanelId: PanelId }
+
+        $(RmId).closest("tr").remove().ready(function () {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("RemovePanelRow", "Page")',
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(parameter),
+                success: function (result) {
+                    $('#unsavedcolumn').append(result);
+                    SelectPanelById(PanelId, tabId);
+
+                }
+
+            });
+            //if (!$(rid).closest("tr").is(':visible')) {
+            //    $(rid).closest("tr").show();
+            //}
+        });
+    }
+
+    function SelectDmlColumn(id,tableid,moduleid) {
+        var rm = id;
+        $('#' + rm).closest("tr").remove();
+
+        var rowCount = $('#dbfield tr').length;
+        var BodyRow = rowCount - 1;
+
+        var parameter = { DmlColumnId: id, rc: BodyRow, tabId: tableid, Moduleid: moduleid }
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SelectDmlColumn", "Page")',
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(parameter),
+            success: function (result) {
+                $('#dbfield').append(result);
+                //  $('#hf_tc').val(rowCount);
+
+            }
+
+        });
+    }
+
+
+
+    function SelectDmlColumn1(id, tableid, ColumnId, PanelId) {
+        var rm = id;
+        $('#' + rm).closest("tr").remove();
+
+        var rowCount = $('#savedcolumn tr').length;
+        var BodyRow = rowCount - 1;
+
+        var parameter = { DmlColumnId: id, rc: BodyRow, tabId: tableid, ColumnId: ColumnId, PanelId: PanelId }
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SelectPanelColumn", "Page")',
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(parameter),
+            success: function (result) {
+                $('#savedcolumn').append(result);
+                SelectPanelById(PanelId, tableid);
+                //  $('#hf_tc').val(rowCount);
+
+            }
+
+        });
+    }
+
+    function DbField(tableId, TableName, ModuleId) {
+        Resize1(tableId, TableName, ModuleId);
+        $("#btnSystem").hide();
+        $("#btnUnmap").hide();
+        $("#SortingBtn").hide();
+        $("#SortingCondition").hide();
+        $("#FilterCondition").hide();
+        $('#SortingCondition').html('');
+        $('#FilterCondition').html('');
+        $('#ShowMessage').text('');
+        $('#setColumnSave').hide();
+
+    }
+
+    function Setup(tableid) {
+
+        $("#btnSystem").show();
+        $("#btnUnmap").show();
+
+
+        if (!$('#ColumnList').is(':visible') ) {
+            $('#ColumnList').show();
+        }
+        $('#ColumnList').show();
+
+        $('#SaveSetColumnProperty').val('');
+        $('#SaveSetColumnProperty').val('DF');
+
+        $('#systemFieldFilter').val(' and IsSystem = 0 ');
+
+        var parameter = { TableId: tableid, Filter: " and IsSystem = 0 ", Sort: "SlNo"}
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Setup", "Page")',
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(parameter),
+            success: function (result) {
+                $('#setup').html(result);
+                $("#SortingBtn").show();
+                $("#SortingCondition").show();
+                $("#FilterCondition").show();
+                $('#setColumnSave').show();
+                $('#closecolumn').show();
+                $('#ShowMessage').text('');
+            }
+
+        });
+        //$('#dbfieldhf').val($('#setup-dbfield tr').length-1);
+        //var rowCount = $('#dbfield tr').length-1;
+        //$('#dbfieldhf').val(rowCount);
+
+        var newSOptions = {
+            "Sorting":"SlNo",
+            "Input Type": "ControlType asc",
+            "Fillup Field Property": "ColumnProperty desc"
+        };
+
+        var $sc = $('#SortingCondition');
+        $sc.html(' ');
+        $.each(newSOptions, function (key, value) {
+            $sc.append($("<option></option>")
+                .attr("value", value).text(key));
+        });
+
+
+        var newFOptions = {
+            "Filtering": "",
+            "Find Duplicat 'DML Column'": "FDDMLC",
+            "Find Duplicat 'View Column'": "FDVC",
+            "Find Duplicat 'Field Caption'": "FDFC",
+            "Find 'Text Box'": " and ControlType ='txt'",
+            "Find 'Dropdown'": " and ControlType ='ddl'",
+            "Find 'Check Box'": " and ControlType ='rbl'",
+            "Find 'Hidden Field'": " and ControlType ='hfl'",
+            "Find 'ReadOnly'": " and ColumnProperty = 'lock'",
+            "Find 'AutoCode'": " and ColumnProperty = 'auto'",
+            "Find 'Primary Key'": " and ColumnProperty = 'pk'",
+            "Find 'Foreign Key'": " and ColumnProperty = 'fk'"
+
+        };
+
+        var $fc = $('#FilterCondition');
+        $fc.html(' ');
+        $.each(newFOptions, function (key, value) {
+            $fc.append($("<option></option>")
+                .attr("value", value).text(key));
+        });
+
+    }
+
+    function Layouts(tableid) {
+
+        $('#SaveSetColumnProperty').val('');
+        $('#SaveSetColumnProperty').val('Layouts');
+
+        var parameter = { TableId: tableid, Sort:'SlNo'}
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SetLayout", "Page")',
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(parameter),
+            success: function (result) {
+                $('#setlayout').html(result);
+
+                $("#SortingBtn").show();
+                $("#SortingCondition").show();
+                $("#FilterCondition").hide();
+                $("#btnSystem").hide();
+                $("#btnUnmap").hide();
+                $('#setColumnSave').show();
+
+                $('#ShowMessage').text('');
+            }
+
+        });
+
+        var rowCount = $('#dbfield tr').length-1;
+        $('#layouthf').val(rowCount);
+
+        var newSOptions = {
+            "Sorting": "SlNo",
+            "Panel Row Column": "panelid,rowposition,colposition asc",
+            "Field Width": "ColumnWidth desc",
+            "Data Length":"DbColumnWidth desc"
+        };
+
+        var $sc = $('#SortingCondition');
+        $sc.html(' ');
+        $.each(newSOptions, function (key, value) {
+            $sc.append($("<option></option>")
+                .attr("value", value).text(key));
+        });
+    }
+
+    function DML(tableid) {
+        $('#ColumnList').hide();
+        $('#SaveSetColumnProperty').val('');
+        $('#SaveSetColumnProperty').val('DML');
+        $('#systemFieldFilter').val(' and IsSystem = 0 ');
+
+         var parameter = { TableId: tableid, IsSyatem: " and IsSystem = 0"}
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SetDML", "Page")',
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(parameter),
+            success: function (result) {
+                $('#setdml').html(result);
+                $('#ShowMessage').text('');
+
+
+                $("#SortingBtn").show();
+                $("#SortingCondition").hide();
+                $("#FilterCondition").hide();
+                $("#btnSystem").show();
+                $("#btnUnmap").hide();
+                $('#setColumnSave').show();
+            }
+
+        });
+
+        var rowCount = $('#dbfield tr').length-1;
+        $('#dmlhf').val(rowCount);
+
+    }
+
+    function Variable(tableid) {
+        $('#ColumnList').hide();
+        $('#SaveSetColumnProperty').val('');
+        $('#SaveSetColumnProperty').val('Variable');
+
+        $('#systemFieldFilter').val(' and IsSystem = 0 ');
+
+        var parameter = { TableId: tableid, SystemField:" and IsSystem = 0", Sort: 'SlNo'}
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SetVariable", "Page")',
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(parameter),
+            success: function (result) {
+                $('#setvariable').html(result);
+                $('#ShowMessage').text('');
+
+                $("#SortingBtn").show();
+                $("#SortingCondition").show();
+                $("#FilterCondition").hide();
+                $("#btnSystem").show();
+                $("#btnUnmap").hide();
+                $('#setColumnSave').show();
+
+            }
+        });
+
+        var rowCount = $('#dbfield tr').length-1;
+        $('#dbfield').val(rowCount);
+
+        var newSOptions = {
+            "Sorting": "SlNo",
+            "Set Global Variable": "GlobalParamId desc",
+            "Set Variable Method": "GlobalParamValue desc",
+            "Set Default Value": "DefaultValue desc"
+        };
+
+        var $sc = $('#SortingCondition');
+        $sc.html(' ');
+        $.each(newSOptions, function (key, value) {
+            $sc.append($("<option></option>")
+                .attr("value", value).text(key));
+        });
+    }
+
+
+
+    function SortingProperty(tableid) {
+
+        var ColumnProperty = $('#SaveSetColumnProperty').val();
+
+        if (ColumnProperty == 'Variable') {
+
+            var sortItem = $('#SortVariable').val();
+            if (sortItem == 'globalparamid desc') {
+                var parameter = { TableId: tableid, Sort: sortItem }
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("SetVariable", "Page")',
+                    dataType: "html",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(parameter),
+                    success: function (result) {
+                        $('#setvariable').html(result);
+
+                        $('#SortVariable').val('');
+                        $('#SortVariable').val('SlNo');
+                    }
+                });
+            }
+            else {
+                var parameter = { TableId: tableid, Sort: sortItem }
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("SetVariable", "Page")',
+                    dataType: "html",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(parameter),
+                    success: function (result) {
+                        $('#setvariable').html(result);
+
+                        $('#SortVariable').val('');
+                        $('#SortVariable').val('globalparamid desc');
+                    }
+                });
+            }
+        }
+        else if (ColumnProperty == 'Layouts') {
+
+            var sortItem = $('#SortLayouts').val();
+            if (sortItem == 'PanelId, RowPosition, ColPosition') {
+
+                var parameter = { TableId: tableid, Sort: sortItem}
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("SetLayout", "Page")',
+                    dataType: "html",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(parameter),
+                    success: function (result) {
+                        $('#setlayout').html(result);
+
+                        $('#SortLayouts').val('');
+                        $('#SortLayouts').val('SlNo');
+                    }
+
+                });
+            }
+            else {
+                var parameter = { TableId: tableid, Sort: sortItem }
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("SetLayout", "Page")',
+                    dataType: "html",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(parameter),
+                    success: function (result) {
+                        $('#setlayout').html(result);
+
+                        $('#SortLayouts').val('');
+                        $('#SortLayouts').val('PanelId, RowPosition, ColPosition');
+                    }
+
+                });
+            }
+        }
+    }
+
+
+    function HyperLink(tableid) {
+        $('#ColumnList').hide();
+        $('#SaveSetColumnProperty').val('');
+        $('#SaveSetColumnProperty').val('HyperLink');
+
+        $('#systemFieldFilter').val(' and IsSystem = 0 ');
+
+        var parameter = { TableId: tableid, SystemField: " and IsSystem = 0", Sort:"SlNo"}
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SetHyperLink", "Page")',
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(parameter),
+            success: function (result) {
+                $('#sethyperlink').html(result);
+                $('#ShowMessage').text('');
+
+                $("#SortingBtn").show();
+                $("#SortingCondition").show();
+                $("#FilterCondition").hide();
+                $("#btnSystem").show();
+                $("#btnUnmap").hide();
+                $('#setColumnSave').show();
+            }
+        });
+
+        var rowCount = $('#dbfield tr').length-1;
+        $('#hyperlinkhf').val(rowCount);
+
+        var newOptions = {
+            "Sorting": "SlNo",
+            "Field Caption": "ColumnDisplayName asc",
+            "Hyperlink Role": "LinkType desc"
+        };
+
+        var $el = $('#SortingCondition');
+        $el.html(' ');
+        $.each(newOptions, function (key, value) {
+            $el.append($("<option></option>")
+                .attr("value", value).text(key));
+        });
+
+    }
+
+    function Role(tableid) {
+        $('#ColumnList').hide();
+        $('#SaveSetColumnProperty').val('');
+        $('#SaveSetColumnProperty').val('Role');
+
+        $('#systemFieldFilter').val(' and IsSystem = 0 ');
+
+        var parameter = { TableId: tableid, SystemField: " and IsSystem = 0", Sort:"SlNo"}
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SetRole", "Page")',
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(parameter),
+            success: function (result) {
+                $('#setrole').html(result);
+                $('#ShowMessage').text('');
+
+                $("#SortingBtn").show();
+                $("#SortingCondition").show();
+                $("#FilterCondition").hide();
+                $("#btnSystem").show();
+                $("#btnUnmap").hide();
+                $('#setColumnSave').show();
+            }
+        });
+
+        var rowCount = $('#dbfield tr').length-1;
+        $('#rolehf').val(rowCount);
+
+
+        var newOptions = {
+            "Sorting": "SlNo",
+            "User Role": "User_Privilege desc",
+            "Field Caption": "ColumnDisplayName asc"
+        };
+
+        var $el = $('#SortingCondition');
+        $el.html(' ');
+        $.each(newOptions, function (key, value) {
+            $el.append($("<option></option>")
+                .attr("value", value).text(key));
+        });
+    }
+
+    function FieldValidation(tableid) {
+        $('#ColumnList').hide();
+        $('#SaveSetColumnProperty').val('');
+        $('#SaveSetColumnProperty').val('FieldValidation');
+
+        $('#systemFieldFilter').val(' and IsSystem = 0 ');
+
+        var parameter = { TableId: tableid, SystemField: " and IsSystem = 0", Sort:"SlNo"}
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SetFieldValidation", "Page")',
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(parameter),
+            success: function (result) {
+                $('#setfieldvalidation').html(result);
+                $('#ShowMessage').text('');
+
+                $('#setColumnSave').show();
+                $("#SortingBtn").show();
+                $("#SortingCondition").show();
+                $("#FilterCondition").hide();
+                $("#btnSystem").show();
+                $("#btnUnmap").hide();
+            }
+        });
+        var rowCount = $('#dbfield tr').length-1;
+        $('#fieldvalidationhf').val(rowCount);
+
+
+        var newOptions = {
+            "Sorting Condition": "SlNo",
+            "Operator": "OperatorId desc",
+            "Field Caption": "ColumnDisplayName asc"
+        };
+
+        var $el = $('#SortingCondition');
+        $el.html(' ');
+        $.each(newOptions, function (key, value) {
+            $el.append($("<option></option>")
+                .attr("value", value).text(key));
+        });
+
+    }
+
+    function DdlSource(tableid) {
+        $('#ColumnList').hide();
+        $('#SaveSetColumnProperty').val('');
+        $('#SaveSetColumnProperty').val('DdlSource');
+
+        var parameter = { TableId: tableid}
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SetDdlSource", "Page")',
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(parameter),
+            success: function (result) {
+                $('#setddlsource').html(result);
+                $('#ShowMessage').text('');
+
+                $('#setColumnSave').show();
+                $("#SortingBtn").hide();
+                $("#SortingCondition").show();
+                $("#FilterCondition").hide();
+                $("#btnSystem").hide();
+                $("#btnUnmap").hide();
+            }
+        });
+        var rowCount = $('#dbfield tr').length-1;
+        $('#ddlhf').val(rowCount);
+
+        var $el = $('#SortingCondition');
+        $el.html(' ');
+    }
+
+
+    function Function(tableid, moduleid) {
+        $('#ColumnList').hide();
+        $('#SaveSetColumnProperty').val('');
+        $('#SaveSetColumnProperty').val('Function');
+        var parameter = { TableId: tableid, ModuleId: moduleid }
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SetFunction", "Page")',
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(parameter),
+            success: function (result) {
+                $('#setfunction').html(result);
+                $('#ShowMessage').text('');
+
+                $('#setColumnSave').hide();
+                $("#SortingBtn").hide();
+                $("#SortingCondition").hide();
+                $("#FilterCondition").hide();
+                $("#btnSystem").hide();
+                $("#btnUnmap").hide();
+            }
+        });
+
+        var rowCount = $('#dbfield tr').length-1;
+        $('#functionhf').val(rowCount);
+    }
+
+    function Sorting(tableid) {
+        $('#ColumnList').hide();
+        $('#SaveSetColumnProperty').val('');
+        $('#SaveSetColumnProperty').val('Sorting');
+        var parameter = { TableId: tableid}
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SetSorting", "Page")',
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(parameter),
+            success: function (result) {
+                $('#setsorting').html(result);
+                $('#ShowMessage').text('');
+
+                $('#setColumnSave').show();
+                $("#SortingBtn").hide();
+                $("#SortingCondition").hide();
+                $("#FilterCondition").hide();
+                $("#btnSystem").hide();
+                $("#btnUnmap").hide();
+            }
+        });
+
+        var rowCount = $('#dbfield tr').length-1;
+        $('#functionhf').val(rowCount);
+    }
+
+    function Expression(tableid) {
+
+        $('#ColumnList').hide();
+        $('#SaveSetColumnProperty').val('');
+        $('#SaveSetColumnProperty').val('Expression');
+
+        var parameter = { TableId: tableid}
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SetExpression", "Page")',
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(parameter),
+            success: function (result) {
+                $('#setexpression').html(result);
+                $('#ShowMessage').text('');
+
+                $('#setColumnSave').show();
+                $("#SortingBtn").hide();
+                $("#SortingCondition").hide();
+                $("#FilterCondition").hide();
+                $("#btnSystem").hide();
+                $("#btnUnmap").hide();
+            }
+        });
+        var rowCount = $('#dbfield tr').length-1;
+        $('#expressionhf').val(rowCount);
+    }
+
+    function Autocode(tableid,moduleid) {
+
+        $('#ColumnList').hide();
+        $('#SaveSetColumnProperty').val('');
+        $('#SaveSetColumnProperty').val('Autocode');
+
+        var parameter = { TableId: tableid, ModuleId: moduleid}
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SetAutocode", "Page")',
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(parameter),
+            success: function (result) {
+                $('#setauto').html(result);
+                $('#ShowMessage').text('');
+
+                $("#SortingBtn").hide();
+                $("#SortingCondition").hide();
+                $("#FilterCondition").hide();
+                $("#btnSystem").hide();
+                $("#btnUnmap").hide();
+                $('#setColumnSave').hide();
+
+            }
+        });
+        var rowCount = $('#dbfield tr').length-1;
+        $('#autocodehf').val(rowCount);
+    }
+
+    function Image(tableid) {
+        $('#ColumnList').hide();
+        $('#SaveSetColumnProperty').val('');
+        $('#SaveSetColumnProperty').val('Image');
+        var parameter = { TableId: tableid}
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SetImage", "Page")',
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(parameter),
+            success: function (result) {
+                $('#setimage').html(result);
+                $('#ShowMessage').text('');
+                $('#setColumnSave').show();
+            }
+        });
+        var rowCount = $('#dbfield tr').length-1;
+        $('#imagehf').val(rowCount);
+    }
+
+    function Triggers(tableid,moduleid) {
+        $('#SaveSetColumnProperty').val('');
+        $('#SaveSetColumnProperty').val('trigger');
+        var parameter = { TableId: tableid, ModuleId: moduleid}
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SetTrigger", "Page")',
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(parameter),
+            success: function (result) {
+                $('#settrigger').html(result);
+                $('#setColumnSave').hide();
+            }
+        });
+        var rowCount = $('#dbfield tr').length - 1;
+        $('#sysFieldhf').val(rowCount);
+    }
+
+    function SetColumnSave() {
+        var rowCount = $('#dbfield tr').length - 1;
+        $('#dbfieldhf').val($('#setup-dbfield tr').length -1);
+        $('#layouthf').val($('#set-layout tr').length - 1);
+        $('#dmlhf').val(rowCount);
+        $('#ddlhf').val($('#ddl-source tr').length - 1);
+        $('#imagehf').val($('#set-image tr').length - 1);
+        $('#expressionhf').val(rowCount);
+        $('#functionhf').val(rowCount);
+        $('#fieldvalidationhf').val($('#set-field-validation tr').length - 1);
+        $('#rolehf').val(rowCount);
+        $('#hyperlinkhf').val($('#set-hyperlink tr').length - 1);
+        $('#variablehf').val($('#set-variable tr').length - 1);
+        $('#autocodehf').val(rowCount);
+        $('#sortinghf').val(rowCount);
+
+        var RwCount = $('#savedcolumn tr').length - 1;
+        $('#panelrowhf').val(RwCount);
+
+        var FormId = $('#SaveSetColumnProperty').val();
+        var form = $('#' + FormId).serialize();
+
+        if (FormId == "DF") {
+            var tableId = $('#dbtableid').val();
+
+            $.ajax({
+                type: 'POST',
+                url: "/Submodule/SaveSetColumn",
+                dataType: "json",
+                data: form,
+                //beforeSend: function () {
+                //    $('#hideTable').preloader()
+                //},
+                success: function (result) {
+                    //Setup(tableId);
+                    //$('#ShowMessage').text(result.message);
+
+                    if (result.message == "Saved Successfully!") {
+                        swal(result.message, "You clicked the button!", "success");
+                    } else {
+                        swal("Failed to Save!", result.message, "warning");
+                    }
+                }
+                //complete: function () {
+                //    $('.loader').hide();
+                //}
+            });
+        }
+        else if (FormId == "Layouts") {
+            $.ajax({
+                type: 'POST',
+                url: "/Submodule/UpdateLayouts",
+                dataType: "json",
+                data: form,
+
+                success: function (result) {
+                    if (result.message == "Saved Successfully!") {
+                        swal(result.message, "You clicked the button!", "success");
+                    } else {
+                        swal("Failed to Save!", result.message, "warning");
+                    }
+                }
+            });
+
+        }
+        else if (FormId == "DML") {
+            $.ajax({
+                type: 'POST',
+                url: "/Submodule/UpdateDML",
+                dataType: "json",
+                data: form,
+
+                success: function (result) {
+                    swal(result.message, "You clicked the button!", "success");
+                }
+            });
+        }
+        else if (FormId == "Variable") {
+            $.ajax({
+                type: 'POST',
+                url: "/Submodule/UpdateVariable",
+                dataType: "json",
+                data: form,
+
+                success: function (result) {
+                    if (result.message == "Saved Successfully!") {
+                        swal(result.message, "You clicked the button!", "success");
+                    } else {
+                        swal("Failed to Save!", result.message, "warning");
+                    }
+                }
+            });
+        }
+        else if (FormId == "HyperLink") {
+            $.ajax({
+                type: 'POST',
+                url: "/Submodule/UpdateHyperlink",
+                dataType: "json",
+                data: form,
+
+                success: function (result) {
+                    if (result.message == "Saved Successfully!") {
+                        swal(result.message, "You clicked the button!", "success");
+                    } else {
+                        swal("Failed to Save!", result.message, "warning");
+                    }
+                }
+            });
+        }
+
+        else if (FormId == "Panel") {
+
+
+            $.ajax({
+                type: 'POST',
+                url: "/Submodule/UpdatePanelSl",
+                dataType: "json",
+                data: form,
+
+                success: function (result) {
+                    swal(result.message, "You clicked the button!", "success");
+                }
+            });
+        }
+
+
+
+        else if (FormId == "Role") {
+            $.ajax({
+                type: 'POST',
+                url: "/Submodule/UpdateRole",
+                dataType: "json",
+                data: form,
+
+                success: function (result) {
+                    swal(result.message, "You clicked the button!", "success");
+                }
+            });
+        }
+        else if (FormId == "FieldValidation") {
+            $.ajax({
+                type: 'POST',
+                url: "/Submodule/UpdateFieldValidation",
+                dataType: "json",
+                data: form,
+
+                success: function (result) {
+                    if (result.message == "Saved Successfully!") {
+                        swal(result.message, "You clicked the button!", "success");
+                    } else {
+                        swal("Failed to Save!", result.message, "warning");
+                    }
+                }
+            });
+        }
+        else if (FormId == "DdlSource") {
+            $.ajax({
+                type: 'POST',
+                url: "/Submodule/UpdateDdlSource",
+                dataType: "json",
+                data: form,
+
+                success: function (result) {
+                    if (result.message == "Saved Successfully!") {
+                        swal(result.message, "You clicked the button!", "success");
+                    } else {
+                        swal("Failed to Save!", result.message, "warning");
+                    }
+                }
+            });
+        }
+
+        else if (FormId == "Function") {
+            $.ajax({
+                type: 'POST',
+                url: "/Submodule/UpdateFunction",
+                dataType: "json",
+                data: form,
+
+                success: function (result) {
+                swal(result.message, "You clicked the button!", "success");
+                }
+            });
+        }
+        else if (FormId == "Sorting") {
+            $.ajax({
+                type: 'POST',
+                url: "/Submodule/UpdateSorting",
+                dataType: "json",
+                data: form,
+
+                success: function (result) {
+                    swal(result.message, "You clicked the button!", "success");
+                }
+            });
+        }
+        else if (FormId == "Expression") {
+            $.ajax({
+                type: 'POST',
+                url: "/Submodule/UpdateExpression",
+                dataType: "json",
+                data: form,
+
+                success: function (result) {
+                swal(result.message, "You clicked the button!", "success");
+                }
+            });
+        }
+        else if (FormId == "Autocode") {
+            $.ajax({
+                type: 'POST',
+                url: "/Submodule/UpdateAutocode",
+                dataType: "json",
+                data: form,
+
+                success: function (result) {
+                swal(result.message, "You clicked the button!", "success");
+                }
+            });
+        }
+        else if (FormId == "Image") {
+            $.ajax({
+                type: 'POST',
+                url: "/Submodule/UpdateImage",
+                dataType: "json",
+                data: form,
+
+                success: function (result) {
+                    if (result.message == "Saved Successfully!") {
+                        swal(result.message, "You clicked the button!", "success");
+                    } else {
+                        swal("Failed to Save!", result.message, "warning");
+                    }
+                }
+            });
+        }
+        else {
+            swal('Select Specific Tab for Saving information!!', "You clicked the button!", "success");
+
+        }
+    }
+
+    function SaveAutocode() {
+
+        var moduleid = $('#mid').val();
+        var tableid = $('#tid').val();
+
+        var form = $('#SaveAuto').serialize();
+        $.ajax({
+            type: 'POST',
+            url: "/Submodule/Creatennn",
+            data: form,
+            dataType: 'json',
+            success: function (data) {
+               // alert(data.message);
+                //$('#myModal').modal('hide');
+                if (data.message == "Saved Successfully!") {
+                    swal(data.message, "You clicked the button!", "success");
+                } else {
+                    swal("Failed to Save!", data.message, "warning");
+                }
+                Autocode(tableid,moduleid);
+            }
+        });
+    }
+
+    function Create(c) {
+
+            var cm ='#' + c ;
+
+            var form = $(cm).serialize();
+            $.ajax({
+                type: 'POST',
+                url: "/Submodule/Create",
+                data: form,
+                dataType: 'json',
+                success: function (data) {
+
+                    swal(data.message, "You clicked the button!", "success");
+
+                }
+            });
+    }
+
+    function UpdateSubmodule(c) {
+
+        var cm = '#' + c;
+
+        var form = $(cm).serialize();
+        $.ajax({
+            type: 'POST',
+            url: "/Submodule/UpdateSubmodule",
+            data: form,
+            dataType: 'json',
+            success: function (data) {
+
+                swal(data.message, "You clicked the button!", "success");
+
+            }
+        });
+    }
+    function UpdatePage(c) {
+
+        var cm = '#' + c;
+
+        var form = $(cm).serialize();
+        $.ajax({
+            type: 'POST',
+            url: "/Submodule/UpdatePage",
+            data: form,
+            dataType: 'json',
+            success: function (data) {
+
+                swal(data.message, "You clicked the button!", "success");
+
+            }
+        });
+    }
+    function UpdateTable(c) {
+
+        var cm = '#' + c;
+
+        var form = $(cm).serialize();
+        $.ajax({
+            type: 'POST',
+            url: "/Submodule/UpdateTable",
+            data: form,
+            dataType: 'json',
+            success: function (data) {
+
+                swal(data.message, "You clicked the button!", "success");
+
+            }
+        });
+    }
+
+    function SelectPanelById(id, tableid) {
+
+        var parameter = { PanelId: id,TableId:tableid };
+
+        $.ajax({
+                type: "POST",
+                url: '@Url.Action("SelectPanelById", "Page")',
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(parameter),
+                success: function (result) {
+                    $('#paneldbfield').html(result);
+
+                    $('#setColumnSave').show();
+                }
+
+        });
+
+
+    }
+
+    function Panel(tableid) {
+        $('#ColumnList').hide();
+        $('#SaveSetColumnProperty').val('');
+        $('#SaveSetColumnProperty').val('Panel');
+
+        var parameter = { TableId: tableid}
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SetPanel", "Page")',
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(parameter),
+            success: function (result) {
+                $('#setpanel').html(result);
+
+                //button hide.
+                $("#SortingBtn").hide();
+                $("#SortingCondition").hide();
+                $("#FilterCondition").hide();
+                $("#btnSystem").hide();
+                $("#btnUnmap").hide();
+                $('#setColumnSave').hide();
+            }
+
+        });
+
+
+    }
+
+    function AddPanel(c,tid) {
+
+        var cm = '#' + c;
+
+        var form = $(cm).serialize();
+        $.ajax({
+            type: 'POST',
+            url: "/Submodule/CreatePanel",
+            data: form,
+            dataType: 'json',
+            success: function (data) {
+                Panel(tid);
+                if (data.message == "Saved Successfully!") {
+                    swal(data.message, "You clicked the button!", "success");
+                } else {
+                    swal("Failed to save!", data.message, "warning");
+                }
+            }
+        });
+    }
+
+    function AddTrigger(frm, tableid, moduleid) {
+        var fm = '#' + frm;
+        var form = $(fm).serialize();
+
+        $.ajax({
+            type: 'POST',
+            url: "/Submodule/CreateTrigger",
+            data: form,
+            dataType: 'json',
+            success: function (result) {
+                Triggers(tableid, moduleid);
+                if (result.message == "Saved Successfully!") {
+                    swal(result.message, "You clicked the button!", "success");
+                } else {
+                    swal("Failed to save!", result.message, "warning");
+                }
+            }
+        });
+    }
+
+
+
+    function SaveColumn() {
+
+            $('#imageproperty').hide();
+            $('#autocode').hide();
+            $('#dropdown1').hide();
+            var ct = $('#ControlType').val();
+            var cp = $('#ColumnProperty').val();
+
+            var form = $('#CC').serialize();
+            $.ajax({
+                type: 'POST',
+                url: "/Submodule/Create",
+                data: form,
+                dataType: 'json',
+                success: function (data) {
+                    //alert(data.message);
+                    if (ct == 2 && cp == 4) {
+                        $('#dropdown1').show();
+                        $('#autocode').show();
+
+                    }
+                    else if (ct == 9) {
+                        $('#imageproperty').show();
+                    }
+                    else if (ct == 2) {
+                        $('#dropdown1').show();
+
+                    }
+                    else if (cp == 4) {
+                        $('#autocode').show();
+                    }
+                    else {
+                        $('#imageproperty').hide();
+                        $('#autocode').hide();
+                        $('#dropdown1').hide();
+                    }
+
+
+                }
+            });
+        }
+
+   function DeleteSubModuleById(id){
+
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this  file!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+
+                var parameter = { submoduleId: id }
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("DeleteSubModuleById", "Page")',
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+
+                    data: JSON.stringify(parameter),
+                    success: function (result) {
+
+                        swal(result.message, {
+                            icon: "success",
+                        });
+                    }
+
+                });
+
+            } else {
+                swal("Your file is safe!");
+            }
+        });
+   }
+
+   function DeletePageById(id,sn,sid)
+   {
+
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this  file!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+
+                    var parameter = { ModuleId: id }
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("DeletePageById", "Page")',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+
+                            data: JSON.stringify(parameter),
+                            success: function (result) {
+
+                                swal(result.message, {
+                                    icon: "success",
+                                });
+                                SelectById(sid,sn);
+                            }
+
+                        });
+
+                } else {
+                    swal("Your  file is safe!");
+                }
+            });
+
+   }
+
+   function DeleteTableById(tid,mid,mn)
+   {
+
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this  file!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+
+                var parameter = { TableId: tid }
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("DeleteTableById", "Page")',
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+
+                        data: JSON.stringify(parameter),
+                        success: function (result) {
+
+                            swal(result.message, {
+                                icon: "success",
+                            });
+                            SelectTableById(mid,mn);
+                        }
+
+                    });
+
+            } else {
+                swal("Your  file is safe!");
+            }
+        });
+   }
+
+   function DeleteColumnById(cid,tid,tn,mid)
+    {
+
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this  file!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+
+                var parameter = { ColumnId: cid }
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("DeleteColumnById", "Page")',
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+
+                        data: JSON.stringify(parameter),
+                        success: function (result) {
+
+                            swal(result.message, {
+                                icon: "success",
+                            });
+                            SelectColumnById(tid,tn,mid);
+                        }
+
+                    });
+
+            } else {
+                swal("Your  file is safe!");
+            }
+        });
+
+
+    }
+
+
+
+    function DeleteAutocodeById(pid,tid,mid)
+    {
+
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this  file!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+
+                var parameter = { PropertyId: pid }
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("DeleteAutocodeById", "Page")',
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+
+                        data: JSON.stringify(parameter),
+                        success: function (result) {
+
+                            swal(result.message, {
+                                icon: "success",
+                            });
+                            Autocode(tid,mid);
+                        }
+
+                    });
+
+            } else {
+                swal("Your  file is safe!");
+            }
+        });
+
+
+    }
+
+    function DeleteTriggerById(triggerid, tableid) {
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this  file!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+
+                var parameter = { TriggerId: triggerid }
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("DeleteTriggerById", "Page")',
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+
+                        data: JSON.stringify(parameter),
+                        success: function (result) {
+
+                            swal(result.message, {
+                                icon: "success",
+                            });
+                            Triggers(tableid);
+                        }
+
+                    });
+
+            } else {
+                swal("Your  file is safe!");
+            }
+        });
+    }
+
+    function DeletePanelById(pid,tid)
+    {
+
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this  file!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+
+                    var parameter = { PanelId: pid }
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("DeletePanelById", "Page")',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+
+                            data: JSON.stringify(parameter),
+                            success: function (result) {
+
+                                swal(result.message, {
+                                    icon: "success",
+                                });
+                                Panel(tid);
+                            }
+
+                        });
+
+                } else {
+                    swal("Your  file is safe!");
+                }
+            });
+
+
+    }
+
+    function EditSubModuleById(id,AppId, module)
+    {
+        var parameter = { submoduleId: id, AppId: AppId }
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("EditSubModule", "Page")',
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+
+            data: JSON.stringify(parameter),
+            success: function (result) {
+                $('#sm').html(result);
+                $('#selectedData').val('');
+                $('#selectedData').val('Material Management');
+                $('#filePath').text(module);
+            }
+        });
+    }
+
+    function SelectById(id,module)
+    {
+
+        var parameter = { pageId: id, SubModName: module }
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("SelectById", "Page")',
+                            dataType: "html",
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify(parameter),
+                            success: function (result) {
+                                $('#page1').html(result).ready(function () {
+                                    $('#sm1').html('<a href="#" ><i id="SmIcon" class="fa fa-caret-down" aria-hidden="true"></i> Sub Module </a> ').ready(function () {
+                                        //$('#s1').hide();
+                                        $('#selectedData').val(module);
+                                        $('#filePath').text(module);
+                                    });
+                                });
+
+
+                            }
+
+                        });
+
+    }
+    function UpdatePageList(sid,sn) {
+
+        var rowCount = $('#editpagelisttable tr').length - 1;
+        $('#editpagelisthf').val(rowCount);
+        var form = $('#editpagelist').serialize();
+
+            $.ajax({
+                type: 'POST',
+                url: "/Page/UpdatePageList",
+                dataType: "json",
+                data: form,
+
+                success: function (result) {
+                    swal(result.message, "You clicked the button!", "success");
+                    SelectById(sid,sn);
+                }
+            });
+
+
+    }
+    function UpdateTableList(mid,mn) {
+
+        var rowCount = $('#edittablelisttable tr').length - 1;
+        $('#edittablelisthf').val(rowCount);
+        var form = $('#edittablelist').serialize();
+
+        $.ajax({
+            type: 'POST',
+            url: "/Page/UpdateTableList",
+            dataType: "json",
+            data: form,
+
+            success: function (result) {
+                swal(result.message, "You clicked the button!", "success");
+                SelectTableById(mid,mn);
+            }
+        });
+
+
+    }
+
+
+    function EditPageById(id,pageName)
+    {
+
+        var parameter = { pageId: id }
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("EditPageById", "Page")',
+                            dataType: "html",
+                            contentType: "application/json; charset=utf-8",
+
+                            data: JSON.stringify(parameter),
+                            success: function (result) {
+
+                                $('#sm').html(result);
+                                $('.editpageapplicationid').select2();
+                                $('.editexistmodule').select2();
+                                $('.editmodule-type').select2();
+                                $('#filePath').text($('#subname').val() + '/' + pageName);
+
+                            }
+
+                        });
+
+
+    }
+
+    function EditTableById(id,tablecaption,tableName)
+    {
+
+        var parameter = { tableId: id }
+        $('#col2').toggle().ready(function () {
+
+            $('#col3').removeClass("col-md-6").addClass("col-md-12").ready(function () {
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("EditTableById", "Page")',
+                            dataType: "html",
+                            contentType: "application/json; charset=utf-8",
+
+                            data: JSON.stringify(parameter),
+                            success: function (result) {
+
+                                $('#sm').html(result);
+                                $('#filePath').text($('#subname').val() + '/' + $('#pageName').val() + '/' + tablecaption);
+                                $('#showDBTable').text(tableName);
+                            }
+
+                        });
+            });
+        });
+    }
+
+    function EditTriggerById(triggerid, tableid) {
+        var parameter = { TriggerId: triggerid, TableId: tableid }
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("EditTriggerById","Page")',
+            dataType: 'html',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(parameter),
+            success: function (result) {
+
+                $('#editTrigger').html(result);
+            }
+        });
+    }
+
+    function EditTrigger(tableid) {
+        var form = $('#edittrigger').serialize();
+        $.ajax({
+            type: 'POST',
+            url: "/Page/UpdateTrigger",
+            data: form,
+            dataType: 'json',
+            success: function (result) {
+                Triggers(tableid);
+                if (result.message == "Updated Successfully!") {
+                    swal(result.message, "You clicked the button!", "success");
+                }
+                else {
+                    swal("Failed to save!", result.message, "warning");
+                }
+            }
+        });
+    }
+
+    function EditPanelById(pid,tid){
+
+        var parameter = {PanelId: pid ,TableId:tid}
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("EditPanelById", "Page")',
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+
+            data: JSON.stringify(parameter),
+            success: function (result) {
+
+                $('#ep').html(result);
+                //jQuery.noConflict();
+                //$('#editpanelmodal').modal('show');
+            }
+        });
+    }
+
+    function EditPanel(tid) {
+
+        var form = $('#editpanelform').serialize();
+        $.ajax({
+            type: 'POST',
+            url: "/Page/UpdatePanel",
+            data: form,
+            dataType: 'json',
+            success: function (result) {
+                Panel(tid);
+                if (result.message == "Updated Successfully!") {
+                    swal(result.message, "You clicked the button!", "success");
+                }
+                else {
+                    swal("Failed to save!", result.message, "warning");
+                }
+
+                //$('#editpanelmodal').modal('hide');
+                //$('.modal-backdrop').remove()
+                //$(document.body).removeClass("modal-open");
+
+
+            }
+        });
+
+    }
+
+
+
+
+    function EditAutocodeById(pid,tid,mid)
+    {
+
+        var parameter = { propertyId: pid, tableid: tid, ModuleId:mid}
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("EditAutocodeById", "Page")',
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+
+            data: JSON.stringify(parameter),
+            success: function (result) {
+
+                $('#editauto').html(result);
+                //jQuery.noConflict();
+                //$('#editautomodal').modal('show');
+
+            }
+
+        });
+
+
+    }
+
+    function UpdateAutocode(tid,mid) {
+
+        var form = $('#UpdateAuto').serialize();
+        $.ajax({
+            type: 'POST',
+            url: "/Page/UpdateAutocode",
+            data: form,
+            dataType: 'json',
+            success: function (result) {
+
+                if (result.message == "Updated Successfully!") {
+                    swal(result.message, "You clicked the button!", "success");
+                }
+                else {
+                    swal("Failed to Update!", result.message, "warning");
+                }
+                //$('#editautomodal').modal('hide');
+                //$('.modal-backdrop').remove()
+                //$(document.body).removeClass("modal-open");
+                Autocode(tid,mid);
+
+            }
+        });
+
+    }
+
+    function EditColumnById(id)
+            {
+
+             var parameter = { columnId: id }
+
+
+             $('#col2').toggle().ready(function () {
+
+                 $('#col3').removeClass("col-md-6").addClass("col-md-12").ready(function () {
+                                $.ajax({
+                                    type: "POST",
+                                    url: '@Url.Action("EditColumnById", "Page")',
+                                    dataType: "html",
+                                    contentType: "application/json; charset=utf-8",
+
+                                    data: JSON.stringify(parameter),
+                                    success: function (result) {
+
+                                        $('#sm').html(result);
+                                    }
+
+                                });
+                 });
+             });
+
+        }
+
+    function SelectTableById(id,pageName)
+    {
+
+        var parameter = { pageId: id, pn: pageName }
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SelectTableById", "Page")',
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(parameter),
+            success: function (result) {
+                $('#table1').html(result).ready(function () {
+                    //$('#page2').html('<a href="#" ><i id="PageIcon" class="fa fa-caret-right" aria-hidden="true"></i> Page </a> ').ready(function () {
+                        //$('#p1').hide();
+                    $('#selectedData').val('');
+                    $('#selectedData').val(pageName);
+                    $('#filePath').text($('#subname').val() + '/' + pageName);
+
+                    //});
+                });
+
+
+            }
+
+        });
+
+    }
+
+
+    function SelectColumnById(tableid,tablename,moduleid,tablecaption)
+    {
+        var parameter = { TableId: tableid, TableName: tablename,ModuleId:moduleid }
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SelectColumnById", "Page")',
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(parameter),
+            success: function (result) {
+                $('#column1').html(result).ready(function () {
+                    //$('#page2').html('<a href="#" ><i id="PageIcon" class="fa fa-caret-right" aria-hidden="true"></i> Page </a> ').ready(function () {
+                        //$('#p1').hide();
+                    $('#selectedData').val('');
+                    $('#selectedData').val(tablename);
+                    $('#ColumnTable').hide();
+                    $('#filePath').text($('#subname').val() + '/' + $('#pageName').val() + '/' + tablecaption);
+                    $('#showDBTable').text(tablename);
+
+                    //});
+                });
+            }
+        });
+
+    }
+
+    function showColumnTable() {
+        $('#ColumnTable').show();
+    }
+
+    function saveSystemColumn(tableId, TableName, ModuleId) {
+        var parameter = { TableId: tableId }
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SaveSystemField", "Page")',
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+
+            data: JSON.stringify(parameter),
+            success: function (result) {
+                Resize1(tableId, TableName, ModuleId);
+                swal(result.message, {
+                    icon: "success",
+                });
+            }
+        });
+    }
+
+    function saveAllColumn(tableId, TableName, ModuleId) {
+        var parameter = { TableId: tableId }
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SaveAllField", "Page")',
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+
+            data: JSON.stringify(parameter),
+            success: function (result) {
+                Resize1(tableId, TableName, ModuleId);
+                swal(result.message, {
+                    icon: "success",
+                });
+            }
+        });
+    }
+
+    function Resize1(tableid,tablename,moduleid) {
+
+        var parameter = {Tableid:tableid, TableName: tablename,ModuleId:moduleid}
+        $('#col2').hide().ready(function () {
+
+            $('#col3').removeClass("col-md-6").addClass("col-md-12").ready(function () {
+
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("SetColumn", "Page")',
+                            dataType: "html",
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify(parameter),
+                            success: function (result) {
+                                $('#sm').html(result);
+                                $('#ColumnList').hide();
+                                $("#SortingBtn").hide();
+                                $("#SortingCondition").hide();
+                                $("#FilterCondition").hide();
+                                $("#btnSystem").hide();
+                                $("#btnUnmap").hide();
+                                $('#setColumnSave').hide();
+                            }
+
+                        });
+            });
+        });
+    }
+
+    function CloseTable() {
+
+        $('#hideTable').hide().ready(function () {
+
+            $('#col3').removeClass("col-md-12").addClass("col-md-6").ready(function () {
+                $('#col2').show();
+            });
+        });
+
+
+    }
+    function CloseCreateColumn() {
+
+        $('#hideColumnCreate').hide().ready(function () {
+
+            $('#col3').removeClass("col-md-12").addClass("col-md-6").ready(function () {
+                $('#col2').show();
+            });
+        });
+
+
+    }
+
+    function CloseCreateTable() {
+
+            $('#HideCreateTable').hide().ready(function () {
+
+                $('#col3').removeClass("col-md-12").addClass("col-md-6").ready(function () {
+                    $('#col2').show();
+                });
+            });
+
+
+    }
+    function HideEditPageList() {
+
+        $('#HideEditPageList').hide().ready(function () {
+
+            $('#col3').removeClass("col-md-12").addClass("col-md-6").ready(function () {
+                $('#col2').show();
+            });
+        });
+
+
+    }
+    function HideEditTableList() {
+
+        $('#HideEditTableList').hide().ready(function () {
+
+            $('#col3').removeClass("col-md-12").addClass("col-md-6").ready(function () {
+                $('#col2').show();
+            });
+        });
+
+
+    }
+
+    function CloseEditTable() {
+
+        $('#HideCreateTable').hide().ready(function () {
+
+            $('#col3').removeClass("col-md-12").addClass("col-md-6").ready(function () {
+                if (!$('#col2').is(':visible')) {
+                    $('#col2').show();
+                }
+
+            });
+        });
+
+
+    }
+    function PageIconToggle() {
+        if ($('#PageIcon').hasClass("fa fa-caret-right")) {
+            $('#PageIcon').removeClass("fa fa-caret-right").addClass("fa fa-caret-down").ready(function () {
+                $('#p1').show();
+                $('#selectedData').val('');
+                $('#selectedData').val('Page');
+            });
+        }
+        else {
+            $('#PageIcon').removeClass("fa fa-caret-down").addClass("fa fa-caret-right").ready(function () {
+                $('#p1').hide();
+                $('#selectedData').val('');
+                $('#selectedData').val('Page');
+            });
+        }
+
+    }
+
+    function IconToggle() {
+        if ($('#SmIcon').hasClass("fa fa-caret-right")) {
+            $('#SmIcon').removeClass("fa fa-caret-right").addClass("fa fa-caret-down").ready(function () {
+                $('#s1').show();
+                $('#selectedData').val('');
+                $('#selectedData').val('Sub Module');
+            });
+        }
+        else {
+            $('#SmIcon').removeClass("fa fa-caret-down").addClass("fa fa-caret-right").ready(function () {
+                $('#s1').hide();
+                $('#selectedData').val('');
+                $('#selectedData').val('Sub Module');
+            });
+        }
+
+    }
+
+
+    function TableIconToggle() {
+        if ($('#TableIcon').hasClass("fa fa-caret-right")) {
+            $('#TableIcon').removeClass("fa fa-caret-right").addClass("fa fa-caret-down").ready(function () {
+                $('#t1').show();
+                $('#selectedData').val('');
+                $('#selectedData').val('Table');
+            });
+        }
+        else {
+            $('#TableIcon').removeClass("fa fa-caret-down").addClass("fa fa-caret-right").ready(function () {
+                $('#t1').hide();
+                $('#selectedData').val('');
+                $('#selectedData').val('Table');
+            });
+        }
+
+    }
+
+
+    function PanelIconToggle() {
+        if ($('#PanelIcon').hasClass("fa fa-caret-right")) {
+            $('#PanelIcon').removeClass("fa fa-caret-right").addClass("fa fa-caret-down").ready(function () {
+                $('#pan1').show();
+                $('#selectedData').val('');
+                $('#selectedData').val('Panel');
+            });
+        }
+        else {
+            $('#PanelIcon').removeClass("fa fa-caret-down").addClass("fa fa-caret-right").ready(function () {
+                $('#pan1').hide();
+                $('#selectedData').val('');
+                $('#selectedData').val('Panel');
+            });
+        }
+
+    }
+
+
+    function ColumnIconToggle() {
+        if ($('#ColumnIcon').hasClass("fa fa-caret-right")) {
+            $('#ColumnIcon').removeClass("fa fa-caret-right").addClass("fa fa-caret-down").ready(function () {
+                $('#c1').show();
+                $('#selectedData').val('');
+                $('#selectedData').val('Column');
+            });
+        }
+        else {
+            $('#ColumnIcon').removeClass("fa fa-caret-down").addClass("fa fa-caret-right").ready(function () {
+                $('#c1').hide();
+                $('#selectedData').val('');
+                $('#selectedData').val('Column');
+            });
+        }
+
+    }
+
+
+
+
+
+</script>
+
+
+
+
+
+
+

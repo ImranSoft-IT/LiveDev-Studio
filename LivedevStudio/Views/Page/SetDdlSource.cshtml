@@ -1,0 +1,211 @@
+﻿
+
+@using System.Data
+@model DataSet
+
+
+@{
+    var L = ViewBag.DdlList;
+    var tableId = ViewBag.tableId;
+}
+<form action="" method="post" id="DdlSource">
+
+    <input type="hidden" id="ddlhf" name="ddlhf" value="" />
+    <table style="width:99%; font-size:12px; color:black;border:0px solid #CCD5F0 ; background-color:white; " border="1" id="ddl-source">
+        <tr style="background-color:#003366; color:white;height:28px;">
+            <th style="text-align: center;">ID</th>
+            <th style="text-align: center;">Field Caption</th>
+            <th style="text-align: center;">Parent Dropdown</th>
+            <th style="text-align: center;">Data Source</th>
+            <th style="text-align: center;">Popup LOV Table</th>
+            <th style="text-align: center;">Dropdown Table</th>
+            <th style="text-align: center;">Value Column</th>
+            <th style="text-align: center;">Text Column</th>
+            <th style="text-align: center;">Text Column(Expr)</th>
+            <th style="text-align: center;">Where</th>
+            <th style="text-align: center;">Order By</th>
+
+        </tr>
+        @{
+            int c = 0;
+            var dd = ViewBag.DdlList;
+
+        }
+
+        @foreach (DataRow ddl in dd.Tables[0].Rows)
+        {
+            <tr>
+
+                <td style="padding:0px;width:50px;">
+                    <input type="text" name="columnid[@c]" value="@ddl["ColumnId"]" style="width:100%;outline:none;border:0px none;" readonly />
+                </td>
+                <td style="padding:0px;width:110px;">
+                    <input type="text" style="width:100%;outline:none;border:0px none;" name="columndisplayname[@c]" value="@ddl["ColumnDisplayName"]" />
+                </td>
+                <td style="padding:0px;width:110px;">
+                    @{ 
+                        var pc = ViewBag.ParentDdList;
+                    }
+                    <select name="parentcolumn[@c]" style="width:100%;border:0px none;outline:none;">
+                        @*<option value="0">Select Parent Column</option>*@
+                        <option value="0"> </option>
+                        @foreach (DataRow lo in pc.Tables[0].Rows)
+                        {
+                            if (ddl["ParentColumn"].ToString() == lo["DataField"].ToString())
+                            {
+                                <option value="@lo["DataField"]" selected> @lo["DataText"] </option>
+                            }
+                            else
+                            {
+                                <option value="@lo["DataField"]"> @lo["DataText"] </option>
+
+                            }
+
+                        }
+
+                    </select>
+                </td>
+                <td style="padding:0px;width:110px;">
+                    <select name="ddldatasource[@c]" style="width:100%;border:0px none;outline:none;">
+                        @if (ddl["DdlDataSource"].ToString() == "1")
+                        {
+                            <option value="0"> </option>
+                            <option value="1" selected>Data Table</option>
+                            <option value="2">LOV Table</option>
+                            <option value="3">SQL Expression</option>
+                            <option value="4">Data List</option>
+                        }
+                        else if (ddl["DdlDataSource"].ToString() == "2")
+                        {
+                            <option value="0"> </option>
+                            <option value="1">Data Table</option>
+                            <option value="2" selected>LOV Table</option>
+                            <option value="3">SQL Expression</option>
+                            <option value="4">Data List</option>
+                        }
+                        else if (ddl["DdlDataSource"].ToString() == "3")
+                        {
+                            <option value="0"> </option>
+                            <option value="1">Data Table</option>
+                            <option value="2">LOV Table</option>
+                            <option value="3" selected>SQL Expression</option>
+                            <option value="4">Data List</option>
+                        }
+                        else if (ddl["DdlDataSource"].ToString() == "4")
+                        {
+                            <option value="0"> </option>
+                            <option value="1">Data Table</option>
+                            <option value="2">LOV Table</option>
+                            <option value="3">SQL Expression</option>
+                            <option value="4" selected>Data List</option>
+                        }
+                        else
+                        {
+                            <option value="0" selected > </option>
+                            <option value="1">Data Table</option>
+                            <option value="2">LOV Table</option>
+                            <option value="3" >SQL Expression</option>
+                            <option value="4">Data List</option>
+                        }
+
+                    </select>
+                </td>
+                <td style="padding:0px;width:120px;">
+                    @{
+                        var lov = ViewBag.LovTableList;
+                        var v = "LovTable" + c;
+                    }
+
+                    <select name="lovtableid[@c]" style="width:100%;outline:none;border:0px none;" class=@v onmouseover="SearchableDropdown('@v')">
+
+                        <option value="0"> </option>
+                        @foreach (DataRow lo in lov.Tables[0].Rows)
+                        {
+                            <option value="@lo["TableId"]"
+                                      @if (ddl["LovTableId"].ToString() == lo["TableId"].ToString()) { @: selected
+                                       }> @lo["TableCaption"] </option>
+                        }
+                    </select>
+                </td>
+                <td style="padding:0px;width:170px;">
+                    @{
+                        var dbtable = ViewBag.DbTableList;
+                        var DbTabId = "dbtabid" + c;
+                        var colvalid = "colvalid" + c;
+                        var coltextid = "coltextid" + c;
+                        var dt = "Dropdown-Table" + c;
+                    }
+
+                    
+
+                    <select name="tablename[@c]" style="width:100%;outline:none;border:0px none;" id=@DbTabId onchange="FillValueText('@DbTabId ','@colvalid','@coltextid')" class=@dt  onmouseover="SearchableDropdown('@dt')">
+
+                        <option value=""> </option>
+                        @foreach (DataRow t1 in dbtable.Tables[0].Rows)
+                        {
+                            <option value="@t1["DataField"]"
+                                    
+                                     @if (ddl["TableName"].ToString() == t1["DataField"].ToString()) { @: selected
+                                       }
+                                    
+                                    > @t1["DataText"] </option>
+                        }
+                    </select>
+
+
+                </td>
+                
+                <td style="width:90px;padding:0px;">
+                   
+                    <select name="columnvalue[@c]" style="width:100%;outline:none;border:0px none;" id=@colvalid  >
+
+                        <option value="">Select Column value </option>
+                        <option value="@ddl["ColumnValue"]" selected>@ddl["ColumnValue"] </option>
+                    </select>
+                </td>
+
+                <td style="width:90px;padding:0px;">
+                    
+                    <select name="columntext[@c]" style="width:100%;outline:none;border:0px none;" id=@coltextid >
+
+                        <option value="">Select Column Text</option>
+                        <option value="@ddl["ColumnText"]" selected>@ddl["ColumnText"] </option>
+                    </select>
+                </td>
+
+                <td style="width:100px;padding:0px;">
+                    @*<input type="text" style="width:100%;outline:none;border:0px none;" name="columntextexp[@c]" value="@ddl["ColumnTextExp"]" />*@
+                    <textarea style="width:100%;outline:none;border:0px none;" rows="2" cols="33" name="columntextexp[@c]">@ddl["ColumnTextExp"]</textarea>
+                </td>
+                <td style="width:100px;padding:0px;">
+                    <input type="text" style="width:100%;outline:none;border:0px none;" name="whereexpression[@c]" value="@ddl["WhereExpression"]" />
+                </td>
+                <td style="width:100px;padding:0px;">
+                    <input type="text" style="width:100%;outline:none;border:0px none;" name="orderbyexpression[@c]" value="@ddl["OrderByExpression"]" />
+                </td>
+
+
+            </tr>
+            c = c + 1;
+        }
+
+
+
+
+    </table>
+
+</form>
+
+@*<script>
+    $('#ddl-source td').click(function () {
+        $('#ddl-source tr').css({ "background-color": "white", "color": "black" });
+        $('#ddl-source th').css({ "background-color": "#003366", "color": "white" });
+        $(this).parent().css({ "background-color": "#0066ff", "color": "white" });
+        //$(this).parent().css("background-color", "green");
+
+
+
+
+    });
+
+</script>*@

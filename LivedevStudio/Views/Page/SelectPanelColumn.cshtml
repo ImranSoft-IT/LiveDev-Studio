@@ -1,0 +1,34 @@
+﻿@using System.Data
+@model DataSet
+
+@{
+
+    int r = ViewBag.RowCount;
+    string rmid = "RemovePanelRow" + r;
+    string Rowno = ViewBag.Id;
+    var colsl = ViewBag.PanelColSl;
+}
+
+<tr>
+    @* INSERT INTO utl_dynamic_table_column (tableid,columnname,selectcolumnname,foreignkeyname,controltype,columnproperty,columndisplayname,columnwidth,ismoduleselect,isfvinsert,
+        isfvupdate,isfvforceedit,isforeigntable,globalparamid,globalparamvalue,defaultvalue,filterby,transpolicyid,user_privilege,linktype,linkpageid,linktableid,linkcolumnname,
+        reportcolumn,slno,columnid,isshow,isgvselect,isfvselect,*@
+
+
+
+
+    <td style="text-align:center;width:60px;padding:0px;">
+        <input type="hidden" style="border:0px none; outline:none; width:100%;" name="columnid[@r]" value="@ViewBag.ColumnId" />
+        <input type="hidden" style="border:0px none; outline:none; width:100%;" name="panelid[@r]" value="@ViewBag.PanelId" />
+        <a href="#" id=@rmid class="border-0" style="font-size:18px; margin-left:5px; color: crimson;outline:none;" onclick="RemoveRow1('@rmid','@Rowno',@ViewBag.TableId,@ViewBag.ColumnId,@ViewBag.PanelId )"><i class="fa fa-times-circle" aria-hidden="true"></i> </a>
+    </td>
+
+    <td style="width:140px;padding:0px;"><input type="text" name="columnname[@r]" style="outline:none !important; width:100%;border:0px none;" value=@Rowno readonly /></td>
+
+
+    @foreach (DataRow c in colsl.Tables[0].Rows)
+    {
+        <td style="width:80px;padding:0px;"><input type="text" name="PnlColSl[@r]" value="@c["PnlColSl"]" style="outline:none !important; width:100%;border:0px none;text-align:center;"  /></td>
+        <td style="width:80px;padding:0px;"><input type="text" name="PnlColMerge[@r]" value="@c["PnlColMerge"]" style="outline:none !important; width:100%; border:0px none;text-align:center;"  /></td>
+    }
+</tr>

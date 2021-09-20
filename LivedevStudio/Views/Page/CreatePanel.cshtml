@@ -1,0 +1,257 @@
+﻿
+<style>
+    input {
+        outline: none;
+    }
+
+    tr td:first-child {
+        padding-left: 6px;
+    }
+</style>
+
+<div class="ml-0 mt-2" style="width:710px; background-color:#CCD5F0"><a class="ml-1 font-weight-bold text-dark" href="#">Create New Panel</a> </div>
+<div class=" " >
+
+    <form method="post" action="" id="CPanel">
+
+        <input type="hidden" name="TableId" value="21" />
+
+
+
+        @*<input type="hidden" name="hfpkid_@formelement[0].formid" id="hfpkid_@formelement[0].formid" value="0" />
+        <input type="hidden" name="hffkid_@formelement[0].formid" id="hffkid_@formelement[0].formid" value="0" />*@
+        <input type="hidden" name="hfpkid" id="hfpkid" value="0" />
+        <input type="hidden" name="hffkid" id="hffkid" value="0" />
+
+        <input type="hidden" name="entry_user_id" id="entry_user_id" value="1" />
+        <input type="hidden" name="entry_by" id="entry_by" value="Shabuj" />
+        <input type="hidden" name="entry_date" id="entry_date" value="Getdate()" />
+        <input type="hidden" name="update_by" id="update_by" value="Shabuj" />
+        <input type="hidden" name="update_date" id="update_date" value="Getdate()" />
+
+        <input type="hidden" name="is_approved" id="is_approved" value="0" />
+        <input type="hidden" name="is_deleted" id="is_deleted" value="0" />
+        <input type="hidden" name="is_cancel" id="is_cancel" value="0" />
+        <input type="hidden" name="work_follow_position" id="work_follow_position" value="1" />
+
+        <table style="width:98%;background-color:white; border:1px  solid #CCD5F0;  font-size:13px; color: black;" border="1" id="SM">
+            @*<tr>
+            <td>Table Id <a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget "><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+            <td> <input type="text" name="tableid" value="" class="border-0" style="width:100%; " readonly /></td>
+
+        </tr>*@
+            <tr>
+                <td>Panel Id<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget.."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a> </td>
+                <td> <input type="text" name="PanelId" value="" class="border-0" style="width:100%; " /></td>
+            </tr>
+            <tr>
+                <td>Panel Name <a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                <td> <input type="text" name="PanelName" value="" class="border-0" style="width:100%;" /></td>
+
+            </tr>
+            <tr>
+                <td>Panel Caption <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                <td class="ml-2"> <input type="text" name="PanelCaption" value="" class="border-0" style="width:100%;" /></td>
+            </tr>
+            <tr>
+                <td>Row Position <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                <td> <input type="text" name="RowPosition" value="" class="border-0" style="width:100%;" /></td>
+
+            </tr>
+            <tr>
+                <td>Column Position <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                <td> <input type="text" name="ColumnPosition" value="" class="border-0" style="width:100%;" /></td>
+            </tr>
+            <tr>
+                <td>SL. <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                <td> <input type="text" name="SlNo" value="" class="border-0" style="width:100%;" /></td>
+            </tr>
+
+
+        </table>
+        <div class="row">
+            <div class="col-sm-2">
+                <a href="#" class="btn btn-sm  mt-1 font-weight-bold " style="width:100%; background-color:#CCD5F0; color:black;" onclick="Create('CPanel')">Save</a>
+            </div>
+
+        </div>
+
+    </form>
+
+
+</div>
+
+
+
+
+<script>
+
+
+    //$('#SM td').click(function () {
+    //    $('#SM tr').css("background-color", "white");
+    //    $('#SM tr:first-child').parent().css("background-color", "green");
+    //    //$(this).parent().css("background-color", "green");
+
+
+
+
+    //});
+
+
+
+
+    $('#SM td').click(function () {
+        $('#SM tr').css({ "background-color": "white", "color": "black" });
+        $(this).parent().css({ "background-color": "#0066ff", "color": "white" });
+        //$(this).parent().css("background-color", "green");
+
+
+
+
+    });
+
+    function CreateSubModuleIcon() {
+
+        if ($('#CreateSubModuleIcon').hasClass("fa fa-caret-down")) {
+            $('#CreateSubModuleIcon').removeClass("fa fa-caret-down").addClass("fa fa-caret-right").ready(function () {
+                $('#CreateSm').hide();
+            });
+        }
+        else {
+            $('#CreateSubModuleIcon').removeClass("fa fa-caret-right").addClass("fa fa-caret-down").ready(function () {
+                $('#CreateSm').show();
+            });
+        }
+    }
+
+
+        //$('#SM tr td:last-child').click(function () {
+        //    $('#SM td:first-child').css("background-color", "green");
+
+        //});
+
+</script>
+
+@*<div class="panel">
+        <div class="panel-body rounded">
+            <div class="row">
+                <div class="col-md-11">
+                    <form method="post" action="">
+
+                        <div class="row ">
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="ml-3 font-weight-bold"> CategoryId </label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="name" value="8" class="form-control-sm" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="ml-3 font-weight-bold"> Module </label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="name" value="Sales" class="form-control-sm" />
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="ml-3 font-weight-bold"> Page/Menu Category </label>
+                                    <div class="col-md-10">
+                                        <input type="text" name="name" value="Product Setup" class="form-control-sm" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="ml-3 font-weight-bold">System </label>
+                                    <div class="col-md-10">
+                                        <input type="checkbox" name="name" value="" class="" />
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="ml-3 font-weight-bold"> Sl </label>
+                                    <div class="col-md-10">
+                                        <input type="text" name="name" value="34" class="form-control-sm" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="ml-3 font-weight-bold"> Module </label>
+                                    <div class="col-md-10">
+                                        <input type="text" name="name" value="Sales" class="form-control-sm" />
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="ml-3 font-weight-bold"> CategoryId </label>
+                                    <div class="col-md-10">
+                                        <input type="text" name="name" value="6" class="form-control-sm" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="ml-3 font-weight-bold"> Module </label>
+                                    <div class="col-md-10">
+                                        <input type="text" name="name" value="Sales" class="form-control-sm" />
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-sm-6">
+
+
+                                    <div class="col-sm-6">
+
+                                        <input type="submit" name="name" value="Update" class="btn btn-info btn-block bg-info text-light form-control-sm" style="width:180px; text-align:center;" />
+                                    </div>
+
+                            </div>
+
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>*@
+
+
+
+
+
+
+
+
+
+
+

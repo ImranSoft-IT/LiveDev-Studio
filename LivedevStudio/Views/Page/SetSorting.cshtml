@@ -1,0 +1,144 @@
+﻿
+
+@using System.Data
+@model DataSet
+
+
+@{
+    var L = ViewBag.SortingList;
+    var tableId = ViewBag.tableId;
+}
+<form action="" method="post" id="Sorting">
+    <input type="hidden" id="sortinghf" name="sortinghf" value="" />
+
+    <table style="width:80%; font-size:12px; color:black;border:0px solid #CCD5F0 ; background-color:white; " border="1" id="set-function">
+
+
+        <tr style="background-color:#003366; color:white;height:28px;">
+
+            <th style="text-align: center;">ID</th>
+            <th style="text-align: center;">DML Column</th>
+            <th>Field Caption</th>
+            <th style="text-align: center;">Aggregate Function</th>
+            @*<th style="text-align: center;">Evaluate Expression</th>
+            <th style="text-align: center;">Effect Fields</th>*@
+            <th style="text-align: center;">Data Sort?</th>
+            <th style="text-align: center;">Decending?</th>
+
+
+
+        </tr>
+        @{
+            int f = 0;
+        }
+
+        @foreach (DataRow l in L.Tables[0].Rows)
+        {
+            <tr>
+                <td style="padding:0px;width:80px;">
+                    <input type="text" style="width: 100%; border: 0px none; outline: none;" name="columnid[@f]" value="@l["ColumnId"]" readonly />
+                </td>
+                <td style="padding:0px;width:200px;">
+                    <input type="text" style="width: 100%; border: 0px none; outline: none;" name="columnname[@f]" value="@l["ColumnName"]" readonly />
+                </td>
+                <td style="padding:0px;width:200px;">
+                    <input type="text" style="width: 100%; border: 0px none; outline: none;" name="columndisplayname[@f]" value="@l["ColumnDisplayName"]" />
+                </td>
+
+                <td style="padding:0px;width:200px;">
+                    <select style="width:100%;border: 0px none; outline: none;" name="aggregatefunction[@f]">
+
+                        @if (l["AggregateFunction"].ToString() == "sum")
+                        {
+                            <option value="0"></option>
+                            <option value="sum" selected>Sum</option>
+                            <option value="max">Maximum</option>
+                            <option value="min">Minimum</option>
+                            <option value="avg">Average</option>
+                        }
+                        else if (l["AggregateFunction"].ToString() == "max")
+                        {
+                            <option value="0"></option>
+                            <option value="sum">Sum</option>
+                            <option value="max" selected>Maximum</option>
+                            <option value="min">Minimum</option>
+                            <option value="avg">Average</option>
+                        }
+                        else if (l["AggregateFunction"].ToString() == "min")
+                        {
+                            <option value="0"></option>
+                            <option value="sum">Sum</option>
+                            <option value="max">Maximum</option>
+                            <option value="min" selected>Minimum</option>
+                            <option value="avg">Average</option>
+                        }
+                        else if (l["AggregateFunction"].ToString() == "avg")
+                        {
+                            <option value="0"></option>
+                            <option value="sum">Sum</option>
+                            <option value="max">Maximum</option>
+                            <option value="min">Minimum</option>
+                            <option value="avg" selected>Average</option>
+                        }
+                        else
+                        {
+                            <option value="0" selected></option>
+                            <option value="sum">Sum</option>
+                            <option value="max">Maximum</option>
+                            <option value="min">Minimum</option>
+                            <option value="avg">Average</option>
+                        }
+                    </select>
+                </td>
+                @*<td style="width:200px;"><input type="text" style="width: 100%; border: 0px none; outline: none;" name="evaluatevalue[@f]" value="@l["EvaluateValue"]" /></td>
+                <td style="width:200px;"><input type="text" style="width: 100%; border: 0px none; outline: none;" name="effectcolumn[@f]" value="@l["EffectColumn"]" /></td>*@
+
+                @if (Convert.ToBoolean(@l["IsDataShort"]))
+                {
+
+                    <td class="ml-2" style="width:120px; text-align:center;"> <input type="checkbox" name="isdatashort[@f]" value="1" class="border-0" checked /></td>
+                }
+                else
+                {
+                    <td class="ml-2" style="width:120px; text-align:center;"> <input type="checkbox" name="isdatashort[@f]" value="1" class="border-0" /></td>
+                }
+
+                @if (Convert.ToBoolean(@l["IsDescending"]))
+                {
+                    <td class="ml-2" style="width:120px; text-align:center;"> <input type="checkbox" name="isdescending[@f]" value="1" class="border-0" checked /></td>
+
+                }
+                else
+                {
+                    <td class="ml-2" style="width:120px; text-align:center;"> <input type="checkbox" name="isdescending[@f]" value="1" class="border-0" /></td>
+                }
+
+
+
+
+
+
+            </tr>
+
+            f = f + 1;
+        }
+
+
+
+    </table>
+
+</form>
+
+<script>
+    $('#set-function td').click(function () {
+        $('#set-function tr').css({ "background-color": "white", "color": "black" });
+        $('#set-function th').css({ "background-color": "#003366", "color": "white" });
+        $(this).parent().css({ "background-color": "#0066ff", "color": "white" });
+        //$(this).parent().css("background-color", "green");
+
+
+
+
+    });
+
+</script>

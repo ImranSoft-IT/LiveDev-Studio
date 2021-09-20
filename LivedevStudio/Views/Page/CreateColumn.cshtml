@@ -1,0 +1,684 @@
+﻿
+<style>
+    input {
+        outline: none;
+        width: 100%;
+    }
+
+    tr td:first-child {
+        padding-left: 6px;
+    }
+
+    #dropdown tbody tr td:first-child {
+        width: 50px;
+    }
+
+
+    select {
+        outline: none;
+    }
+</style>
+<div id="hideColumnCreate">
+    <form method="post" action="/Submodule/Create" id="CC">
+        <div class="row">
+            <div class="col-md-8 ">
+                <div class="mt-2" style="width:99%; background-color:#CCD5F0"><span class=" font-weight-bold text-dark ml-2" href="#">Create New Column</span> </div>
+
+                <input type="hidden" name="TableIds" value="3" />
+
+                <input type="hidden" name="hfpkid" id="hfpkid" value="0" />
+                <input type="hidden" name="hffkid" id="hffkid" value="0" />
+
+                <input type="hidden" name="entry_user_id" id="entry_user_id" value="1" />
+                <input type="hidden" name="entry_by" id="entry_by" value="Shabuj" />
+                <input type="hidden" name="entry_date" id="entry_date" value="Getdate()" />
+                
+                <input type="hidden" name="is_approved" id="is_approved" value="0" />
+                <input type="hidden" name="is_deleted" id="is_deleted" value="0" />
+                <input type="hidden" name="is_cancel" id="is_cancel" value="0" />
+                <input type="hidden" name="work_follow_position" id="work_follow_position" value="1" />
+                <div class="row">
+                    @* INSERT INTO utl_dynamic_table_column (tableid,columnname,selectcolumnname,foreignkeyname,controltype,columnproperty,columndisplayname,columnwidth,ismoduleselect,isfvinsert,
+                        isfvupdate,isfvforceedit,isforeigntable,globalparamid,globalparamvalue,defaultvalue,filterby,transpolicyid,user_privilege,linktype,linkpageid,linktableid,linkcolumnname,
+                        reportcolumn,slno,columnid,isshow,isgvselect,isfvselect,*@
+                    <div class="col-md-6 mr-0 pr-0">
+                        <table class="ml-0 pl-0" style="width:99%;background-color:white; border:1px  solid #CCD5F0;  font-size:13px; color: black;" border="1" id="SM">
+                            @*<tr>
+                                    <td>Page Grid/Form <a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget "><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                    <td> <input type="text" name="tableid" value="" class="border-0" style="width:100%; " readonly /></td>
+
+                                </tr>*@
+                            <tr>
+                                <td>DML Column<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget.."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a> </td>
+                                <td>
+                                    <select style="width:100%; " name="columnname">
+                                        <option value="0">Select Column</option>
+                                        <option value="1">Sales</option>
+                                        <option value="2">MM</option>
+                                        <option value="3">Vat</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>View Column <a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                <td> <input type="text" name="selectcolumnname" value="" class="border-0" style="width:100%;" placeholder="Enter Page " /></td>
+
+                            </tr>
+                            <tr>
+                                <td>View Column(Global Field) <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                <td class="ml-2">
+                                    <select style="width:100%; " name="foreignkeyname">
+                                        <option value="0">Select Column</option>
+                                        <option value="1">Sales</option>
+                                        <option value="2">MM</option>
+                                        <option value="3">Vat</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Input Type<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                <td>
+                                    <select style="width:100%; " name="controltype" id="ControlType">
+
+                                        <option value="1">Textbox</option>
+                                        <option value="2">Dropdown</option>
+                                        <option value="3">Label</option>
+                                        <option value="4">Check Box</option>
+                                        <option value="5">Hidden Feild</option>
+                                        <option value="6">Dummy Field Label</option>
+                                        <option value="7">Dummy Field Textbox</option>
+                                        <option value="8">Dummy Field Dropdown</option>
+                                        <option value="9">Image</option>
+
+                                    </select>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td>Field Property<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                <td>
+                                    <select style="width:100%; " name="columnproperty" id="ColumnProperty">
+                                        <option value="0">Select Field Property</option>
+                                        <option value="1">Primary Key</option>
+                                        <option value="2">Forign Key</option>
+                                        <option value="3">ReadOnly</option>
+                                        <option value="4">Autocode</option>
+                                        <option value="5">Global Dropdown</option>
+                                        <option value="6">Password</option>
+                                        <option value="7">Input Reference Key</option>
+                                        <option value="8">Identity Increment</option>
+
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>Field Caption<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                <td> <input type="text" name="columndisplayname" value="" class="border-0" style="width:100%;" /></td>
+                            </tr>
+                            <tr>
+                                <td>Field Width<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                <td> <input type="text" name="columnwidth" value="" class="border-0" style="width:100%;" /></td>
+                            </tr>
+
+                            <tr>
+                                <td>Grid View?<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                <td> <input type="checkbox" name="ismoduleselect" value="1" class="border-0" style="width:100%;" /></td>
+
+                            </tr>
+
+                            <tr>
+                                <td>Insert<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                <td class="ml-2"> <input type="checkbox" name="isfvinsert" value="1" class="border-0" checked /></td>
+                            </tr>
+                            <tr>
+                                <td>Update<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                <td> <input type="checkbox" name="isfvupdate" value="1" class="border-0" style="width:100%;" checked /></td>
+
+                            </tr>
+
+                            <tr>
+                                <td>Edit after Approval?<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                <td> <input type="checkbox" name="isfvforceedit" value="1" class="border-0" style="width:100%;" checked /></td>
+                            </tr>
+                            <tr>
+                                <td>LOV View?<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                <td> <input type="checkbox" name="isforeigntable" value="1" class="border-0" style="width:100%;" /></td>
+                            </tr>
+
+                            <tr>
+                                <td>Global Variable<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                <td>
+                                    <select style="width:100%; " name="globalparamid">
+                                        <option value="0">Select Global Variable</option>
+
+
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Variable Method<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                <td>
+                                    <select style="width:100%; " name="globalparamvalue">
+                                        <option value="0">Select Variable Method</option>
+
+
+                                    </select>
+                                </td>
+                            </tr>
+
+
+
+
+                        </table>
+
+                    </div>
+                    <div class="col-md-6 ml-0 pl-0">
+                        <table class="ml-0 pl-0" style="width:98%;background-color:white; border:1px  solid #CCD5F0;  font-size:13px; color: black;" border="1" id="SM">
+
+
+                            <tr>
+                                <td>Row Position<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                <td> <input type="text" name="rowposition" value="" class="border-0" style="width:100%;" /></td>
+                            </tr>
+
+                            <tr>
+                                <td>Column Position<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                <td> <input type="text" name="colposition" value="" class="border-0" style="width:100%;" /></td>
+                            </tr>
+
+                            <tr>
+                                <td>Default Value<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                <td> <input type="text" name="defaultvalue" value="" class="border-0" style="width:100%;" /></td>
+                            </tr>
+                            <tr>
+                                <td>Grid Filter<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                <td>
+                                    <select style="width:100%; " name="filterby">
+                                        <option value="0">Select Variable Method</option>
+
+
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Date Lock Role<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                <td>
+                                    <select style="width:100%; " name="transpolicyid">
+                                        <option value="0">SelectDate Lock Role</option>
+
+
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>User Role<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                <td>
+                                    <select style="width:100%; " name="user_privilege">
+                                        <option value="0">Select User Role</option>
+
+
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Hyper Link Role<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                <td class="ml-2">
+                                    <select style="width:100%; " name="linktype">
+                                        <option value="0">Select Hyper Link Role</option>
+
+
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>Link Page<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                <td class="ml-2">
+                                    <select style="width:100%; " name="linkpageid">
+                                        <option value="0">Select Hyper Link Role</option>
+
+
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Link Grid<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                <td class="ml-2">
+                                    <select style="width:100%; " name="linktableid">
+                                        <option value="0">Select Hyper Link Role</option>
+
+
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Link Param(FK)<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                <td class="ml-2">
+                                    <select style="width:100%; " name="linkcolumnname">
+                                        <option value="0">Select Hyper Link Role</option>
+
+
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Report SL.<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                <td class="ml-2"> <input type="text" name="reportcolumn" value="" class="border-0" /></td>
+                            </tr>
+                            <tr>
+                                <td>Grid/Form SL.<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                <td class="ml-2"> <input type="text" name="slno" value="" class="border-0" /></td>
+                            </tr>
+                            <tr>
+                                <td>Column Id<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                <td class="ml-2"> <input type="text" name="columnid" value="" class="border-0" readonly /></td>
+                            </tr>
+                            <tr>
+                                <td>Active?<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                <td class="ml-2"> <input type="checkbox" name="isshow" value="1" class="border-0" checked /></td>
+                            </tr>
+                        </table>
+                        <!--<div class="row mb-2">
+                            <div class="col-md-12">-->
+                                @*<span  class="btn btn-sm  font-weight-bold " style="width:98%;height: 27px; background-color:#009933; color:white;">
+                                        <i class="fa fa-floppy-o" aria-hidden="true"></i> &nbsp Save
+                                    </span>*@
+                                <!--<a href="#" class="btn btn-sm font-weight-bold" style="width:98%;height: 27px; background-color:#009933; color:white;" onclick="SaveColumn()">Save</a>-->
+                                @*<input class="btn btn-sm font-weight-bold" style="width:98%;height: 27px; background-color:#009933; color:white;" type="submit" value="Save" />*@
+                            <!--</div>
+
+                        </div>-->
+
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="" style="margin-top: 152px; width: 99%; height: 40px; background-color: #CCD5F0; text-align:center;">
+                    <a href="#" class=" mt-1 btn btn-sm btn-success font-weight-bold " @*style="width:98%;height: 27px; background-color:#009933; color:white;"*@ onclick="SaveColumn()"> &nbsp &nbsp  <i class="fa fa-floppy-o" aria-hidden="true"></i> Save &nbsp &nbsp </a>
+                    <a class="ml-2 mt-1 text-white btn btn-danger btn-sm font-weight-bold" @*style="text-align:center"*@ href="#" onclick="CloseCreateColumn()">&nbsp &nbsp <i class="fa fa-times-circle"></i> Close &nbsp &nbsp</a>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4 " style="border:1px solid #CCD5F0; height:630px; overflow:auto;">
+                <div id="dropdown1">
+                    <div class="p-0 m-0 mt-2" style="width:99%; background-color:#003366"><span class=" font-weight-bold text-white ml-2" href="#">Dropdown</span>  <a href="#" style="float:right; color:white; margin-right: 21px;" onclick="Create('DD')"> <i class="fa fa-check" aria-hidden="true"></i></a> </div>
+                    @*<form method="post" action="/Submodule/Create" id="DD">*@
+
+                    <!--<input type="hidden" name="TableId" value="5" />-->
+                    @*<input type="hidden" name="hfpkid_@formelement[0].formid" id="hfpkid_@formelement[0].formid" value="0" />
+                        <input type="hidden" name="hffkid_@formelement[0].formid" id="hffkid_@formelement[0].formid" value="0" />*@
+                    <!--<input type="hidden" name="hfpkid" id="hfpkid" value="0" />
+                    <input type="hidden" name="hffkid" id="hffkid" value="0" />
+
+                    <input type="hidden" name="entry_user_id" id="entry_user_id" value="1" />
+                    <input type="hidden" name="entry_by" id="entry_by" value="Shabuj" />
+                    <input type="hidden" name="entry_date" id="entry_date" value="Getdate()" />
+                    <input type="hidden" name="update_by" id="update_by" value="Shabuj" />
+                    <input type="hidden" name="update_date" id="update_date" value="Getdate()" />
+
+                    <input type="hidden" name="is_approved" id="is_approved" value="0" />
+                    <input type="hidden" name="is_deleted" id="is_deleted" value="0" />
+                    <input type="hidden" name="is_cancel" id="is_cancel" value="0" />
+                    <input type="hidden" name="work_follow_position" id="work_follow_position" value="1" />-->
+                    <table class="ml-0 pl-0" style="width:99%;background-color:white; border:1px  solid #CCD5F0;  font-size:13px; color: black;" border="1">
+                        <tr>
+                            <td>Parent Dropdown <a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget "><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                            <td>
+                                <select name="parentcolumn" style="width:100%;">
+                                    <option value="0">Select Parent Column</option>
+                                </select>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>Data Source<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget.."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a> </td>
+                            <td>
+                                <select name="ddldatasource" style="width:100%;">
+                                    <option value="0">Select Parent Data Source</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Popup LOV Table <a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                            <td>
+                                <select name="lovtableid" style="width:100%;">
+                                    <option value="0">Select LOV</option>
+                                </select>
+                            </td>
+
+                        </tr>
+
+                        @*INSERT INTO utl_dynamic_table_column (columnid,tableid,columndisplayname,parentcolumn,ddldatasource,lovtableid,tablename,columnvalue,columntext,columntextexp,
+                            whereexpression,orderbyexpression,sqlexpression,slno,controltype,entry_user_id,is_active,*@
+                        <tr>
+                            <td>Dropdown Table <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                            <td class="ml-2">
+                                <select name="tablename" style="width:100%;">
+                                    <option value="0">Select Dropdown Table</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Value Column</td>
+                            <td>
+                                <select name="columnvalue" style="width:100%;">
+                                    <option value="0">Select Column value </option>
+                                </select>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>Text Column</td>
+                            <td>
+                                <select name="columntext" style="width:100%;">
+                                    <option value="0">Select Column Text</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Text Column (Expression)</td>
+                            <td> <input type="text" name="columntextexp" value="" class="border-0" style="width:100%;" /></td>
+                        </tr>
+                        <tr>
+                            <td>Where</td>
+                            <td> <input type="text" name="whereexpression" value="" class="border-0" style="width:100%;" /></td>
+                        </tr>
+                        <tr>
+                            <td>Order By</td>
+                            <td> <input type="text" name="orderbyexpression" value="" class="border-0" style="width:100%;" /></td>
+                        </tr>
+                        <tr>
+                            <td>Sql Expression</td>
+                            <td> <input type="text" name="sqlexpression" value="" class="border-0" style="width:100%;" /></td>
+                        </tr>
+
+
+                    </table>
+                    @*<div class="row mb-2">
+                            <div class="col-sm-4">
+
+                                <button type="submit" name="name" value="" class="btn btn-sm  mt-1 font-weight-bold " style="width:100%; background-color:#CCD5F0; color:black;"><i class="fa fa-check" aria-hidden="true"></i></button>
+                            </div>
+
+                        </div>*@
+
+
+                    @*</form>*@
+                </div>
+
+                <div id="inputvalidation">
+                    <div class="p-0 m-0 mt-2" style="width:99%; background-color:#006699"><span class=" font-weight-bold text-white ml-2 " href="#">Input Fields Validation</span><a href="#" style="float:right; color:white; margin-right: 21px;" onclick="Create('IFV')"> <i class="fa fa-check" aria-hidden="true"></i></a></div>
+                    @*<form method="post" action="" id="IFV">*@
+
+                    <!--<input type="hidden" name="TableId" value="10" />-->
+                    @*<input type="hidden" name="hfpkid_@formelement[0].formid" id="hfpkid_@formelement[0].formid" value="0" />
+                        <input type="hidden" name="hffkid_@formelement[0].formid" id="hffkid_@formelement[0].formid" value="0" />*@
+                    <!--<input type="hidden" name="hfpkid" id="hfpkid" value="0" />
+                    <input type="hidden" name="hffkid" id="hffkid" value="0" />
+
+                    <input type="hidden" name="entry_user_id" id="entry_user_id" value="1" />
+                    <input type="hidden" name="entry_by" id="entry_by" value="Shabuj" />
+                    <input type="hidden" name="entry_date" id="entry_date" value="Getdate()" />
+                    <input type="hidden" name="update_by" id="update_by" value="Shabuj" />
+                    <input type="hidden" name="update_date" id="update_date" value="Getdate()" />
+
+                    <input type="hidden" name="is_approved" id="is_approved" value="0" />
+                    <input type="hidden" name="is_deleted" id="is_deleted" value="0" />
+                    <input type="hidden" name="is_cancel" id="is_cancel" value="0" />
+                    <input type="hidden" name="work_follow_position" id="work_follow_position" value="1" />-->
+                    <table class="ml-0 pl-0" style="width:99%;background-color:white; border:1px  solid #CCD5F0;  font-size:13px; color: black;" border="1">
+
+                        @*//INSERT INTO utl_dynamic_validation_property (propertyid,tableid,columnid,operatorid,valueexpression,errormessage,isactive,
+                            //entry_user_id,entry_by,entry_date,is_active,is_approved,is_deleted,work_follow_position) values*@
+                        @*<tr>
+                                <td>Property Id<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget "><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                <td> <input type="text" name="propertyid" value="" class="border-0" style="width:100%; " readonly /></td>
+
+                            </tr>*@
+                        @*<tr>
+                                <td>Grid/Form<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget "><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                <td> <input type="text" name="tableid" value="" class="border-0" style="width:100%; " readonly /></td>
+
+                            </tr>
+
+                            <tr>
+                                <td>Field Name<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget "><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                <td> <input type="text" name="columnid" value="" class="border-0" style="width:100%; " readonly /></td>
+
+                            </tr>*@
+
+
+                        <tr>
+                            <td>Operator<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget.."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a> </td>
+                            <td>
+                                <select name="operatorid" style="width:100%;">
+                                    <option value="0">Select Operator</option>
+                                </select>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>Compare to Value <a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                            <td> <input type="text" name="valueexpression" value="" class="border-0" style="width:100%;" placeholder="Enter Page " /></td>
+
+                        </tr>
+                        <tr>
+                            <td>Error Message <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                            <td class="ml-2"> <input type="text" name="errormessage" value="" class="border-0" /></td>
+                        </tr>
+                        <tr>
+                            <td>Active <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                            <td class="ml-2"> <input type="checkbox" name="isactive" value="1" class="border-0" checked /></td>
+                        </tr>
+
+                    </table>
+
+
+                    @*</form>*@
+                </div>
+
+
+
+
+                <div id="gridfunction">
+                    <div class="p-0 m-0 mt-2" style="width:99%; background-color:#000000"><span class=" font-weight-bold text-white ml-2" href="#">Grid Functions</span> <a onclick="Create('GF')" href="#" style="float:right; color:white; margin-right: 21px;"> <i class="fa fa-check" aria-hidden="true"></i></a></div>
+                    @*   <form method="post" action="/Submodule/Create" id="GF">*@
+                    @*<input type="hidden" name="TableId" value="6" />*@
+
+                    @*<input type="hidden" name="hfpkid_@formelement[0].formid" id="hfpkid_@formelement[0].formid" value="0" />
+                        <input type="hidden" name="hffkid_@formelement[0].formid" id="hffkid_@formelement[0].formid" value="0" />*@
+                    @*<input type="hidden" name="hfpkid" id="hfpkid" value="0" />
+                        <input type="hidden" name="hffkid" id="hffkid" value="0" />
+
+                        <input type="hidden" name="entry_user_id" id="entry_user_id" value="1" />
+                        <input type="hidden" name="entry_by" id="entry_by" value="Shabuj" />
+                        <input type="hidden" name="entry_date" id="entry_date" value="Getdate()" />
+                        <input type="hidden" name="update_by" id="update_by" value="Shabuj" />
+                        <input type="hidden" name="update_date" id="update_date" value="Getdate()" />
+
+                        <input type="hidden" name="is_approved" id="is_approved" value="0" />
+                        <input type="hidden" name="is_deleted" id="is_deleted" value="0" />
+                        <input type="hidden" name="is_cancel" id="is_cancel" value="0" />
+                        <input type="hidden" name="work_follow_position" id="work_follow_position" value="1" />*@
+                    <table class="ml-0 pl-0" style="width:99%;background-color:white; border:1px  solid #CCD5F0;  font-size:13px; color: black;" border="1">
+                        @*<tr>
+                                <td>Function Fielde<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget "><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                <td> <input type="text" name="name" value="" class="border-0" style="width:100%; " readonly /></td>
+
+                            </tr>*@
+                        @*<tr>
+                                <td>Id	<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget "><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                <td> <input type="text" name="name" value="" class="border-0" style="width:100%; " readonly /></td>
+
+                            </tr>*@
+                        @* INSERT INTO utl_dynamic_table_function (tablefunctionid,tableid,columnname,aggregatefunction,evaluatevalue,effectcolumn,isdatashort,isdescending,slno,*@
+                        <tr>
+                            <td>Aggregate Function<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget.."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a> </td>
+                            <td>
+                                <select name="aggregatefunction" style="width:100%;">
+                                    <option value="0">Select  Function</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Evaluate Expression <a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                            <td> <input type="text" name="evaluatevalue" value="" class="border-0" style="width:100%;" /></td>
+
+                        </tr>
+                        <tr>
+                            <td>Effect Field <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                            <td class="ml-2"> <input type="text" name="effectcolumn" value="" class="border-0" /></td>
+                        </tr>
+                        <tr>
+                            <td>Data Short <a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                            <td> <input type="checkbox" name="isdatashort" value="1" class="border-0" style="width:100%;" /></td>
+
+                        </tr>
+                        <tr>
+                            <td>Descending <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                            <td class="ml-2"> <input type="checkbox" name="isdescending" value="" class="border-0" /></td>
+                        </tr>
+                        @*<tr>
+                                <td> Sl No<a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                <td class="ml-2"> <input type="checkbox" name="name" value="" class="border-0" /></td>
+                            </tr>*@
+                        <tr>
+                            <td>Active? <a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                            <td> <input type="checkbox" name="is_active" value="1" class="border-0" style="width:100%;" checked /></td>
+
+                        </tr>
+
+
+
+                    </table>
+
+
+                    @*</form>*@
+                </div>
+
+
+
+                <div id="imageproperty">
+                    <div class="p-0 m-0 mt-1" style="width:99%; background-color:#990000"><span class=" font-weight-bold text-white ml-2" href="#">Image Property</span> <a onclick="Create('Img')" href="#" style="float:right; color:white; margin-right: 21px;"> <i class="fa fa-check" aria-hidden="true"></i></a></div>
+                    @*<form method="post" action="/Submodule/Create" id="Img" enctype="multipart/form-data">*@
+                    <!--<input type="hidden" name="TableId" value="37" />-->
+                    @*<input type="hidden" name="hfpkid_@formelement[0].formid" id="hfpkid_@formelement[0].formid" value="0" />
+                        <input type="hidden" name="hffkid_@formelement[0].formid" id="hffkid_@formelement[0].formid" value="0" />*@
+                    <!--<input type="hidden" name="hfpkid" id="hfpkid" value="0" />
+                    <input type="hidden" name="hffkid" id="hffkid" value="0" />
+
+                    <input type="hidden" name="entry_user_id" id="entry_user_id" value="1" />
+                    <input type="hidden" name="entry_by" id="entry_by" value="Shabuj" />
+                    <input type="hidden" name="entry_date" id="entry_date" value="Getdate()" />
+                    <input type="hidden" name="update_by" id="update_by" value="Shabuj" />
+                    <input type="hidden" name="update_date" id="update_date" value="Getdate()" />
+
+                    <input type="hidden" name="is_approved" id="is_approved" value="0" />
+                    <input type="hidden" name="is_deleted" id="is_deleted" value="0" />
+                    <input type="hidden" name="is_cancel" id="is_cancel" value="0" />
+                    <input type="hidden" name="work_follow_position" id="work_follow_position" value="1" />-->
+                    <table class="ml-0 pl-0" style="width:99%;background-color:white; border:1px  solid #CCD5F0;  font-size:13px; color: black;" border="1">
+
+                        <tr>
+                            <td>Image Id<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget "><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                            <td> <input type="text" name="image_id" value="" class="border-0" style="width:100%; " readonly /></td>
+
+                        </tr>
+
+                        <tr>
+                            <td>Upload Image<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget.."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a> </td>
+                            <td>
+                                <input type="file" name="image" value="upload Image" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Image Height<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget.."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a> </td>
+                            <td> <input type="text" name="image_height" value="" class="border-0" style="width:100%; " /></td>
+                        </tr>
+                        <tr>
+                            <td>Image Width <a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                            <td> <input type="text" name="image_width" value="" class="border-0" style="width:100%;" /></td>
+
+                        </tr>
+                        <tr>
+                            <td>Active? <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                            <td class="ml-2"> <input type="checkbox" name="isactive" value="1" class="border-0" checked /></td>
+                        </tr>
+
+                    </table>
+
+
+                    @* </form>*@
+                </div>
+
+            </div>
+        </div>
+        @*<div class="row mt-2" >
+                <div class="col-md-8">
+                    <div class="" style="width:100%; height:40px; background-color:#CCD5F0">
+
+                        <a class="ml-2 mt-1 text-white btn btn-danger btn-sm " style="text-align:center" href="#" onclick="CloseCreateColumn()">&nbsp &nbsp Close Create Page &nbsp &nbsp</a>
+
+                    </div>
+                </div>
+            </div>*@
+        </form>
+</div>
+
+
+
+
+
+<script>
+
+
+
+    $('#SM td').click(function () {
+        $('#SM tr').css({ "background-color": "white", "color": "black" });
+        $(this).parent().css({ "background-color": "#0066ff", "color": "white" });
+        //$(this).parent().css("background-color", "green");
+
+
+
+
+    });
+    
+    function CreateSubModuleIcon() {
+
+        if ($('#CreateSubModuleIcon').hasClass("fa fa-caret-down")) {
+            $('#CreateSubModuleIcon').removeClass("fa fa-caret-down").addClass("fa fa-caret-right").ready(function () {
+                $('#CreateSm').hide();
+            });
+        }
+        else {
+            $('#CreateSubModuleIcon').removeClass("fa fa-caret-right").addClass("fa fa-caret-down").ready(function () {
+                $('#CreateSm').show();
+            });
+        }
+    }
+
+
+      
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+

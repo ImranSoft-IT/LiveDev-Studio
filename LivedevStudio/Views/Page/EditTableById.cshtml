@@ -1,0 +1,523 @@
+﻿@using System.Data
+@model DataSet
+
+<style>
+    input {
+        outline: none;
+    }
+
+    #SM tr td:first-child {
+        padding-left: 6px;
+        width: 50%;
+    }
+
+
+    select {
+        outline: none;
+    }
+</style>
+
+
+
+
+
+<div id="HideCreateTable">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="ml-0 mt-2" style="width:99%; background-color:#CCD5F0"><a class="ml-1 font-weight-bold text-dark" href="#">Edit Table</a> </div>
+            <div class=" " id="CreateSm">
+
+                <form method="post" action="" id="ET">
+
+                    <input type="hidden" name="TableIds" value="2" />
+                    
+                    <input type="hidden" name="hfpkid" id="hfpkid" value="0" />
+                    <input type="hidden" name="hffkid" id="hffkid" value="0" />
+
+                    <input type="hidden" name="update_by" id="update_by" value="Shabuj" />
+                    <input type="hidden" name="update_date" id="update_date" value="Getdate()" />
+
+                    <input type="hidden" name="is_approved" id="is_approved" value="0" />
+                    <input type="hidden" name="is_deleted" id="is_deleted" value="0" />
+                    <input type="hidden" name="is_cancel" id="is_cancel" value="0" />
+                    <input type="hidden" name="work_follow_position" id="work_follow_position" value="1" />
+
+                    @*INSERT INTO utl_dynamic_table (tableid,moduleid,parenttableid,moduletablecaption,tablecaption,templatetype,tablename,existingtableid,foreigntableid,
+        externaldatafilter,externaldatacaption,modulewidth,positionexp,rowposition,colposition,isreadonly,isworkfollow,formwidth,procedurename,objecttype,
+        procfireontrans,procedurecaption,refreshtype,isautotoggle,reportprocedurename,rptprocforworksheet,reportfilename,procedurevalidation,
+        procfooterview,procfooterdml,showonreport,slno,*@
+
+                    @{
+
+                        var ParentTableList = ViewBag.ParentTableList;
+                        var procedureName = ViewBag.DbProcedureLists;
+
+                    }
+
+                    <div class="row">
+
+
+
+                        @{
+                            var tableList = ViewBag.EditTable;
+                        }
+                        @foreach (DataRow t in tableList.Tables[0].Rows)
+                        {
+                            <div class="col-md-6  mr-0 pr-0">
+
+                                <table style="width:99%;background-color:white; border:1px  solid #CCD5F0;  font-size:13px; color: black;" border="1" id="SM">
+
+                                    <tr>
+                                        <td>Table Id <a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget "><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                        <td> <input type="text" name="tableid" value="@t["TableId"]" class="border-0" style="width:100%; " readonly /></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>Page Name<a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget.."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a> </td>
+                                        <td> @t["ModuleCaption"]<input type="hidden" name="moduleid" value="@t["ModuleId"]" class="border-0" style="width:100%; " placeholder=" " /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Parent Grid/Form<a style="color:white;background-color:black;width:100%;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                        <td>
+
+                                            <input type="hidden" name="name" value=@t["ParentTableId"] id="ptid" />
+                                            <select style="width:100%; " name="parenttableid" id="parenttableid" class="edit-parent-table" onmouseover="SearchableDropdown('edit-parent-table')">
+                                                <option value="0">Select Module</option>
+                                                @foreach (DataRow p in ParentTableList.Tables[0].Rows)
+                                                {
+                                                    <option value="@p["TableId"]"> @p["TableCaption"] </option>
+                                                }
+                                            </select>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <td>Grid/Form Name <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                        <td class="ml-2"> <input type="text" name="moduletablecaption" value="@t["ModuleTableCaption"]" class="border-0" style="width:100%;" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Caption</td>
+                                        <td> <input type="text" name="tablecaption" value="@t["TableCaption"]" class="border-0" style="width:100%;" /></td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <td>Template</td>
+                                        <td>
+
+                                            <input type="hidden" name="name" value=@t["TemplateType"] id="temptype" />
+                                            <select style="width:100%; " name="templatetype" id="templatetype" class="edit-tem-type" onmouseover="SearchableDropdown('edit-tem-type')">
+                                                <option value="0"> Select Template </option>
+                                                <option value="login">Log In</option>
+                                                <option value="trans">DML</option>
+                                                <option value="process">Process</option>
+                                                <option value="view">View</option>
+                                                <option value="edit">Edit</option>
+                                                <option value="param">Report Param</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>DB Table Name</td>
+                                        <td>
+                                            @{
+                                                var tn = ViewBag.DbTableList;
+
+                                            }
+                                            <input type="hidden" name="name" value=@t["TableName"] id="tabname" />
+                                            <select style="width:100%; " name="tablename" id="tablename" class="edit-db-table" onmouseover="SearchableDropdown('edit-db-table')">
+                                                <option value="0">Select DB Table</option>
+                                                @foreach (DataRow t1 in tn.Tables[0].Rows)
+                                                {
+                                                    <option value="@t1["DataField"]"> @t1["DataText"] </option>
+                                                }
+
+
+                                            </select>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Copy Grid/Form</td>
+                                        <td>
+
+                                            <input type="hidden" name="name" value=@t["ExistingTableId"] id="extab" />
+                                            <select style="width:100%; " name="existingtableid" class="edit-copy-table" onmouseover="SearchableDropdown('edit-copy-table')">
+                                                <option value="0">Select Table</option>
+                                                @foreach (DataRow ptl in ParentTableList.Tables[0].Rows)
+                                                {
+                                                    <option value="@ptl["TableId"]"> @ptl["TableCaption"] </option>
+                                                }
+
+                                            </select>
+                                        </td>
+
+                                    </tr>
+
+
+                                    <tr>
+                                        <td>Flat LOV Grid View</td>
+                                        <td class="ml-2">
+
+                                            <input type="hidden" name="name" value=@t["ForeignTableId"] id="ftab" />
+                                            <select style="width:100%; " name="foreigntableid" class="edit-lov-table" onmouseover="SearchableDropdown('edit-lov-table')">
+                                                <option value="0">Select Table</option>
+                                                @foreach (DataRow p in ParentTableList.Tables[0].Rows)
+                                                {
+                                                    <option value="@p["TableId"]"> @p["TableCaption"] </option>
+                                                }
+
+                                            </select>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>LOV Filter (Expression)</td>
+                                        <td> <input type="text" name="externaldatafilter" value="@t["ExternalDataFilter"]" class="border-0" style="width:100%;" /></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>LOV Caption</td>
+                                        <td> <input type="text" name="externaldatacaption" value="@t["ExternalDataCaption"]" class="border-0" style="width:100%;" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Grid Width</td>
+                                        <td> <input type="text" name="modulewidth" value="@t["ModuleWidth"]" class="border-0" style="width:100%;" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Module Height </td>
+                                        <td> <input type="text" name="moduleheight" value="@t["ModuleHeight"]" class="border-0" style="width:100%;" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Position Expression</td>
+                                        <td> <input type="text" name="positionexp" value="@t["PositionExp"]" class="border-0" style="width:100%;" /></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>Page Row</td>
+                                        <td class="ml-2"> <input type="text" name="rowposition" value="@t["RowPosition"]" class="border-0" style="width:100%;" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Page Column</td>
+                                        <td> <input type="text" name="colposition" value="@t["ColPosition"]" class="border-0" style="width:100%;" /></td>
+
+                                    </tr>
+
+
+
+
+
+                                </table>
+                            </div>
+                            <div class="col-md-6 ml-0 pl-0">
+                                <table style="width:98%;background-color:white; border:1px  solid #CCD5F0;  font-size:13px; color: black;" border="1" id="SM">
+
+                                    <tr>
+                                        <td>View Only</td>
+
+                                        @if (Convert.ToBoolean(t["IsReadOnly"]))
+                                        {
+
+                                            <td> <input type="checkbox" name="isreadonly" value="1" class="border-0" style="width:100%;" checked /></td>
+                                        }
+                                        else
+                                        {
+                                            <td> <input type="checkbox" name="isreadonly" value="1" class="border-0" style="width:100%;" /></td>
+                                        }
+
+
+                                    </tr>
+                                    <tr>
+                                        <td>Approval Required?</td>
+
+
+
+                                        @if (Convert.ToBoolean(t["IsWorkFollow"]))
+                                        {
+
+                                            <td> <input type="checkbox" name="isworkfollow" value="1" class="border-0" style="width:100%;" checked /></td>
+                                        }
+                                        else
+                                        {
+                                            <td> <input type="checkbox" name="isworkfollow" value="1" class="border-0" style="width:100%;" /></td>
+                                        }
+                                    </tr>
+                                    <tr>
+                                        <td>Form Width</td>
+                                        <td> <input type="text" name="formwidth" value="@t["FormWidth"]" class="border-0" style="width:100%;" /></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>Trigger</td>
+                                        <td class="ml-2">
+
+                                            <input type="hidden" name="name" value=@t["ProcedureName"] id="pn" />
+                                            <select style="width:100%; " name="procedurename" id="procedurename" class="edittrigger" onmouseover="SearchableDropdown('edittrigger')">
+                                                <option value="0">Select Procedure</option>
+                                                @foreach (DataRow proName in procedureName.Tables[0].Rows)
+                                                {
+                                                    <option value="@proName["DataField"]"> @proName["DataText"] </option>
+                                                }
+
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Auto Fire</td>
+
+                                        @if (Convert.ToBoolean(t["ProcFireOnTrans"]))
+                                        {
+
+                                            <td> <input type="checkbox" name="objecttype" value="1" class="border-0" style="width:100%;" checked /></td>
+                                        }
+                                        else
+                                        {
+                                            <td> <input type="checkbox" name="objecttype" value="1" class="border-0" style="width:100%;" /></td>
+                                        }
+
+                                    </tr>
+                                    <tr>
+                                        <td>Trigger Name</td>
+                                        <td> <input type="text" name="procedurecaption" value="@t["ProcedureCaption"]" class="border-0" style="width:100%;" /></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Refresh Type</td>
+                                        <td class="ml-2">
+
+
+                                            <input type="hidden" name="name" value=@t["RefreshType"] id="rtype" />
+                                            <select style="width:100%; " name="refreshtype" id="refreshtype" class="edit-refresh" onmouseover="SearchableDropdown('edit-refresh')">
+                                                <option value="0">Select Table</option>
+                                                <option value="1">Child DML </option>
+                                                <option value="2">Any DML</option>
+
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Auto Toggle</td>
+
+                                        @if (Convert.ToBoolean(t["IsAutoToggle"]))
+                                        {
+
+                                            <td> <input type="checkbox" name="isautotoggle" value="1" class="border-0" style="width:100%;" checked /></td>
+                                        }
+                                        else
+                                        {
+                                            <td> <input type="checkbox" name="isautotoggle" value="1" class="border-0" style="width:100%;" /></td>
+                                        }
+
+                                    </tr>
+
+                                    <tr>
+                                        <td>Report Source</td>
+                                        <td class="ml-2">
+
+                                            <input type="hidden" name="name" value=@t["ReportProcedureName"] id="rpn" />
+                                            <select style="width:100%; " name="reportprocedurename" class="edit-report-source" onmouseover="SearchableDropdown('edit-report-source')">
+                                                <option value="0">Select Table</option>
+                                                @foreach (DataRow proName in procedureName.Tables[0].Rows)
+                                                {
+                                                    <option value="@proName["DataField"]"> @proName["DataText"] </option>
+                                                }
+
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td> Grid View</td>
+                                        @if (Convert.ToBoolean(t["RptProcForWorksheet"]))
+                                        {
+
+                                            <td> <input type="checkbox" name="rptprocforworksheet" value="1" class="border-0" style="width:100%;" checked /></td>
+                                        }
+                                        else
+                                        {
+                                            <td> <input type="checkbox" name="rptprocforworksheet" value="1" class="border-0" style="width:100%;" /></td>
+                                        }
+
+                                    </tr>
+                                    <tr>
+                                        <td>Crystal Report</td>
+                                        <td class="ml-2"> <input type="text" name="reportfilename" value="@t["ReportFileName"]" class="border-0" style="width:100%;" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Validation Source (Procedure)</td>
+                                        <td class="ml-2"> <input type="text" name="procedurevalidation" value="@t["ProcedureValidation"]" class="border-0" style="width:100%;" /></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Batch DML Source</td>
+                                        <td class="ml-2">
+
+                                            <input type="hidden" name="name" value=@t["ProcFooterView"] id="bds" />
+                                            <select style="width:100%; " name="procfooterview" id="procfooterview" class="edit-batch-dml" onmouseover="SearchableDropdown('edit-batch-dml')">
+                                                <option value="0">Select Table</option>
+                                                @foreach (DataRow proName in procedureName.Tables[0].Rows)
+                                                {
+                                                    <option value="@proName["DataField"]"> @proName["DataText"] </option>
+                                                }
+
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Data Import Source</td>
+                                        <td class="ml-2">
+
+                                            <input type="hidden" name="name" value=@t["ProcFooterDml"] id="bis" />
+                                            <select style="width:100%; " name="procfooterdml" id="procfooterdml" class="edit-data-import-source" onmouseover="SearchableDropdown('edit-data-import-source')">
+                                                <option value="0">Select Table</option>
+                                                @foreach (DataRow proName in procedureName.Tables[0].Rows)
+                                                {
+                                                    <option value="@proName["DataField"]"> @proName["DataText"] </option>
+                                                }
+
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Include Report</td>
+                                        @if (Convert.ToBoolean(t["ShowOnReport"]))
+                                        {
+
+                                            <td> <input type="checkbox" name="showonreport" value="1" class="border-0" style="width:100%;" checked /></td>
+                                        }
+                                        else
+                                        {
+                                            <td> <input type="checkbox" name="showonreport" value="1" class="border-0" style="width:100%;" /></td>
+                                        }
+
+
+                                    </tr>
+                                    <tr>
+                                        <td>SL No.</td>
+                                        <td class="ml-2"> <input type="text" name="slno" value="@t["SlNo"]" class="border-0" style="width:100%;" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Active</td>
+                                        @if (Convert.ToBoolean(t["Is_Active"]))
+                                        {
+
+                                            <td> <input type="checkbox" name="is_active" value="1" class="border-0" style="width:100%;" checked /></td>
+                                        }
+                                        else
+                                        {
+                                            <td> <input type="checkbox" name="is_active" value="1" class="border-0" style="width:100%;" /></td>
+                                        }
+                                    
+                                    </tr>
+
+                                </table>
+
+                            </div>
+                        }
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <a href="#" class="btn btn-sm  mt-1 font-weight-bold btn-success" style="width:100%;  color:white;" onclick="UpdateTable('ET')">Update</a>
+                         
+                        </div>
+
+                    </div>
+
+                </form>
+
+
+            </div>
+            <div class="" style="margin-top: 152px; width: 99%; height: 40px; background-color: #CCD5F0; text-align:center;">
+
+                <a class="ml-2 mt-1 text-white btn btn-danger btn-sm font-weight-bold" style="text-align:center" href="#" onclick="CloseEditTable()">&nbsp &nbsp <i class="fa fa-times-circle"></i> Close All &nbsp &nbsp</a>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<script>
+
+
+
+    $(document).ready(function () {
+
+        var ptid = $('#ptid').val();
+        $('#parenttableid option[value=' + ptid + ']').attr("selected", "selected");
+                        
+        var tt = $('#temptype').val();
+        $('#templatetype option[value=' + tt + ']').attr("selected", "selected");
+
+        var tabnam = $('#tabname').val();
+        $('#tablename option[value=' + tabnam + ']').attr("selected", "selected");
+
+        var extab = $('#extabid').val();
+        $('#existingtableid option[value=' + extab + ']').attr("selected", "selected");
+
+        var extab = $('#ftab').val();
+        $('#foreigntableid option[value=' + extab + ']').attr("selected", "selected");
+        
+        var pname = $('#pn').val();
+        $('#procedurename option[value=' + pname + ']').attr("selected", "selected");
+        refreshtype
+        var rtype = $('#rtype').val();
+        $('#refreshtype option[value=' + rtype + ']').attr("selected", "selected");
+
+        var rpn = $('#rpn').val();
+        $('#reportprocedurename option[value=' + rpn + ']').attr("selected", "selected");
+        
+        var bds = $('#bds').val();
+        $('#procfooterview option[value=' + bds + ']').attr("selected", "selected");
+
+        var bis = $('#bis').val();
+        $('#procfooterdml option[value=' + bis + ']').attr("selected", "selected");
+        
+
+        });
+
+
+
+    $('#SM td').click(function () {
+        $('#SM tr').css({ "background-color": "white", "color": "black" });
+        $(this).parent().css({ "background-color": "#0066ff", "color": "white" });
+        //$(this).parent().css("background-color", "green");
+
+
+
+
+    });
+
+    function CreateSubModuleIcon() {
+
+        if ($('#CreateSubModuleIcon').hasClass("fa fa-caret-down")) {
+            $('#CreateSubModuleIcon').removeClass("fa fa-caret-down").addClass("fa fa-caret-right").ready(function () {
+                $('#CreateSm').hide();
+            });
+        }
+        else {
+            $('#CreateSubModuleIcon').removeClass("fa fa-caret-right").addClass("fa fa-caret-down").ready(function () {
+                $('#CreateSm').show();
+            });
+        }
+    }
+
+
+        //$('#SM tr td:last-child').click(function () {
+        //    $('#SM td:first-child').css("background-color", "green");
+
+        //});
+
+</script>
+
+

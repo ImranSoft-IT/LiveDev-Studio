@@ -1,0 +1,143 @@
+﻿@using System.Data
+@model DataSet
+
+@{
+    var trigger = ViewBag.EditTrigger;
+}
+
+<form method="post" action="" id="edittrigger">
+    
+    <input type="hidden" name="hfpkid" id="hfpkid" value="0" />
+    <input type="hidden" name="hffkid" id="hffkid" value="0" />
+
+    
+    <input type="hidden" name="update_by" id="update_by" value="Imran" />
+    <input type="hidden" name="update_date" id="update_date" value="Getdate()" />
+
+    <input type="hidden" name="is_approved" id="is_approved" value="0" />
+    <input type="hidden" name="is_deleted" id="is_deleted" value="0" />
+    <input type="hidden" name="is_cancel" id="is_cancel" value="0" />
+    <input type="hidden" name="work_follow_position" id="work_follow_position" value="1" />
+    @*<input type="hidden" name="TableIds" value="21" />*@
+    <input type="hidden" name="triggerid" value="@ViewBag.TriggerId" />
+
+    <table class="ml-0 pl-0" style="width:99%;background-color:white; border:1px  solid #CCD5F0;  font-size:13px; color: black;" border="1">
+
+        @foreach (DataRow tg in trigger.Tables[0].Rows)
+        {
+
+            <tr>
+                <td>Table Id <a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget "><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                <td> <input type="text" name="tableid" value="@ViewBag.TableId" class="border-0" style="width:100%; outline:none;" readonly /></td>
+            </tr>
+
+            <tr>
+                <td>Trigger Type <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                <td class="ml-2">
+                    <select name="TriggerTypeId" class="border-0" style="width:100%;outline:none;">
+                        @if (tg["TriggerTypeId"].ToString() == "1")
+                        {
+                            <option value="0"></option>
+                            <option value="1" selected>Trigger</option>
+                            <option value="2">DML Validation</option>
+                            <option value="3">Batch DML</option>
+                            <option value="4">Data Import</option>
+                            <option value="5">HTML Report</option>
+                            <option value="6">Crystal Report</option>
+                        }
+                        else if (tg["TriggerTypeId"].ToString() == "2")
+                        {
+                            <option value="0"></option>
+                            <option value="1">Trigger</option>
+                            <option value="2" selected>DML Validation</option>
+                            <option value="3">Batch DML</option>
+                            <option value="4">Data Import</option>
+                            <option value="5">HTML Report</option>
+                            <option value="6">Crystal Report</option>
+                        }
+                        else if (tg["TriggerTypeId"].ToString() == "3")
+                        {
+                            <option value="0"></option>
+                            <option value="1">Trigger</option>
+                            <option value="2">DML Validation</option>
+                            <option value="3" selected>Batch DML</option>
+                            <option value="4">Data Import</option>
+                            <option value="5">HTML Report</option>
+                            <option value="6">Crystal Report</option>
+                        }
+                        else if (tg["TriggerTypeId"].ToString() == "4")
+                        {
+                            <option value="0"></option>
+                            <option value="1">Trigger</option>
+                            <option value="2">DML Validation</option>
+                            <option value="3">Batch DML</option>
+                            <option value="4" selected>Data Import</option>
+                            <option value="5">HTML Report</option>
+                            <option value="6">Crystal Report</option>
+                        }
+                        else if (tg["TriggerTypeId"].ToString() == "5")
+                        {
+                            <option value="0"></option>
+                            <option value="1">Trigger</option>
+                            <option value="2">DML Validation</option>
+                            <option value="3">Batch DML</option>
+                            <option value="4">Data Import</option>
+                            <option value="5" selected>HTML Report</option>
+                            <option value="6">Crystal Report</option>
+                        }
+                        else if (tg["TriggerTypeId"].ToString() == "6")
+                        {
+                            <option value="0"></option>
+                            <option value="1">Trigger</option>
+                            <option value="2">DML Validation</option>
+                            <option value="3">Batch DML</option>
+                            <option value="4">Data Import</option>
+                            <option value="5">HTML Report</option>
+                            <option value="6" selected>Crystal Report</option>
+                        }
+                        else
+                        {
+                            <option value="0" selected></option>
+                            <option value="1">Trigger</option>
+                            <option value="2">DML Validation</option>
+                            <option value="3">Batch DML</option>
+                            <option value="4">Data Import</option>
+                            <option value="5">HTML Report</option>
+                            <option value="6">Crystal Report</option>
+                        }
+
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Trigger Caption <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                <td> <input type="text" name="TriggerCaption" value="@tg["TriggerCaption"]" class="border-0" style="width:100%;outline:none;" /></td>
+            </tr>
+            <tr>
+                <td>Source <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                <td> <input type="text" name="TriggerName" value="@tg["TriggerName"]" class="border-0" style="width:100%;outline:none;" /></td>
+
+            </tr>
+            <tr>
+                <td>AutoExecute? <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                <td>
+                    @if (Convert.ToBoolean(tg["IsAutoExecute"]))
+                    {
+                        <input type="checkbox" name="IsAutoExecute" value="1" class="border-0" style="width:100%;" checked />
+                    }
+                    else
+                    {
+                        <input type="checkbox" name="IsAutoExecute" value="1" class="border-0" style="width:100%;" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>SL. <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                <td> <input type="text" name="SlNo" value="@tg["SlNo"]" class="border-0" style="width:100%;outline:none;" /></td>
+            </tr>
+
+        }
+
+
+    </table>
+</form>

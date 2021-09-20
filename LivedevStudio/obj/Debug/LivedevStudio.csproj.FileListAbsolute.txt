@@ -1,0 +1,224 @@
+F:\Shabuj07\LivedevStudio\bin\LivedevStudio.dll.config
+F:\Shabuj07\LivedevStudio\bin\LivedevStudio.dll
+F:\Shabuj07\LivedevStudio\bin\LivedevStudio.pdb
+F:\Shabuj07\LivedevStudio\bin\roslyn\csc.exe
+F:\Shabuj07\LivedevStudio\bin\roslyn\csc.exe.config
+F:\Shabuj07\LivedevStudio\bin\roslyn\csc.rsp
+F:\Shabuj07\LivedevStudio\bin\roslyn\csi.exe
+F:\Shabuj07\LivedevStudio\bin\roslyn\csi.exe.config
+F:\Shabuj07\LivedevStudio\bin\roslyn\csi.rsp
+F:\Shabuj07\LivedevStudio\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\Microsoft.CodeAnalysis.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\Microsoft.CSharp.Core.targets
+F:\Shabuj07\LivedevStudio\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\Microsoft.Managed.Core.targets
+F:\Shabuj07\LivedevStudio\bin\roslyn\Microsoft.VisualBasic.Core.targets
+F:\Shabuj07\LivedevStudio\bin\roslyn\Microsoft.Win32.Primitives.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\System.AppContext.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\System.Collections.Immutable.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\System.Console.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\System.Diagnostics.StackTrace.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\System.Globalization.Calendars.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\System.IO.Compression.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\System.IO.Compression.ZipFile.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\System.IO.FileSystem.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\System.IO.FileSystem.Primitives.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\System.Net.Sockets.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\System.Reflection.Metadata.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\System.Security.Cryptography.Encoding.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\System.Security.Cryptography.Primitives.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\System.Text.Encoding.CodePages.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\System.Threading.Tasks.Extensions.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\System.ValueTuple.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\System.Xml.ReaderWriter.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\System.Xml.XmlDocument.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\System.Xml.XPath.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\System.Xml.XPath.XDocument.dll
+F:\Shabuj07\LivedevStudio\bin\roslyn\vbc.exe
+F:\Shabuj07\LivedevStudio\bin\roslyn\vbc.exe.config
+F:\Shabuj07\LivedevStudio\bin\roslyn\vbc.rsp
+F:\Shabuj07\LivedevStudio\bin\roslyn\VBCSCompiler.exe
+F:\Shabuj07\LivedevStudio\bin\roslyn\VBCSCompiler.exe.config
+F:\Shabuj07\LivedevStudio\obj\Debug\LivedevStudio.csproj.CoreCompileInputs.cache
+F:\Shabuj07\LivedevStudio\obj\Debug\LivedevStudio.csproj.CopyComplete
+F:\Shabuj07\LivedevStudio\obj\Debug\LivedevStudio.dll
+F:\Shabuj07\LivedevStudio\obj\Debug\LivedevStudio.pdb
+F:\Shabuj07\LivedevStudio\obj\Debug\LivedevStudio.csprojAssemblyReference.cache
+D:\IDE\LivedevStudio\bin\LivedevStudio.dll.config
+D:\IDE\LivedevStudio\bin\LivedevStudio.dll
+D:\IDE\LivedevStudio\bin\LivedevStudio.pdb
+D:\IDE\LivedevStudio\bin\roslyn\csc.exe
+D:\IDE\LivedevStudio\bin\roslyn\csc.exe.config
+D:\IDE\LivedevStudio\bin\roslyn\csc.rsp
+D:\IDE\LivedevStudio\bin\roslyn\csi.exe
+D:\IDE\LivedevStudio\bin\roslyn\csi.exe.config
+D:\IDE\LivedevStudio\bin\roslyn\csi.rsp
+D:\IDE\LivedevStudio\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\IDE\LivedevStudio\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\IDE\LivedevStudio\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\IDE\LivedevStudio\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\IDE\LivedevStudio\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\IDE\LivedevStudio\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\IDE\LivedevStudio\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\IDE\LivedevStudio\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\IDE\LivedevStudio\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\IDE\LivedevStudio\bin\roslyn\Microsoft.Managed.Core.targets
+D:\IDE\LivedevStudio\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\IDE\LivedevStudio\bin\roslyn\Microsoft.Win32.Primitives.dll
+D:\IDE\LivedevStudio\bin\roslyn\System.AppContext.dll
+D:\IDE\LivedevStudio\bin\roslyn\System.Collections.Immutable.dll
+D:\IDE\LivedevStudio\bin\roslyn\System.Console.dll
+D:\IDE\LivedevStudio\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+D:\IDE\LivedevStudio\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+D:\IDE\LivedevStudio\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\IDE\LivedevStudio\bin\roslyn\System.Globalization.Calendars.dll
+D:\IDE\LivedevStudio\bin\roslyn\System.IO.Compression.dll
+D:\IDE\LivedevStudio\bin\roslyn\System.IO.Compression.ZipFile.dll
+D:\IDE\LivedevStudio\bin\roslyn\System.IO.FileSystem.dll
+D:\IDE\LivedevStudio\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\IDE\LivedevStudio\bin\roslyn\System.Net.Sockets.dll
+D:\IDE\LivedevStudio\bin\roslyn\System.Reflection.Metadata.dll
+D:\IDE\LivedevStudio\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\IDE\LivedevStudio\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+D:\IDE\LivedevStudio\bin\roslyn\System.Security.Cryptography.Encoding.dll
+D:\IDE\LivedevStudio\bin\roslyn\System.Security.Cryptography.Primitives.dll
+D:\IDE\LivedevStudio\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+D:\IDE\LivedevStudio\bin\roslyn\System.Text.Encoding.CodePages.dll
+D:\IDE\LivedevStudio\bin\roslyn\System.Threading.Tasks.Extensions.dll
+D:\IDE\LivedevStudio\bin\roslyn\System.ValueTuple.dll
+D:\IDE\LivedevStudio\bin\roslyn\System.Xml.ReaderWriter.dll
+D:\IDE\LivedevStudio\bin\roslyn\System.Xml.XmlDocument.dll
+D:\IDE\LivedevStudio\bin\roslyn\System.Xml.XPath.dll
+D:\IDE\LivedevStudio\bin\roslyn\System.Xml.XPath.XDocument.dll
+D:\IDE\LivedevStudio\bin\roslyn\vbc.exe
+D:\IDE\LivedevStudio\bin\roslyn\vbc.exe.config
+D:\IDE\LivedevStudio\bin\roslyn\vbc.rsp
+D:\IDE\LivedevStudio\bin\roslyn\VBCSCompiler.exe
+D:\IDE\LivedevStudio\bin\roslyn\VBCSCompiler.exe.config
+D:\IDE\LivedevStudio\obj\Debug\LivedevStudio.csproj.CoreCompileInputs.cache
+D:\IDE\LivedevStudio\obj\Debug\LivedevStudio.csproj.CopyComplete
+D:\IDE\LivedevStudio\obj\Debug\LivedevStudio.dll
+D:\IDE\LivedevStudio\obj\Debug\LivedevStudio.pdb
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\LivedevStudio.dll.config
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\LivedevStudio.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\LivedevStudio.pdb
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\csc.exe
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\csc.exe.config
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\csc.rsp
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\csi.exe
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\csi.exe.config
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\csi.rsp
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\Microsoft.CodeAnalysis.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\Microsoft.CSharp.Core.targets
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\Microsoft.Managed.Core.targets
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\Microsoft.VisualBasic.Core.targets
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\Microsoft.Win32.Primitives.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\System.AppContext.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\System.Collections.Immutable.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\System.Console.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\System.Diagnostics.StackTrace.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\System.Globalization.Calendars.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\System.IO.Compression.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\System.IO.Compression.ZipFile.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\System.IO.FileSystem.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\System.IO.FileSystem.Primitives.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\System.Net.Sockets.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\System.Reflection.Metadata.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\System.Security.Cryptography.Encoding.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\System.Security.Cryptography.Primitives.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\System.Text.Encoding.CodePages.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\System.Threading.Tasks.Extensions.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\System.ValueTuple.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\System.Xml.ReaderWriter.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\System.Xml.XmlDocument.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\System.Xml.XPath.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\System.Xml.XPath.XDocument.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\vbc.exe
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\vbc.exe.config
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\vbc.rsp
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\VBCSCompiler.exe
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\bin\roslyn\VBCSCompiler.exe.config
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\obj\Debug\LivedevStudio.csprojAssemblyReference.cache
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\obj\Debug\LivedevStudio.csproj.CoreCompileInputs.cache
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\obj\Debug\LivedevStudio.csproj.CopyComplete
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\obj\Debug\LivedevStudio.dll
+E:\Logic InfoTech Ltd\LiveDev\IDE\LivedevStudio\obj\Debug\LivedevStudio.pdb
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\LivedevStudio.dll.config
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\LivedevStudio.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\LivedevStudio.pdb
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\csc.exe
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\csc.exe.config
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\csc.rsp
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\csi.exe
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\csi.exe.config
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\csi.rsp
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\Microsoft.CodeAnalysis.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\Microsoft.CSharp.Core.targets
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\Microsoft.Managed.Core.targets
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\Microsoft.VisualBasic.Core.targets
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\Microsoft.Win32.Primitives.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\System.AppContext.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\System.Collections.Immutable.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\System.Console.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\System.Diagnostics.StackTrace.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\System.Globalization.Calendars.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\System.IO.Compression.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\System.IO.Compression.ZipFile.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\System.IO.FileSystem.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\System.IO.FileSystem.Primitives.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\System.Net.Sockets.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\System.Reflection.Metadata.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\System.Security.Cryptography.Encoding.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\System.Security.Cryptography.Primitives.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\System.Text.Encoding.CodePages.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\System.Threading.Tasks.Extensions.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\System.ValueTuple.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\System.Xml.ReaderWriter.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\System.Xml.XmlDocument.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\System.Xml.XPath.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\System.Xml.XPath.XDocument.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\vbc.exe
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\vbc.exe.config
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\vbc.rsp
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\VBCSCompiler.exe
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\bin\roslyn\VBCSCompiler.exe.config
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\obj\Debug\LivedevStudio.csproj.CoreCompileInputs.cache
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\obj\Debug\LivedevStudio.csproj.CopyComplete
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\obj\Debug\LivedevStudio.dll
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\obj\Debug\LivedevStudio.pdb
+D:\IDE\LivedevStudio\obj\Debug\LivedevStudio.csprojAssemblyReference.cache
+E:\Logic InfoTech Ltd\LiveDev 2\IDE\LivedevStudio\obj\Debug\LivedevStudio.csprojAssemblyReference.cache

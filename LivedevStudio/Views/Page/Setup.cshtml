@@ -1,0 +1,484 @@
+﻿
+@using System.Data
+@model DataSet
+
+<form action="" method="post" id="DF">
+    <input type="hidden" id="dbfieldhf" name="dbfieldhf" value="" />
+    <input type="hidden" id="dbtableid" name="dbtableid" value="@ViewBag.tableId" />
+    <table style="width:99%; font-size:12px; color:black;border:0px solid #CCD5F0 ; background-color:white; " border="1" id="setup-dbfield">
+        <tr style="background-color:#003366; color:white; height:33px;">
+
+            <th style="text-align:center;">ID</th>
+            <th style="text-align:center;">DML Column</th>
+            <th style="text-align:center;">View Column</th>
+            <th style="text-align:center;">Form Caption</th>
+            <th style="text-align:center;">View Caption</th>
+            <th style="text-align:center;">Data Type</th>
+            <th style="text-align:center;">Input Type</th>
+            <th style="text-align:center;">Field Property</th>
+            <th style="text-align:center;">View Column(Global)</th>
+            <th style="text-align:center;">Active</th>
+
+            @* INSERT INTO utl_dynamic_table_column (tableid,columnname,selectcolumnname,foreignkeyname,controltype,columnproperty,columndisplayname,columnwidth,ismoduleselect,isfvinsert,
+        isfvupdate,isfvforceedit,isforeigntable,globalparamid,globalparamvalue,defaultvalue,filterby,transpolicyid,user_privilege,linktype,linkpageid,linktableid,linkcolumnname,
+        reportcolumn,slno,columnid,isshow,isgvselect,isfvselect,*@
+
+        </tr>
+        @{
+            var sf = ViewBag.Df;
+            int s = 0;
+        }
+        @foreach (DataRow d in sf.Tables[0].Rows)
+        {
+
+            <tr>
+                @{
+                    string rmid = "Remove" + s;
+                    string Rowno = d["ColumnName"].ToString();
+                }
+                <td style="padding:0px;width:70px;">
+                    <input type="text" style="border: 0px none; outline: none; width: 100%" name="columnid[@s]" value="@d["ColumnId"]" readonly />
+                </td>
+                <td style="width:160px;">
+                    <input type="text" style="border: 0px none; outline: none; width: 100%" name="columnname[@s]" value="@d["ColumnName"]" />
+                </td>
+
+                @{
+                    string colname = d["ColumnName"].ToString();
+                    var col = colname.Replace('_', ' ');
+                }
+
+        
+
+
+                <td style="width:160px;">
+
+                    @if (d["SelectColumnName"].ToString() != "")
+                    {
+                        <input type="text" style="border: 0px none; outline: none; width: 100%" name="selectcolumnname[@s]" value="@d["SelectColumnName"]" />
+                    }
+                    else
+                    {
+                        <input type="text" style="border: 0px none; outline: none; width: 100%" name="selectcolumnname[@s]" value="@d["ColumnName"]" />
+                    }
+
+                </td>
+
+                @if (d["ColumnDisplayName"].ToString() != "")
+                {
+                    <td style="width:200px;">
+                        <input type="text" style="border:0px none;outline:none; width:100%" name="columndisplayname[@s]" value="@d["ColumnDisplayName"]" />
+                    </td>
+                }
+                else
+                {
+                    <td style="width:200px;">
+                        <input type="text" style="border: 0px none; outline: none; width: 100%" name="listcation[@s]" value="@col" />
+                    </td>
+                }
+
+                <td style="width:160px;">
+                    
+                    @if (d["ListCaption"].ToString() != "")
+                    {
+                        <input type="text" style="border: 0px none; outline: none; width: 100%" name="listcation[@s]" value="@d["ListCaption"]" />
+                    }
+                    else
+                    {
+                        <input type="text" style="border: 0px none; outline: none; width: 100%" name="listcation[@s]" value="@col" />
+                    }
+                </td>
+
+
+                
+                <td style="width:160px; padding:0px;">
+                    <select style="border: 0px none; outline: none; width: 100%;" name="datatype[@s]">
+
+                        @{
+                            var dt = d["DataType"].ToString();
+                            if (dt == "char")
+                            {
+
+                                <option value=""></option>
+                                <option value="char" selected>Character</option>
+                                <option value="num">Numeric</option>
+                                <option value="bit">Checkbox</option>
+                                <option value="img">Image</option>
+                                <option value="date">Date</option>
+
+                            }
+                            else if (dt == "num")
+                            {
+                                <option value=""></option>
+                                <option value="char">Character</option>
+                                <option value="num" selected>Numeric</option>
+                                <option value="bit">Checkbox</option>
+                                <option value="img">Image</option>
+                                <option value="date">Date</option>
+
+                            }
+                            else if (dt == "bit")
+                            {
+                                <option value=""></option>
+                                <option value="char">Character</option>
+                                <option value="num">Numeric</option>
+                                <option value="bit" selected>Checkbox</option>
+                                <option value="img">Image</option>
+                                <option value="date">Date</option>
+
+                            }
+                            else if (dt == "img")
+                            {
+                                <option value=""></option>
+                                <option value="char">Character</option>
+                                <option value="num">Numeric</option>
+                                <option value="bit">Checkbox</option>
+                                <option value="img" selected>Image</option>
+                                <option value="date">Date</option>
+
+                            }
+                            else if (dt == "date")
+                            {
+                                <option value=""></option>
+                                <option value="char">Character</option>
+                                <option value="num">Numeric</option>
+                                <option value="bit">Checkbox</option>
+                                <option value="img">Image</option>
+                                <option value="date" selected>Date</option>
+
+                            }
+                            else
+                            {
+                                <option value="" selected></option>
+                                <option value="char">Character</option>
+                                <option value="num">Numeric</option>
+                                <option value="bit">Checkbox</option>
+                                <option value="img">Image</option>
+                                <option value="date">Date</option>
+
+                            }
+
+                        }
+
+                    </select>
+                </td>
+
+                <td style="width:160px; padding:0px;">
+                    <select style="border: 0px none; outline: none; width: 100%;" name="controltype[@s]">
+
+                        @{
+                            var ct = d["ControlType"].ToString();
+                            if (ct == "txt")
+                            {
+
+                                <option value="0"></option>
+                                <option value="txt" selected>Text Box</option>
+                                <option value="ddl">Dropdown</option>
+                                <option value="lbl">Label</option>
+                                <option value="rbl">Check Box</option>
+                                <option value="hfl">Hidden Field</option>
+                                <option value="dfl">Dummy Field Label</option>
+                                <option value="dft">Dummy Field TextBox</option>
+                                <option value="dfd">Dummy Field Dropdown</option>
+                                <option value="img">Image</option>
+
+                            }
+                            else if (ct == "ddl")
+                            {
+                                <option value="0"></option>
+                                <option value="txt">Text Box</option>
+                                <option value="ddl" selected>Dropdown</option>
+                                <option value="lbl">Label</option>
+                                <option value="rbl">Check Box</option>
+                                <option value="hfl">Hidden Field</option>
+                                <option value="dfl">Dummy Field Label</option>
+                                <option value="dft">Dummy Field TextBox</option>
+                                <option value="dfd">Dummy Field Dropdown</option>
+                                <option value="img">Image</option>
+
+                            }
+                            else if (ct == "lbl")
+                            {
+                                <option value="0"></option>
+                                <option selected="selected" value="txt">Text Box</option>
+                                <option value="ddl">Dropdown</option>
+                                <option value="lbl" selected>Label</option>
+                                <option value="rbl">Check Box</option>
+                                <option value="hfl">Hidden Field</option>
+                                <option value="dfl">Dummy Field Label</option>
+                                <option value="dft">Dummy Field TextBox</option>
+                                <option value="dfd">Dummy Field Dropdown</option>
+                                <option value="img">Image</option>
+
+                            }
+                            else if (ct == "rbl")
+                            {
+                                <option value="0"></option>
+                                <option selected="selected" value="txt">Text Box</option>
+                                <option value="ddl">Dropdown</option>
+                                <option value="lbl">Label</option>
+                                <option value="rbl" selected>Check Box</option>
+                                <option value="hfl">Hidden Field</option>
+                                <option value="dfl">Dummy Field Label</option>
+                                <option value="dft">Dummy Field TextBox</option>
+                                <option value="dfd">Dummy Field Dropdown</option>
+                                <option value="img">Image</option>
+
+                            }
+                            else if (ct == "hfl")
+                            {
+                                <option value="0"></option>
+                                <option selected="selected" value="txt">Text Box</option>
+                                <option value="ddl">Dropdown</option>
+                                <option value="lbl">Label</option>
+                                <option value="rbl">Check Box</option>
+                                <option value="hfl" selected>Hidden Field</option>
+                                <option value="dfl">Dummy Field Label</option>
+                                <option value="dft">Dummy Field TextBox</option>
+                                <option value="dfd">Dummy Field Dropdown</option>
+                                <option value="img">Image</option>
+
+                            }
+                            else if (ct == "dfl")
+                            {
+                                <option value="0"></option>
+                                <option selected="selected" value="txt">Text Box</option>
+                                <option value="ddl">Dropdown</option>
+                                <option value="lbl">Label</option>
+                                <option value="rbl">Check Box</option>
+                                <option value="hfl">Hidden Field</option>
+                                <option value="dfl" selected>Dummy Field Label</option>
+                                <option value="dft">Dummy Field TextBox</option>
+                                <option value="dfd">Dummy Field Dropdown</option>
+                                <option value="img">Image</option>
+
+                            }
+                            else if (ct == "dft")
+                            {
+                                <option value="0"></option>
+                                <option selected="selected" value="txt">Text Box</option>
+                                <option value="ddl">Dropdown</option>
+                                <option value="lbl">Label</option>
+                                <option value="rbl">Check Box</option>
+                                <option value="hfl">Hidden Field</option>
+                                <option value="dfl">Dummy Field Label</option>
+                                <option value="dft" selected>Dummy Field TextBox</option>
+                                <option value="dfd">Dummy Field Dropdown</option>
+                                <option value="img">Image</option>
+
+                            }
+                            else if (ct == "dfd")
+                            {
+                                <option value="0"></option>
+                                <option selected="selected" value="txt">Text Box</option>
+                                <option value="ddl">Dropdown</option>
+                                <option value="lbl">Label</option>
+                                <option value="rbl">Check Box</option>
+                                <option value="hfl">Hidden Field</option>
+                                <option value="dfl">Dummy Field Label</option>
+                                <option value="dft">Dummy Field TextBox</option>
+                                <option value="dfd" selected>Dummy Field Dropdown</option>
+                                <option value="img">Image</option>
+
+                            }
+                            else if (ct == "img")
+                            {
+                                <option value="0"></option>
+                                <option selected="selected" value="txt">Text Box</option>
+                                <option value="ddl">Dropdown</option>
+                                <option value="lbl">Label</option>
+                                <option value="rbl">Check Box</option>
+                                <option value="hfl">Hidden Field</option>
+                                <option value="dfl">Dummy Field Label</option>
+                                <option value="dft">Dummy Field TextBox</option>
+                                <option value="dfd">Dummy Field Dropdown</option>
+                                <option value="img" selected>Image</option>
+
+                            }
+                            else
+                            {
+                                <option value="txt" selected></option>
+                                <option value="txt">Text Box</option>
+                                <option value="ddl">Dropdown</option>
+                                <option value="lbl">Label</option>
+                                <option value="rbl">Check Box</option>
+                                <option value="hfl">Hidden Field</option>
+                                <option value="dfl">Dummy Field Label</option>
+                                <option value="dft">Dummy Field TextBox</option>
+                                <option value="dfd">Dummy Field Dropdown</option>
+                                <option value="img">Image</option>
+
+                            }
+
+                        }
+
+                    </select>
+                </td>
+                <td style="width:160px; padding:0px;">
+                    <select style="border: 0px none; outline: none; width: 100%;" name="columnproperty[@s]">
+
+                        @{
+                            var cp = d["ColumnProperty"].ToString();
+                            if (cp == "pk")
+                            {
+                                <option value="0"> </option>
+                                <option value="pk" selected>Primary Key</option>
+                                <option value="fk">Foreign Key</option>
+                                <option value="lock">ReadOnly</option>
+                                <option value="auto">Auto Code</option>
+                                <option value="pkt">Global Dropdown</option>
+                                <option value="pw">Password</option>
+                                <option value="fdk">Input Reference Key</option>
+                                <option value="identity">Identity Increment</option>
+                            }
+                            else if (cp == "fk")
+                            {
+                                <option value="0"></option>
+                                <option value="pk">Primary Key</option>
+                                <option value="fk" selected>Foreign Key</option>
+                                <option value="lock">ReadOnly</option>
+                                <option value="auto">Auto Code</option>
+                                <option value="pkt">Global Dropdown</option>
+                                <option value="pw">Password</option>
+                                <option value="fdk">Input Reference Key</option>
+                                <option value="identity">Identity Increment</option>
+                            }
+                            else if (cp == "lock")
+                            {
+                                <option value="0"></option>
+                                <option value="pk">Primary Key</option>
+                                <option value="fk">Foreign Key</option>
+                                <option value="lock" selected>ReadOnly</option>
+                                <option value="auto">Auto Code</option>
+                                <option value="pkt">Global Dropdown</option>
+                                <option value="pw">Password</option>
+                                <option value="fdk">Input Reference Key</option>
+                                <option value="identity">Identity Increment</option>
+                            }
+                            else if (cp == "auto")
+                            {
+                                <option value="0"></option>
+                                <option value="pk">Primary Key</option>
+                                <option value="fk">Foreign Key</option>
+                                <option value="lock">ReadOnly</option>
+                                <option value="auto" selected>Auto Code</option>
+                                <option value="pkt">Global Dropdown</option>
+                                <option value="pw">Password</option>
+                                <option value="fdk">Input Reference Key</option>
+                                <option value="identity">Identity Increment</option>
+                            }
+                            else if (cp == "pkt")
+                            {
+                                <option value="0"></option>
+                                <option value="pk">Primary Key</option>
+                                <option value="fk">Foreign Key</option>
+                                <option value="lock">ReadOnly</option>
+                                <option value="auto">Auto Code</option>
+                                <option value="pkt" selected>Global Dropdown</option>
+                                <option value="pw">Password</option>
+                                <option value="fdk">Input Reference Key</option>
+                                <option value="identity">Identity Increment</option>
+                            }
+                            else if (cp == "pw")
+                            {
+                                <option value="0"></option>
+                                <option value="pk">Primary Key</option>
+                                <option value="fk">Foreign Key</option>
+                                <option value="lock">ReadOnly</option>
+                                <option value="auto">Auto Code</option>
+                                <option value="pkt">Global Dropdown</option>
+                                <option value="pw" selected>Password</option>
+                                <option value="fdk">Input Reference Key</option>
+                                <option value="identity">Identity Increment</option>
+                            }
+                            else if (cp == "fdk")
+                            {
+                                <option value="0"></option>
+                                <option value="pk">Primary Key</option>
+                                <option value="fk">Foreign Key</option>
+                                <option value="lock">ReadOnly</option>
+                                <option value="auto">Auto Code</option>
+                                <option value="pkt">Global Dropdown</option>
+                                <option value="pw">Password</option>
+                                <option value="fdk" selected>Input Reference Key</option>
+                                <option value="identity">Identity Increment</option>
+                            }
+                            else if (cp == "identity")
+                            {
+                                <option value="0"></option>
+                                <option value="pk">Primary Key</option>
+                                <option value="fk">Foreign Key</option>
+                                <option value="lock">ReadOnly</option>
+                                <option value="auto">Auto Code</option>
+                                <option value="pkt">Global Dropdown</option>
+                                <option value="pw">Password</option>
+                                <option value="fdk">Input Reference Key</option>
+                                <option value="identity" selected>Identity Increment</option>
+                            }
+                            else
+                            {
+                                <option value="0" selected></option>
+                                <option value="pk">Primary Key</option>
+                                <option value="fk">Foreign Key</option>
+                                <option value="lock">ReadOnly</option>
+                                <option value="auto">Auto Code</option>
+                                <option value="pkt">Global Dropdown</option>
+                                <option value="pw">Password</option>
+                                <option value="fdk">Input Reference Key</option>
+                                <option value="identity">Identity Increment</option>
+                            }
+                        }
+
+
+                    </select>
+                </td>
+                <td style="width:170px; padding:0px;">
+                    @{
+                        var viewcolumn = ViewBag.ViewColumn;
+                        var v = "view-column" + s;
+                    }
+                    <input type="hidden" name="name" value=@d["ForeignKeyName"] id="fkn" />
+                    <select style="border: 0px none; outline: none; width: 100%;" name="foreignkeyname[@s]" id="foreignkeyname" class=@v onmouseover="SearchableDropdownForSetup('@v')">
+                        <option value="0"></option>
+
+                        @foreach (DataRow t1 in viewcolumn.Tables[0].Rows)
+                        {
+                            <option value="@t1["DataField"]"
+                                    @if (d["ForeignKeyName"].ToString() == t1["DataField"].ToString()) { @: selected
+                                    }>
+                                @t1["DataText"]
+                            </option>
+                        }
+
+
+                    </select>
+                </td>
+
+                @if (Convert.ToBoolean(d["Is_Active"]) == true)
+                {
+                    <td style="text-align: center; vertical-align: middle; width:60px;"><input type="checkbox" name="is_active[@s]" value="1" checked /></td>
+                }
+                else
+                {
+                    <td style="text-align: center; vertical-align: middle; width:60px;"><input type="checkbox" name="is_active[@s]" value="1" /></td>
+                }
+
+
+            </tr>
+            s = s + 1;
+        }
+
+
+    </table>
+
+</form>
+<script>
+    $('#setup-dbfield td').click(function () {
+        $('#setup-dbfield tr').css({ "background-color": "white", "color": "black" });
+        $('#setup-dbfield th').css({ "background-color": "#003366", "color": "white" });
+        $(this).parent().css({ "background-color": "#0066ff", "color": "white" });
+        //$(this).parent().css("background-color", "green");
+      
+    });
+
+</script>

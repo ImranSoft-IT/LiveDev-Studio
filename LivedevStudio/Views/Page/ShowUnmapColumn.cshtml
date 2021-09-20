@@ -1,0 +1,73 @@
+﻿@using System.Data
+@model DataSet
+
+@{
+    var Um = ViewBag.unmap;
+    var tableId = ViewBag.tableid;
+    var m = ViewBag.map;
+}
+
+<div class="row">
+
+
+    <div class="col-md-3" style="border:1px solid #CCD5F0; height:529px; overflow:auto;">
+        <table class="p-0 m-0 table-hover mt-2 " style="border: 1px solid #CCD5F0; width:98%; background-color:white; font-size: 12px;" border="1" id="unmaptable">
+            <tr style="background-color:#003366; color:white;height:28px;">
+
+                @*<th style="width: 50px;text-align: center;">
+                        Action
+                    </th>*@
+                <th>
+                    Dml Column
+                </th>
+            </tr>
+
+            @foreach (DataRow item in Um.Tables[0].Rows)
+            {
+                <tr>
+                    @*<td style="width:60px;text-align:center;padding:0px;">
+                            <a href="#" class="btn m-0  " style="padding:0px 2.2px 0px 2.2px; background-color:forestgreen; font-weight:200; color:white; font-size:12px; border:1px solid #5d6b99; border-radius:50%;" id=@item["DataField"] onclick="SelectDmlColumn('@item["DataField"]',@tableId)">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </a>
+                        </td>*@
+                    <td>
+                        @item["ColumnName"]
+                    </td>
+                </tr>
+            }
+
+
+
+        </table>
+    </div>
+    <div class="col-md-3" style="border:1px solid #CCD5F0; height:529px; overflow:auto;">
+        <table class="p-0 m-0 table-hover mt-2 " style="border: 1px solid #CCD5F0; width:98%; background-color:white; font-size: 12px;" border="1" id="maptable">
+            <tr style="background-color:#003366; color:white;height:28px;">
+
+                @*<th style="width: 50px;text-align: center;">
+                        Action
+                    </th>*@
+                <th>
+                    Dml Column
+                </th>
+            </tr>
+
+            @foreach (DataRow item in m.Tables[0].Rows)
+            {
+                <tr>
+                    @*<td style="width:60px;text-align:center;padding:0px;">
+                            <a href="#" class="btn m-0  " style="padding:0px 2.2px 0px 2.2px; background-color:forestgreen; font-weight:200; color:white; font-size:12px; border:1px solid #5d6b99; border-radius:50%;" id=@item["DataField"] onclick="SelectDmlColumn('@item["DataField"]',@tableId)">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </a>
+                        </td>*@
+                    <td>
+                        @item["DataField"]
+                    </td>
+                </tr>
+            }
+
+
+
+        </table>
+    </div>
+</div>

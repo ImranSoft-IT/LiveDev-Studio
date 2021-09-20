@@ -1,0 +1,203 @@
+﻿
+@using System.Data
+@model DataSet
+
+
+@{
+    var L = ViewBag.validationList;
+    var tableId = ViewBag.tableId;
+}
+<form action="" method="post" id="FieldValidation">
+    <input type="hidden" id="fieldvalidationhf" name="fieldvalidationhf" value="" />
+    <table style="width:80%; font-size:12px; color:black;border:0px solid #CCD5F0 ; background-color:white; " border="1" id="set-field-validation">
+
+        <tr style="background-color:#003366; color:white;height:28px;">
+
+            <th style="text-align: center;">ID</th>
+            <th style="text-align: center;">Field Caption</th>
+            <th style="text-align: center;">Operator</th>
+            <th style="text-align: center;">Compare to Value</th>
+            <th style="text-align: center;">Error Message</th>
+        </tr>
+        @{
+            int b = 0;
+        }
+
+        @foreach (DataRow l in L.Tables[0].Rows)
+        {
+            <tr>
+
+                <td style="padding:0px;width:100px;">
+                    <input type="text" style="width:100%;border:0px none;outline:none;" name="columnid[@b]" value="@l["ColumnId"]" readonly />
+                </td>
+                <td style="padding:0px;width:200px;">
+                    <input type="text" style="width:100%;border:0px none;outline:none;" name="columndisplayname[@b]" value="@l["ColumnDisplayName"]" />
+                </td>
+                <td style="padding:0px;width:160px;">
+
+                    <select name="operatorid[@b]" style="width:100%;border:0px none;outline:none;" id="">
+                        @if (l["OperatorId"].ToString() == "1")
+                        {
+                            <option value="0"></option>
+                            <option value="1" selected>Equal</option>
+                            <option value="2">Not Equal</option>
+                            <option value="3">Greater Than</option>
+                            <option value="4">Greater Than Equal</option>
+                            <option value="5">Less Than</option>
+                            <option value="6">Less Than Equal</option>
+                            <option value="7">Contains</option>
+                            <option value="8">Between</option>
+                            <option value="9">Required Field</option>
+
+                        }
+                        else if (l["OperatorId"].ToString() == "2")
+                        {
+                            <option value="0"> </option>
+                            <option value="1">Equal</option>
+                            <option value="2" selected>Not Equal</option>
+                            <option value="3">Greater Than</option>
+                            <option value="4">Greater Than Equal</option>
+                            <option value="5">Less Than</option>
+                            <option value="6">Less Than Equal</option>
+                            <option value="7">Contains</option>
+                            <option value="8">Between</option>
+                            <option value="9">Required Field</option>
+                        }
+                        else if (l["OperatorId"].ToString() == "3")
+                        {
+                            <option value="0"> </option>
+                            <option value="1">Equal</option>
+                            <option value="2">Not Equal</option>
+                            <option value="3" selected>Greater Than</option>
+                            <option value="4">Greater Than Equal</option>
+                            <option value="5">Less Than</option>
+                            <option value="6">Less Than Equal</option>
+                            <option value="7">Contains</option>
+                            <option value="8">Between</option>
+                            <option value="9">Required Field</option>
+                        }
+                        else if (l["OperatorId"].ToString() == "4")
+                        {
+                            <option value="0"> </option>
+                            <option value="1">Equal</option>
+                            <option value="2">Not Equal</option>
+                            <option value="3">Greater Than</option>
+                            <option value="4" selected>Greater Than Equal</option>
+                            <option value="5">Less Than</option>
+                            <option value="6">Less Than Equal</option>
+                            <option value="7">Contains</option>
+                            <option value="8">Between</option>
+                            <option value="9">Required Field</option>
+                        }
+                        else if (l["OperatorId"].ToString() == "5")
+                        {
+                            <option value="0"> </option>
+                            <option value="1">Equal</option>
+                            <option value="2">Not Equal</option>
+                            <option value="3" >Greater Than</option>
+                            <option value="4">Greater Than Equal</option>
+                            <option value="5" selected>Less Than</option>
+                            <option value="6">Less Than Equal</option>
+                            <option value="7">Contains</option>
+                            <option value="8">Between</option>
+                            <option value="9">Required Field</option>
+                        }
+                        else if (l["OperatorId"].ToString() == "6")
+                        {
+                            <option value="0"> </option>
+                            <option value="1">Equal</option>
+                            <option value="2">Not Equal</option>
+                            <option value="3" >Greater Than</option>
+                            <option value="4">Greater Than Equal</option>
+                            <option value="5">Less Than</option>
+                            <option value="6" selected>Less Than Equal</option>
+                            <option value="7">Contains</option>
+                            <option value="8">Between</option>
+                            <option value="9">Required Field</option>
+                        }
+                        else if (l["OperatorId"].ToString() == "7")
+                        {
+                            <option value="0"> </option>
+                            <option value="1">Equal</option>
+                            <option value="2">Not Equal</option>
+                            <option value="3" >Greater Than</option>
+                            <option value="4">Greater Than Equal</option>
+                            <option value="5">Less Than</option>
+                            <option value="6">Less Than Equal</option>
+                            <option value="7" selected>Contains</option>
+                            <option value="8">Between</option>
+                            <option value="9">Required Field</option>
+                        }
+                        else if (l["OperatorId"].ToString() == "8")
+                        {
+                            <option value="0"> </option>
+                            <option value="1">Equal</option>
+                            <option value="2">Not Equal</option>
+                            <option value="3" >Greater Than</option>
+                            <option value="4">Greater Than Equal</option>
+                            <option value="5">Less Than</option>
+                            <option value="6">Less Than Equal</option>
+                            <option value="7">Contains</option>
+                            <option value="8" selected>Between</option>
+                            <option value="9">Required Field</option>
+                        }
+                        else if (l["OperatorId"].ToString() == "9")
+                        {
+                            <option value="0"> </option>
+                            <option value="1">Equal</option>
+                            <option value="2">Not Equal</option>
+                            <option value="3" >Greater Than</option>
+                            <option value="4">Greater Than Equal</option>
+                            <option value="5">Less Than</option>
+                            <option value="6">Less Than Equal</option>
+                            <option value="7">Contains</option>
+                            <option value="8">Between</option>
+                            <option value="9" selected>Required Field</option>
+                        }
+                        else
+                        {
+                            <option value="0" selected> </option>
+                            <option value="1">Equal</option>
+                            <option value="2">Not Equal</option>
+                            <option value="3" >Greater Than</option>
+                            <option value="4">Greater Than Equal</option>
+                            <option value="5">Less Than</option>
+                            <option value="6">Less Than Equal</option>
+                            <option value="7">Contains</option>
+                            <option value="8">Between</option>
+                            <option value="9">Required Field</option>
+                        }
+
+                    </select>
+
+                </td>
+                <td style="padding-left:5px; width:160px;">
+                    <input type="text"style="width:100%;border:0px none;outline:none;" name="valueexpression[@b]" value="@l["ValueExpression"]" />
+                </td>
+                <td style="padding:0px;width:450px;">
+                    <input type="text"style="width:100%;border:0px none;outline:none;" name="errormessage[@b]" value="@l["ErrorMessage"]" />
+                </td>
+
+            </tr>
+
+
+            b = b + 1;
+        }
+
+
+    </table>
+
+</form>
+<script>
+    $('#set-field-validation td').click(function () {
+        $('#set-field-validation tr').css({ "background-color": "white", "color": "black" });
+        $('#set-field-validation th').css({ "background-color": "#003366", "color": "white" });
+        $(this).parent().css({ "background-color": "#0066ff", "color": "white" });
+        //$(this).parent().css("background-color", "green");
+
+
+
+
+    });
+
+</script>

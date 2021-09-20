@@ -1,0 +1,68 @@
+﻿
+@using System.Data
+@model DataSet
+
+
+
+<table class="p-0 m-0 table-hover " style="border: 1px solid #CCD5F0; width:98%; background-color:white; font-size: 12px;" border="1">
+    <thead>
+        <tr style="background-color:white; color:black">
+            <th>Action</th>
+            <th>Module</th>
+            <th>Submodule</th>
+            <th>System</th>
+            <th>SL No.</th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @{
+            var sm1 = ViewBag.SubModule;
+        }
+        @foreach (DataRow s in sm1.Tables[0].Rows)
+        {
+
+
+            <tr>
+                <td>
+                    <a href="#" class="btn m-0" style="padding:0px 2.2px 0px 2.2px; background-color:#CCD5F0; font-weight:200; color:black; font-size:12px; border:1px solid #5d6b99; border-radius:50%;" onclick="SelectById(@s["CategoryId"],'@s["ModuleCategory"]')">
+                        <i class="fa fa-chevron-down"></i>
+                    </a>
+
+                    <a href="#" class="btn m-0 text-primary" style="padding:0px 2.2px 0px 2.2px; background-color:#CCD5F0; font-weight:200; color:black; font-size:12px; border:1px solid #5d6b99; border-radius:50%;" onclick="EditSubModuleById(@s["CategoryId"],@s["ApplicationId"])">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                    <a href="#" class="btn m-0 text-danger" style="padding:0px 2.2px 0px 2.2px; background-color:#CCD5F0; font-weight:200; color:black; font-size:12px; border:1px solid #5d6b99; border-radius:50%;" onclick="DeleteSubModuleById(@s["CategoryId"])">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                </td>
+                <td style="font-size: 12px;">@s["ModuleAlis"]</td>
+                <td style="font-size: 12px;">@s["ModuleCategory"]</td>
+                @{
+
+
+                    var system = Convert.ToBoolean(s["IsSystem"]);
+                }
+                @if (system)
+                {
+                    <td style="font-size: 12px;">
+                        <input type="checkbox" name="issystem" id="system" class="border-0" value="1" checked />
+                    </td>
+                }
+                else
+                {
+                    <td style="font-size: 12px;">
+                        <input type="checkbox" name="issystem" id="system" class="border-0" value="0" />
+                    </td>
+                }
+
+                <td style="font-size: 12px;">@s["Sl"]</td>
+            </tr>
+        }
+
+
+
+    </tbody>
+
+</table>

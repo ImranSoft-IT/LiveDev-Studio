@@ -1,0 +1,490 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>HomePage</title>
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/media/dataTables.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="/Content/jquaryUi.css" rel="stylesheet" />
+    <link href="~/Content/select2.min.css" rel="stylesheet" />
+
+
+
+    @*<style>
+        .ui-tooltip, .arrow:after {
+            background: #009933;
+            border: 2px solid white;
+        }
+
+        .ui-tooltip {
+            padding: 10px 20px;
+            color: white;
+            border-radius: 20px;
+            font: 14px "Helvetica Neue", Sans-Serif;
+            box-shadow: 0 0 7px black;
+        }
+
+        .arrow {
+            width: 70px;
+            height: 16px;
+            overflow: hidden;
+            position: absolute;
+            left: 50%;
+            margin-left: -35px;
+            bottom: -16px;
+        }
+
+            .arrow.top {
+                top: -16px;
+                bottom: auto;
+            }
+
+            .arrow.left {
+                left: 20%;
+            }
+
+            .arrow:after {
+                content: "";
+                position: absolute;
+                left: 20px;
+                top: -20px;
+                width: 25px;
+                height: 25px;
+                box-shadow: 6px 5px 9px -9px black;
+                -webkit-transform: rotate(45deg);
+                -ms-transform: rotate(45deg);
+                transform: rotate(45deg);
+            }
+
+            .arrow.top:after {
+                bottom: -20px;
+                top: auto;
+            }
+    </style>*@
+
+</head>
+<body class="bg-light">
+
+
+    <div class="">
+        <nav class="navbar navbar-expand bordered " style="height:42px; background-color:#336699;  color:black !important; font-weight:bold;">
+            <a class="navbar-brand ml-5 p-1 text-light" style="font-size:15px;" href="#">LiveDev</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item p-1 m-0">
+                        @*@Html.ActionLink("Server Connection", "HomePage", "Home", new { @class = "nav-link text-light" })*@
+                    <a href="#" class="nav-link text-light" data-toggle="modal" data-target="#ServerConnection"> Server Connection </a>
+                </li>
+
+                <li class="nav-item dropdown p-1 m-0">
+                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Select Database
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+                <li class="nav-item p-1 m-0">@Html.ActionLink("Preview", "Production", "Home", new { @class = "nav-link text-light" })</li>
+                <li class="nav-item dropdown p-1 m-0">
+                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Menu
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">Menu</a>
+                        <a class="dropdown-item" href="#">Application</a>
+                        <a class="dropdown-item" href="#">Project</a>
+                    </div>
+                </li>
+                <li class="nav-item p-1 m-0">@Html.ActionLink("Build", "Production", "Home", new { @class = "nav-link text-light" })</li>
+
+            </ul>
+        </div>
+    </nav>
+
+        <div class="border border-dark border-top-0" style="background-color:white;width:100%;">
+            <div class="row">
+                <div class="col-6 pl-4" style="font-size:15px;font-weight:bold; color:midnightblue;text-align:left;" id="filePath">
+
+                </div>
+                <div class="col-6 pr-5" style="font-size:15px;font-weight:bold; color:midnightblue;text-align:right;" id="showDBTable">
+                    
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="card border  mt-0  mb-0">
+
+
+            <div class="card-body  pt-0 pr-0" style="height:688px  !important; background-color:#F1F1F1;">
+
+                <div class="row mt-0 pt-0 mr-0">
+                    <div class="col-md-6 mt-0 pt-0" id="col3">
+
+                        <div class="panel panel-danger m-1">
+                            <div class="panel-body panel-danger">
+                                <div id="sm" class="">
+
+                                </div>
+
+
+
+                            </div>
+                            <div class="panel-footer" style="color:red;padding-left:43%;">
+                                <p id="ShowMessage"></p>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="border  border-top-0   mr-0 border-dark" style="height:688px ; width:747px; background-color:#F1F1F1; overflow-y:auto;" id="col2">
+
+
+                        <div class="row " style="margin-left:3px;">
+                            <div class="border mt-2 rounded" style="height: 35px; width:702px; margin-left:19px; ">
+                                <table style="width:100%;" class="ml-2">
+                                    <tr style="width:100%;">
+                                        <td style="width:23%;">
+
+                                            <a href="#" class="btn m-0" style="padding:0px 2.2px 0px 2.2px; background-color:#CCD5F0; font-weight:200; color:black; font-size:12px; border:1px solid #5d6b99; border-radius:50%;">
+                                                <i class="fa fa-plus"></i>
+                                            </a>
+
+                                            <a href="#" class="btn m-0 text-danger" style="padding:0px 2.2px 0px 2px; background-color:#CCD5F0; font-weight:200;font-size:12px; border:1px solid #5d6b99; border-radius:50%;" onclick="DeleteSubModuleById(1)">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+
+                                            @*<input type="text" name="selectedData" id="selectedData" value="" class="border-0" style=" width:90%;" />*@
+
+                                        </td>
+                                        <td style="width:100%;">
+                                            <input type="text" name="selectedData" id="selectedData" value="" class="border-0 mt-1 " style=" width:90%; background-color:#F1F1F1; outline:none" readonly />
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </div>
+
+                        </div>
+
+
+                        @RenderBody()
+
+
+                    </div>
+
+
+                </div>
+
+
+
+
+            </div>
+
+
+        </div>
+
+        <div class="modal fade" id="ServerConnection" role="dialog">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary text-light m-0 p-0" style="height:38px;">
+                        <div class="text-left">
+                            <h6 class="modal-title mt-1 ml-2 ">Connect Server</h6>
+                        </div>
+                        <div class="text-right">
+                            <button type="button" class="close mr-0" data-dismiss="modal" @*style="float:right;"*@>&times;</button>
+                        </div>
+
+                    </div>
+                    <div class="modal-body" style="height:242px;">
+
+                        <form method="post" action="" id="ServerConnect">
+
+                            <!--<input type="hidden" name="hfpkid" id="hfpkid" value="0" />
+                            <input type="hidden" name="hffkid" id="hffkid" value="0" />
+
+                            <input type="hidden" name="entry_user_id" id="entry_user_id" value="1" />
+                            <input type="hidden" name="entry_by" id="entry_by" value="Shabuj" />
+                            <input type="hidden" name="entry_date" id="entry_date" value="GETDATE()" />
+
+                            <input type="hidden" name="is_approved" id="is_approved" value="0" />-->
+                            @*<input type="hidden" name="Is_Active" id="Is_Active" value="0" />*@
+                            <!--<input type="hidden" name="is_deleted" id="is_deleted" value="0" />
+                            <input type="hidden" name="is_cancel" id="is_cancel" value="0" />
+                            <input type="hidden" name="work_follow_position" id="work_follow_position" value="1" />
+                            <input type="hidden" name="TableIds" value="21" />-->
+
+
+
+                            <table class="ml-0 pl-0" style="width:99%;background-color:white; border:1px  solid #CCD5F0;  font-size:13px; color: black;" border="1">
+                                <tr>
+                                    <td> Server Name: <a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget "><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                    <td> <input type="text" name="ServerName" value="" class="border-0" style="width:100%; outline:none;" /></td>
+                                </tr>
+
+                                <tr>
+                                    <td> Database Name: <a style="color:white;background-color:black;" href="#" title="That&apos;s what this widget is what this widget i what this widget iwhat this widget i"><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                    <td> <input type="text" name="Database" value="" class="border-0" style="width:100%;outline:none;" /></td>
+
+                                </tr>
+                                <tr>
+                                    <td> DB User Name: <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                    <td class="ml-2"> <input type="text" name="Userid" value="" class="border-0" style="width:100%;outline:none;" /></td>
+                                </tr>
+                                <tr>
+                                    <td>DB Password: <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                    <td> <input type="password" name="Password" value="" class="border-0" style="width:100%;outline:none;" /></td>
+
+                                </tr>
+                                <tr>
+                                    <td> Login User: <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                    <td> <input type="text" name="ConnectionStringName" value="" class="border-0" style="width:100%;outline:none;" /></td>
+                                </tr>
+                                <tr>
+                                    <td> Login Password: <a style="color:white;background-color:black;" href="#" title="hello .. THis is an checkbox feild ."><span style="float:right; font-size:16px;padding-right:5px; color:black;"> <i class="fa fa-info-circle" aria-hidden="true"></i></span></a></td>
+                                    <td> <input type="text" name="ProviderName" value="" class="border-0" style="width:100%;outline:none;" /></td>
+
+                                </tr>
+                                
+
+                            </table>
+                        </form>
+
+                    </div>
+                    <div class="modal-footer bg-primary text-light p-0 m-0" style="height:45px;">
+                        <a class="ml-2 text-white btn btn-dark btn-sm  " href="#" onclick="ServerConnect('ServerConnect')" data-dismiss="modal">&nbsp &nbsp Save &nbsp &nbsp</a>
+                        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">&nbsp &nbsp Close &nbsp &nbsp</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="~/Scripts/select2.min.js"></script>
+
+    @*<script>
+        $(function () {
+            $(document).tooltip({
+                position: {
+                    my: "right+510 bottom-20",
+                    at: "center right+500",
+                    using: function (position, feedback) {
+                        $(this).css(position);
+                        $("<div>")
+                            .addClass("arrow")
+                            .addClass(feedback.vertical)
+                            .addClass(feedback.horizontal)
+                            .appendTo(this);
+                    }
+                }
+            });
+        });
+    </script>*@
+    <script>
+
+        //$("#FilterCondition").change(function () {
+
+
+        //    var fc = $("#FilterCondition").val();
+        //    var ColumnProperty = $('#SaveSetColumnProperty').val();
+        //    alert("Handler for .change() called. ColumnProperty: " + ColumnProperty + " filterconditon: " + fc);
+
+
+        //});
+
+        function ServerConnect(SC) {
+
+            var cm = '#' + SC;
+
+            var form = $(cm).serialize();
+            $.ajax({
+                type: 'POST',
+                url: "/Submodule/ServerConnection",
+                data: form,
+                dataType: 'json',
+                success: function (data) {
+                    //alert(data.message);
+                    swal("Saved Successfully!", "You clicked the button!", "success");
+                    
+
+                }
+            });
+        }
+
+        function SearchableDropdownForSetup(id) {
+            var vc = "." + id;
+            $(vc).select2();
+
+        }
+
+
+        $('#Thide').click(function () {
+
+            $('#tHide').toggle();
+        });
+
+        function CreateSubModule(CS) {
+
+            //var cs = '#' + CS;
+            //var createForm = $(cs).val();
+            var createForm = CS;
+            var parameter = { cf: createForm }
+            if (createForm == 'Column') {
+                $('#dropdown1').hide();
+                $('#autocode').hide();
+                $('#imageproperty').hide();
+
+                $('#col2').toggle().ready(function () {
+
+                    $('#col3').removeClass("col-md-6").addClass("col-md-12").ready(function () {
+
+                            $.ajax({
+                                type: "POST",
+                                url: '@Url.Action("CreateColumn", "Page")',
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+
+                                data: JSON.stringify(parameter),
+                                success: function (result) {
+
+                                    $('#sm').html(result).ready(function () {
+                                        $('#dropdown1').hide();
+                                        $('#autocode').hide();
+                                        $('#imageproperty').hide();
+                                        //$('#inputvalidation').show();
+                                        //$('#gridfilter').show();
+                                        //$('#gridfunction').show();
+                                    });
+
+
+                                }
+
+                           });
+                    });
+                });
+
+            }
+            else {
+                $('#col2').css("width", "747px").ready(function () {
+
+                     $('#col3').removeClass("col-md-12").addClass("col-md-6").ready(function () {
+
+
+                            if (createForm == 'Sub Module') {
+
+                                $.ajax({
+                                    type: "POST",
+                                    url: '@Url.Action("CreateSubModule", "Page")',
+                                    dataType: "html",
+                                    contentType: "application/json; charset=utf-8",
+
+                                    data: JSON.stringify(parameter),
+                                    success: function (result) {
+
+                                        $('#sm').html(result);
+                                        $('#submoduleapplicationid').select2();
+                                    }
+
+                                });
+
+
+                            }
+
+                            else if (createForm == 'Page') {
+                                                var smn = $('#subname').val();
+                                                var sid = $('#subid').val();
+                                                var parameter2 = { SubModName: smn,SubModId:sid }
+                                $.ajax({
+                                    type: "POST",
+                                    url: '@Url.Action("CreatePage", "Page")',
+                                    dataType: "html",
+                                    contentType: "application/json; charset=utf-8",
+
+                                    data: JSON.stringify(parameter2),
+                                    success: function (result) {
+                                        //$('#createPage').html(result);
+                                        $('#sm').html(result);
+
+                   
+                                        $('#pageapplicationid').select2();
+                                        $('.existmodule').select2();
+                                        $('.module-type').select2();
+                      
+                        
+                                    }
+
+                                });
+
+                            }
+                            else if (createForm == 'Table') {
+
+                                    $('#col2').toggle().ready(function () {
+                                        var pn = $('#pageName').val();
+                                        var pid = $('#pageId').val();
+                                        var parameter1 = { pageName: pn, pageId: pid}
+                                        $('#col3').removeClass("col-md-6").addClass("col-md-12").ready(function () {
+                                            $.ajax({
+                                                type: "POST",
+                                                url: '@Url.Action("CreateTable", "Page")',
+                                                dataType: "html",
+                                                contentType: "application/json; charset=utf-8",
+
+                                                data: JSON.stringify(parameter1),
+                                                success: function (result) {
+                                                    //$('#createTable').html(result);
+                                                    $('#sm').html(result);
+                                                    $('.parent-table').select2();
+                                                    $('.refresh-type').select2();
+                                                    $('.tem-type').select2();
+                                                    $('.db-table').select2();
+                                                    $('.copy-table').select2();
+                                                    $('.lov-table').select2();
+                                                    $('.trigger').select2();
+                                                    $('.report-source').select2();
+                                                    $('.batch-dml').select2();
+                                                    $('.data-import-source').select2();
+                                                }
+
+                                            });
+                                        });
+                                    });
+                            }
+                            else {
+
+                                alert("Select a table where you want to add data.");
+                            }
+                     });
+                });
+            }
+
+
+        }
+
+
+    </script>
+
+
+
+
+
+
+</body>
+</html>

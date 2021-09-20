@@ -1,0 +1,70 @@
+﻿
+
+@using System.Data
+@model DataSet
+
+
+@{
+    var L = ViewBag.ExpressionList;
+    var tableId = ViewBag.tableId;
+}
+
+<form action="" method="post" id="Expression">
+    <input type="hidden" id="expressionhf" name="expressionhf" value="" />
+    <table style="width:98%; font-size:12px; color:black;border:0px solid #CCD5F0 ; background-color:white; " border="1" id="set-expression">
+
+        <tr style="background-color:#003366; color:white;height:28px;">
+            <th style="text-align: center;">ID</th>
+            <th style="text-align: center;">Field Caption</th>
+            <th style="text-align: center;">Field Description</th>
+            <th style="text-align: center;">Dropdown Source Expression</th>
+        </tr>
+        @{
+            int e = 0;
+        }
+
+        @foreach (DataRow l in L.Tables[0].Rows)
+        {
+            <tr>
+                <td style="padding:0px;width:70px;">
+                    <input type="text" style="width: 100%; border: 0px none; outline: none;text-align:center;" name="columnid[@e]" value="@l["ColumnId"]" readonly />
+                </td>
+                <td style="padding-left:3px;width:150px;">
+                    <input type="text" style="width: 100%; border: 0px none; outline: none;" name="columndisplayname[@e]" value="@l["ColumnDisplayName"]" />
+                </td>
+                <td style="padding:0px; width: 250px;">
+                    <textarea id="expressoin" name="coldescription[@e]" rows="2" cols="33" class="border-0" style="width: 100%; border:0px none;outline:none;">@l["ColDescription"]</textarea>
+                </td>
+
+                <td style="padding:0px;">
+
+                    <textarea id="expressoin" name="sqlexpression[@e]" rows="2" cols="33" class="border-0" style="width: 100%;border:0px none;outline:none;">@l["SqlExpression"]</textarea>
+                </td>
+
+
+
+            </tr>
+
+            e = e + 1;
+        }
+
+
+
+    </table>
+
+
+
+</form>
+@*<script>
+    $('#set-expression td').click(function () {
+        $('#set-expression  tr').css({ "background-color": "white", "color": "black" });
+        $('#set-expression th').css({ "background-color": "#003366", "color": "white" });
+        $(this).parent().css({ "background-color": "#0066ff", "color": "white" });
+        //$(this).parent().css("background-color", "green");
+
+
+
+
+    });
+
+</script>*@

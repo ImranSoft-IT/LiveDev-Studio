@@ -1,0 +1,136 @@
+﻿
+@using System.Data
+@model DataSet
+
+
+
+<div id="HideEditPageList">
+    <form method="post" action="" id="editpagelist">
+
+        <input type="hidden" name="editpagelisthf" id="editpagelisthf" value="" />
+        <table style="width:100%; font-size:12px; color:black;border:0px solid #CCD5F0 ; background-color:white; " border="1" class="mt-3" id="editpagelisttable">
+            <tr style="background-color:#003366; color:white;height:28px;">
+                <th style="text-align:center;">Page ID</th>
+                <th style="text-align:center;">Page Name</th>
+                <th style="text-align:center;">Page Template</th>
+                <th style="text-align:center;">Page Caption</th>
+                <th style="text-align:center;">Report Title</th>
+                <th style="text-align:center;">Drilldown Report</th>
+                @*<th style="text-align:center;">New Copy</th>*@
+                <th style="text-align:center;">Sl. No.</th>
+
+            </tr>
+            @{
+                int x = 0;
+                var pages = ViewBag.Pages;
+            }
+
+            @foreach (DataRow p in pages.Tables[0].Rows)
+            {
+
+        <tr>
+
+            <td style="width:80px;padding:0px;">
+                <input type="text" name="moduleid[@x]" value="@p["ModuleId"]" readonly style="width:100%;outline:none;border:0px none;text-align:center;" />
+            </td>
+
+
+            <td> <input type="text" name="modulename[@x]" value="@p["ModuleName"]" style="width:100%;outline:none;border:0px none;" /></td>
+
+            <td> <input type="text" name="modulecaption[@x]" value="@p["ModuleCaption"]" style="width:100%;outline:none;border:0px none;" /></td>
+            <td>
+                <select style="width:100%;outline:none;border:0px none; " name="moduletype[@x]">
+
+                    @{
+                        var mtype = (p["ModuleType"]).ToString();
+                        if (mtype == "1")
+                        {
+
+                            <option value="0">Select Template Type </option>
+                            <option value="1" selected>Transaction</option>
+                            <option value="2">Setup</option>
+                            <option value="3">Report</option>
+                            <option value="4">Application</option>
+
+                        }
+                        else if (mtype == "2")
+                        {
+                            <option value="0">Select Template Type </option>
+                            <option value="1">Transaction</option>
+                            <option value="2" selected>Setup</option>
+                            <option value="3">Report</option>
+                            <option value="4">Application</option>
+                        }
+                        else if (mtype == "3")
+                        {
+                            <option value="0">Select Template Type </option>
+                            <option value="1">Transaction</option>
+                            <option value="2">Setup</option>
+                            <option value="3" selected>Report</option>
+                            <option value="4">Application</option>
+                        }
+                        else if (mtype == "4")
+                        {
+                            <option value="0">Select Template Type </option>
+                            <option value="1">Transaction</option>
+                            <option value="2">Setup</option>
+                            <option value="3">Report</option>
+                            <option value="4" selected>Application</option>
+                        }
+                        else
+                        {
+                            <option value="0" selected>Select Template Type </option>
+                            <option value="1">Transaction</option>
+                            <option value="2">Setup</option>
+                            <option value="3">Report</option>
+                            <option value="4">Application</option>
+                        }
+                    }
+                </select>
+            </td>
+            <td> <input type="text" name="reporttitle[@x]" value="@p["ReportTitle"]" style="width:100%;outline:none;border:0px none;" /></td>
+
+            @if (Convert.ToBoolean(@p["IsDrilldownReport"]))
+            {
+                <td style="text-align:center;width:130px;"> <input type="checkbox" name="isdrilldownreport[@x]" value="1" class="border-0" checked /></td>
+
+            }
+            else
+            {
+                <td style="text-align:center;width:130px;"> <input type="checkbox" name="isdrilldownreport[@x]" value="1" class="border-0" /></td>
+            }
+
+
+                @*@if (Convert.ToBoolean(@p["IsNewCopy"]))
+                {
+                    <td style="text-align:center;width:130px;"> <input type="checkbox" name="isnewcopy[@x]" value="1" class="border-0" style="" checked /></td>
+
+                }
+                else
+                {
+                    <td style="text-align:center;width:130px;"> <input type="checkbox" name="isnewcopy[@x]" value="1" class="border-0" style="" /></td>
+                }*@
+            <td style="text-align:center;width:70px;"> <input type="text" name="slno[@x]" value="@p["SlNo"]" class="border-0" style="width:100%;outline:none;border:0px none;" /></td>
+        </tr>
+
+                x = x + 1;
+
+            }
+
+
+        </table>
+       
+        <div class="row">
+            <div class="col-md-1" style="width:100px;text-align:right;">
+                <a href="#" class="btn btn-sm  mt-1 font-weight-bold btn-success " style="width:100px; color:white;text-align:center "
+                   onclick="UpdatePageList(@ViewBag.SubmoduleId,'@ViewBag.SubModName')">Update</a>
+            </div>
+            <div class="col-md-1" style="width:100px;text-align:left;">
+                <a class="ml-0 mt-1 text-white btn btn-danger btn-sm font-weight-bold" style="width: 100px; text-align: center" href="#"
+                   onclick="HideEditPageList()"><i class="fa fa-times-circle"></i> Close</a>
+
+            </div>
+
+        </div>
+    </form>
+</div>

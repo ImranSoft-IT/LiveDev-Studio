@@ -1,0 +1,216 @@
+﻿
+
+@using System.Data
+@model DataSet
+
+<div id="HideEditTableList">
+    <form method="post" action="" id="edittablelist">
+
+        <input type="hidden" name="edittablelisthf" id="edittablelisthf" value="" />
+        <table style="width:100%; font-size:12px; color:black;border:0px solid #CCD5F0 ; background-color:white; " border="1" class="mt-3" id="edittablelisttable">
+
+
+            <thead>
+                <tr style="background-color:#003366; color:white;height:28px;">
+                    <th style="text-align:center;">Table Id</th>
+                    <th style="text-align:center;">Parent Grid</th>
+                    <th style="text-align:center;">Grid/Form Name </th>
+                    <th style="text-align:center;">Caption </th>
+                    <th style="text-align:center;">Template</th>
+                    <th style="text-align:center;">Grid Width</th>
+                    <th style="text-align:center;">Form Width</th>
+                    <th style="text-align:center;">Page Row</th>
+                    <th style="text-align:center;">Page Column</th>
+                    <th style="text-align:center;">View Only</th>
+                    <th style="text-align:center;">Approval Required?</th>
+                    <th style="text-align:center;">Include Report</th>
+                    <th style="text-align:center;">SL No.</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int i = 0;
+                    var tableList = ViewBag.Table;
+                    var ParentTableList = ViewBag.ParentTableList;
+
+                    foreach (DataRow t in tableList.Tables[0].Rows)
+                    {
+                        var parentid = "parenttable" + i;
+                                <tr>
+                                    <td style="width:100px;padding:0px;">
+                                        <input type="text" name="tableid[@i]" value="@t["TableId"]" readonly style="width:100%;border:0px none;outline:none;text-align:center;" />
+                                    </td>
+
+                                    <td style="width:210px;">
+
+
+                                        <select style="width:100%;outline:none;border:0px none;" name="parenttableid[@i]" id=@parentid  class=@parentid onmouseover="SearchableDropdown('@parentid')">
+                                            <option value="0">Select Parent Table</option>
+                                            @foreach (DataRow p in ParentTableList.Tables[0].Rows)
+                                            {
+                                                <option value="@p["TableId"]"
+                                                        @if (p["TableId"].ToString() == t["ParentTableId"].ToString()) { @: selected
+                                                        }>
+                                                    @p["TableCaption"]
+                                                </option>
+                                            }
+                                        </select>
+                                    </td>
+                                    <td> <input type="text" name="moduletablecaption[@i]" value="@t["ModuleTableCaption"]" class="border-0" style="width:100%;outline:none;border:0px none;" /></td>
+
+                                    <td><input type="text" name="tablecaption[@i]" value="@t["TableCaption"]" style="outline: none; border: 0px none;"/></td>
+
+                                    <td>
+                                        <select style="width:100%; outline:none;border:0px none;" name="templatetype[@i]" id="templatetype">
+
+                                            @if (t["TemplateType"].ToString() == "login")
+                                            {
+                                                <option value="0"> Select Template </option>
+                                                <option value="login" selected>Log In</option>
+                                                <option value="trans">DML</option>
+                                                <option value="process">Process</option>
+                                                <option value="view">View</option>
+                                                <option value="edit">Edit</option>
+                                                <option value="param">Report Param</option>
+                                            }
+                                            else if (t["TemplateType"].ToString() == "trans")
+                                            {
+                                                <option value="0"> Select Template </option>
+                                                <option value="login">Log In</option>
+                                                <option value="trans" selected>DML</option>
+                                                <option value="process">Process</option>
+                                                <option value="view">View</option>
+                                                <option value="edit">Edit</option>
+                                                <option value="param">Report Param</option>
+                                            }
+                                            else if (t["TemplateType"].ToString() == "process")
+                                            {
+                                                <option value="0"> Select Template </option>
+                                                <option value="login">Log In</option>
+                                                <option value="trans">DML</option>
+                                                <option value="process" selected>Process</option>
+                                                <option value="view">View</option>
+                                                <option value="edit">Edit</option>
+                                                <option value="param">Report Param</option>
+                                            }
+                                            else if (t["TemplateType"].ToString() == "view")
+                                            {
+                                                <option value="0"> Select Template </option>
+                                                <option value="login">Log In</option>
+                                                <option value="trans">DML</option>
+                                                <option value="process">Process</option>
+                                                <option value="view" selected>View</option>
+                                                <option value="edit">Edit</option>
+                                                <option value="param">Report Param</option>
+                                            }
+                                            else if (t["TemplateType"].ToString() == "edit")
+                                            {
+                                                <option value="0"> Select Template </option>
+                                                <option value="login">Log In</option>
+                                                <option value="trans">DML</option>
+                                                <option value="process">Process</option>
+                                                <option value="view">View</option>
+                                                <option value="edit" selected>Edit</option>
+                                                <option value="param">Report Param</option>
+                                            }
+                                            else if (t["TemplateType"].ToString() == "param")
+                                            {
+                                                <option value="0"> Select Template </option>
+                                                <option value="login">Log In</option>
+                                                <option value="trans">DML</option>
+                                                <option value="process">Process</option>
+                                                <option value="view">View</option>
+                                                <option value="edit">Edit</option>
+                                                <option value="param" selected>Report Param</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="0" selected> Select Template </option>
+                                                <option value="login">Log In</option>
+                                                <option value="trans">DML</option>
+                                                <option value="process">Process</option>
+                                                <option value="view">View</option>
+                                                <option value="edit">Edit</option>
+                                                <option value="param">Report Param</option>
+                                            }
+
+                                        </select>
+                                    </td>
+
+
+                                    <td style="width:100px;"> <input type="text" name="modulewidth[@i]" value="@t["ModuleWidth"]" class="border-0" style="width:100%;outline:none;border:0px none;text-align:center;" /></td>
+                                    <td style="width:100px;"> <input type="text" name="formwidth[@i]" value="@t["FormWidth"]" class="border-0" style="width:100%;outline:none;border:0px none;text-align:center;" /></td>
+                                    <td style="width:100px;"> <input type="text" name="rowposition[@i]" value="@t["RowPosition"]" class="border-0" style="width:100%;outline:none;border:0px none;text-align:center;" /></td>
+                                    <td style="width:100px;"> <input type="text" name="colposition[@i]" value="@t["ColPosition"]" class="border-0" style="width:100%;outline:none;border:0px none;text-align:center;" /></td>
+                                    @if (Convert.ToBoolean(t["IsReadOnly"]))
+                                    {
+
+                                        <td style="text-align:center;width:80px;">
+                                            <input type="checkbox" name="isreadonly[@i]" value="1" class="border-0" style="width:100%;" checked />
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td style="text-align:center;width:80px;">
+                                            <input type="checkbox" name="isreadonly[@i]" value="1" class="border-0" style="width:100%;" />
+                                        </td>
+                                    }
+
+                                    @if (Convert.ToBoolean(t["IsWorkFollow"]))
+                                    {
+
+                                        <td style="text-align:center;width:80px;">
+                                            <input type="checkbox" name="isworkfollow[@i]" value="1" class="border-0" style="width:100%;" checked />
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td style="text-align:center;width:80px;">
+                                            <input type="checkbox" name="isworkfollow[@i]" value="1" class="border-0" style="width:100%;" />
+                                        </td>
+                                    }
+
+                                    @if (Convert.ToBoolean(t["ShowOnReport"]))
+                                    {
+
+                                        <td style="text-align:center;width:80px;">
+                                            <input type="checkbox" name="showonreport[@i]" value="1" class="border-0" style="width:100%;" checked />
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td style="text-align:center;width:80px;">
+                                            <input type="checkbox" name="showonreport[@i]" value="1" class="border-0" style="width:100%;" />
+                                        </td>
+                                    }
+
+                                    <td style="width:100px;"> <input type="text" name="slno[@i]" value="@t["SlNo"]" class="border-0" style="width:100%;text-align:center;border:none;outline:none;" /></td>
+
+                                </tr>
+                        i = i + 1;
+                    }
+                }
+
+            </tbody>
+
+        </table>
+
+       
+
+        <div class="row">
+            <div class="col-md-1" style="width:100px;text-align:right;">
+                <a href="#" class="btn btn-sm  mt-1 font-weight-bold btn-success " style="width:100%; color:white;text-align:center "
+                   onclick="UpdateTableList(@ViewBag.ModuleId,'@ViewBag.PageName')">Update</a>
+            </div>
+            <div class="col-md-1" style="width:100px;text-align:left;">
+                <a class="ml-0 mt-1 text-white btn btn-danger btn-sm font-weight-bold" style="width: 100%; text-align: center" href="#"
+                   onclick="HideEditTableList()"><i class="fa fa-times-circle"></i> Close</a>
+
+            </div>
+
+           
+
+        </div>
+    </form>
+</div>

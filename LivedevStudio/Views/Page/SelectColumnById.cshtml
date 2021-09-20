@@ -1,0 +1,72 @@
+﻿
+
+@using System.Data
+@model DataSet
+
+<div class="border border-left-0 border-right-0 border-top-0  border-dark pb-2 mr-3">
+    <div id="" class="ml-4  ">
+        <a href="#" class="font-weight-bold" onclick="ColumnIconToggle()"><i id="ColumnIcon" class="fa fa-caret-down" aria-hidden="true"></i> Column </a>
+        <div class="btn-group btn-sm ml-2  ">
+            <a class="btn btn-info btn-sm  text-white mt-1 border  " id="" style="margin-left: 39px;" onclick="CreateSubModule('Column')"><i class="fa fa-plus " aria-hidden="true"></i></a>
+            <button type="button" class="btn btn-info btn-sm text-dark mt-1 border " id="col1" onclick="Resize1(@ViewBag.tableid,'@ViewBag.tablename',@ViewBag.ModuleId)"><i class="fa fa-list " aria-hidden="true"></i></button>
+        </div>
+        <div class="btn-group btn-sm ml-2">
+            <a class="btn btn-info btn-sm  text-white mt-1 border" style="margin-left: 39px;" onclick="showColumnTable()">Show Column</a>
+            
+        </div>
+        
+        @*<button type="button" class=" mt-1 ml-2 text-info border-0"  id="col1" onclick="Resize1()">  <i class="fa fa-list " aria-hidden="false"></i> </button>*@
+    </div>
+
+    <div class="p-0 m-1 ml-4" id="c1">
+        <table class="p-0 m-0 table-hover" style="border: 1px solid #CCD5F0; width:98%; background-color:white; font-size: 12px;" border="1" id="ColumnTable">
+
+            <thead>
+                <tr style="background-color:white; color:black">
+                    <th>Action</th>
+                    <th>Dml Column</th>
+                    <th>View Column </th>
+                    <th>View Caption</th>
+                    <th>Input Type</th>
+                    
+
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var col = ViewBag.Column;
+                    foreach (DataRow t in col.Tables[0].Rows)
+                    {
+                        <tr>
+                            <td>
+
+
+                                <a href="#" class="btn m-0" style="padding:0px 2.2px 0px 2px; background-color:#CCD5F0; font-weight:200; color:black; font-size:12px; border:1px solid #5d6b99; border-radius:50%;" onclick="EditColumnById(1)">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <a href="#" class="btn m-0 text-danger" style="padding:0px 2.2px 0px 2px; background-color:#CCD5F0; font-weight:200; color:black; font-size:12px; border:1px solid #5d6b99; border-radius:50%;" onclick="DeleteColumnById(@t["ColumnId"],@ViewBag.tableid,'@ViewBag.tablename',@ViewBag.ModuleId)">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                            <td> @t["ColumnName"]</td>
+                            <td> @t["SelectColumnName"]</td>
+                            @{
+                                string colname = @t["ColumnName"].ToString();
+                                var cname = colname.Replace('_', ' ');
+                            }
+                            @*<td> @t["ColumnDisplayName"]</td>*@
+                            <td> @cname</td>
+                            <td> @t["ControlType"]</td>
+
+                        </tr>
+
+                        }
+                    }
+                </tbody>
+
+            </table>
+        </div>
+
+
+    </div>
+

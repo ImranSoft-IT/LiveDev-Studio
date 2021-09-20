@@ -1,0 +1,106 @@
+﻿
+@using System.Data
+@model DataSet
+
+@{ 
+    var PanelId = ViewBag.PanelId;
+}
+
+<div class="row">
+    <div class="col-md-5" style="border:1px solid #CCD5F0; height:529px; overflow:auto;">
+
+        <form id="Panel" method="post" action="">
+            <input type="hidden" name="panelrowhf" id="panelrowhf" value="" />
+            
+            <table class="p-0 m-0 table-hover mt-2 " style="width:98%; font-size:12px; color:black;border:0px solid #CCD5F0 ; background-color:white; " border="1" id="savedcolumn">
+                <tr style="background-color:#003366; color:white; height:28px;">
+
+                    <th style="text-align:center;">Action</th>
+                    <th style="text-align:center;">DML Column</th>
+                    <th style="text-align:center;">Column SL.</th>
+                    <th style="text-align:center;">Column Merge</th>
+                    <th style="text-align:center;">Row Position</th>
+                    <th style="text-align:center;">Column Position</th>
+
+                </tr>
+                @{
+                    var df = ViewBag.SavedColumnList;
+                    int i = 0;
+
+                }
+                @foreach (DataRow d in df.Tables[0].Rows)
+                {
+
+                    <tr>
+                        @{
+                            string rmid = "RemovePanelRow" + i;
+                            string Rowno = d["ColumnName"].ToString();
+                            long ColumnId = Convert.ToInt64(d["ColumnId"]);
+                        }
+
+                        <td style="text-align:center;width:60px;padding:0px;">
+                            <input type="hidden" style="border:0px none; outline:none; width:100%;" name="columnid[@i]" value="@ColumnId" />
+                            <input type="hidden" style="border:0px none; outline:none; width:100%;" name="panelid[@i]" value="@PanelId" />
+                            <input type="hidden" style="border:0px none; outline:none; width:100%;" name="tableid[@i]" value="@ViewBag.TableId" />
+
+                            <a href="#" id=@rmid class=" " style="font-size: 18px; margin-left: 5px; color: crimson;" onclick="RemoveRow1('@rmid','@Rowno',@ViewBag.TableId,@ColumnId,@PanelId)"><i class="fa fa-times-circle" aria-hidden="true"></i> </a>
+                        </td>
+                        <td style="width:140px;padding:0px;">
+                            <input type="text" style="border:0px none; outline:none; width:100%;" name="" value="@d["ColumnName"]" readonly />
+                        </td>
+
+                        <td style="width:80px;padding:0px;">
+                            <input type="text" name="PnlColSl[@i]" value="@d["PnlColSl"]" style="text-align: center;outline: none !important; width: 100%;border:0px none;" />
+                        </td>
+                        <td style="width:80px;padding:0px;">
+                            <input type="text" name="PnlColMerge[@i]" value="@d["PnlColMerge"]" style="text-align: center;outline: none !important; width: 100%;border:0px none;" />
+                        </td>
+                        <td style="width:80px;padding:0px;">
+                            <input type="text" name="RowPosition[@i]" value="@d["RowPosition"]" style="text-align: center;outline: none !important; width: 100%;border:0px none;" readonly/>
+                        </td>
+                        <td style="width:80px;padding:0px;">
+                            <input type="text" name="ColPosition[@i]" value="@d["ColPosition"]" style="text-align: center;outline: none !important; width: 100%;border:0px none;" readonly/>
+                        </td>
+
+                    </tr>
+                    i = i + 1;
+                }
+
+
+            </table>
+        </form>
+
+    </div>
+    <div class="col-md-4" style="border:1px solid #CCD5F0; height:529px; overflow:auto;">
+        <table class="p-0 m-0 table-hover mt-2 " style="border: 1px solid #CCD5F0; width:98%; background-color:white; font-size: 12px;" border="1" id="unsavedcolumn">
+            <tr style="background-color:#003366; color:white;height:28px;">
+                <th>
+                    Action
+                </th>
+                <th>
+                    Dml Column
+                </th>
+            </tr>
+            @{
+                var mn = ViewBag.UnSavedColumnList;
+            }
+            @foreach (DataRow item in mn.Tables[0].Rows)
+            {
+                long ColId = Convert.ToInt64(item["ColumnId"]);
+                <tr>
+
+
+                    <td style="text-align:center;width:60px;padding:0px;">
+                        <a href="#" class="btn m-0  " style="padding:0px 2.2px 0px 2.2px; background-color:forestgreen; font-weight:200; color:white; font-size:12px; border:1px solid #5d6b99; border-radius:50%;" id=@item["ColumnName"] onclick="SelectDmlColumn1('@item["ColumnName"]',@ViewBag.TableId,@ColId,@PanelId)">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                    <td>
+                        @item["ColumnName"]
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

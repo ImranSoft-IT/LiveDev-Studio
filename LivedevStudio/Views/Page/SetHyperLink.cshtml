@@ -1,0 +1,206 @@
+﻿
+
+@using System.Data
+@model DataSet
+
+@{
+    var L = ViewBag.linkList;
+    var tableId = ViewBag.tableId;
+}
+
+<form action="" method="post" id="HyperLink">
+    <input type="hidden" id="hyperlinkhf" name="hyperlinkhf" value="" />
+    <table style="width:80%; font-size:12px; color:black;border:0px solid #CCD5F0 ; background-color:white; " border="1" id="set-hyperlink">
+
+        <tr style="background-color:#003366; color:white;height:28px;">
+
+            <th style="text-align:center;">ID</th>
+            <th style="text-align:center;">Field Caption</th>
+            <th style="text-align:center;">Hyperlink Role</th>
+            <th style="text-align:center;">Link Page</th>
+            <th style="text-align:center;">Link Grid</th>
+            <th style="text-align:center;">Link Param(FK)</th>
+        </tr>
+        @{
+            int p = 0;
+        }
+
+        @foreach (DataRow l in L.Tables[0].Rows)
+        {
+            <tr>
+
+                @{
+                    var lt = "lt" + p;
+                    var linktype = "linktype" + p;
+                }
+
+                <td style="padding:0px;width:80px;">
+                    <input type="text" style="width:100%;outline:0px;border:0px none;" name="columnid[@p]" value="@l["ColumnId"]" readonly />
+                </td>
+                <td style="padding:2px;width:200px;">
+                    <input type="text" style="width:100%;outline:0px;border:0px none;" name="columndisplayname[@p]" value="@l["ColumnDisplayName"]" />
+                </td>
+                <td style="padding:0px;width:200px;">
+                    <input type="hidden" name="name" value=@l["LinkType"] id=@lt />
+                    <select style="width:100%;outline:0px;border:0px none;" name="linktype[@p]" id=@linktype onload="ddlselect('@lt','@linktype')">
+
+
+
+                        @if (l["LinkType"].ToString() == "1")
+                        {
+                            <option value="0"> </option>
+                            <option value="1" selected>Fixed Page</option>
+                            <option value="2">Variable Page</option>
+                            <option value="3">User Transaction</option>
+                        }
+                        else if (l["LinkType"].ToString() == "2")
+                        {
+                            <option value="0"> </option>
+                            <option value="1">Fixed Page</option>
+                            <option value="2" selected>Variable Page</option>
+                            <option value="3">User Transaction</option>
+                        }
+                        else if (l["LinkType"].ToString() == "3")
+                        {
+                            <option value="0"> </option>
+                            <option value="1">Fixed Page</option>
+                            <option value="2">Variable Page</option>
+                            <option value="3" selected>User Transaction</option>
+                        }
+                        else
+                        {
+                            <option value="0" selected> </option>
+                            <option value="1">Fixed Page</option>
+                            <option value="2">Variable Page</option>
+                            <option value="3" >User Transaction</option>
+                        }
+
+
+                    </select>
+                </td>
+                <td style="padding:0px;width:200px;">
+                    @{
+                        var lid = "LinkPageId" + p;
+                        var LinkTabId = "LinkTableId" + p;
+                        var LinkColId = "LinkColId" + p;
+                        var lpid = "lpid" + p;
+                        var ltid = "ltid" + p;
+                        var lcname = "lcname" + p;
+
+
+                    }
+                    <input type="hidden" name="name" value=@l["LinkPageId"] id=@lpid />
+
+                   
+                    <select style="width:100%;outline:0px;border:0px none; " name="linkpageid[@p]" id=@lid onchange="DdlFill('@lid','@LinkTabId')" class=@lid onmouseover="SearchableDropdown('@lid')">
+
+                        <option value="0"> </option>
+                        @{
+                            var pageList = ViewBag.Pagelist;
+                            foreach (DataRow item in pageList.Tables[0].Rows)
+                            {
+                                <option value="@item["ModuleId"]"
+                                        @if (item["ModuleId"].ToString() == l["LinkPageId"].ToString()) { @: selected
+                                       }>
+                                    @item["ModuleCaption"]
+                                    </option>
+                                }
+                        }
+
+                    </select>
+
+                </td>
+                <td style="padding:0px;width:200px;">
+                    <input type="hidden" name="name" value=@l["LinkTableId"] id=@ltid />
+                    <select style="width:100%;border:0px none;outline:none;" name="linktableid[@p]" id=@LinkTabId @*onload="ddlselect('@ltid','@LinkTabId')"*@>
+
+                        @if (l["LinkTableId"].ToString() == "0")
+                        {
+                            <option value="0"> </option>
+                        }
+
+                        <option value="@l["tableId"]" selected>@l["tableCaption"] </option>
+
+                    </select>
+                </td>
+                <td style="padding:0px;width:200px;">
+                    <input type="hidden" name="name" value=@l["LinkColumnName"] id=@lcname />
+
+                    <select style="width:100%;border:0px none;outline:none;" name="linkcolumnname[@p]" id=@LinkColId @*onload="ddlselect('@lcname','@LinkColId')"*@>
+                        <option value="0"> </option>
+                        @{
+
+                            foreach (DataRow item in L.Tables[0].Rows)
+                            {
+                                <option value="@item["ColumnName"]"
+                                        @if (item["ColumnName"].ToString() == l["LinkColumnName"].ToString()) { @: selected
+                                        }>
+                                    @item["ColumnName"]
+                                    </option>
+                                }
+                        }
+
+                    </select>
+                </td>
+
+
+
+            </tr>
+
+
+            p = p + 1;
+        }
+
+
+    </table>
+
+</form>
+
+
+<script>
+    $('#set-hyperlink td').click(function () {
+        $('#set-hyperlink tr').css({ "background-color": "white", "color": "black" });
+        $('#set-hyperlink th').css({ "background-color": "#003366", "color": "white" });
+        $(this).parent().css({ "background-color": "#0066ff", "color": "white" });
+        //$(this).parent().css("background-color", "green");
+
+    });
+
+</script>
+
+
+@*//var lp = $('#lpid').val();
+    //$(".linkpageid option[value=" + lp + "]").attr("selected", "selected");
+
+    //var ltid = $('#ltid').val();
+    //$(".linktableid option[value=" + ltid + "]").attr("selected", "selected");
+
+    //var lc = $('#lcname').val();
+    //$(".linkcolumnname option[value=" + lc + "]").attr("selected", "selected");*@
+
+
+<script>
+
+    //$(document).ready(function () {
+
+    //    function ddlselect(lt, type) {
+    //        alert(lt);
+    //        var lt = "#" + lt;
+    //        var type = "#" + type;
+    //        var ptid = $(lt).val();
+    //        $(type+' option[value=' + ptid + ']').attr("selected", "selected");
+    //    }
+       
+
+    //    //function ddlselect(hfid, ddlid) {
+
+           
+    //    //    var lt = $('#hfid').val();
+    //    //    $('#ddlid option[value=' + ddlid + ']').attr("selected", "selected");
+
+    //    //}
+    //});
+
+
+</script>
+

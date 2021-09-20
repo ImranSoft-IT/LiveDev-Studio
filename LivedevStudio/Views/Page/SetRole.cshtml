@@ -1,0 +1,96 @@
+﻿
+
+@using System.Data
+@model DataSet
+
+
+@{
+    var L = ViewBag.RoleList;
+    var tableId = ViewBag.tableId;
+}
+
+
+<form action="" method="post" id="Role">
+    <input type="hidden" id="rolehf" name="rolehf" value="" />
+    <table style="width:50%; font-size:12px; color:black;border:0px solid #CCD5F0 ; background-color:white; " border="1" id="set-role">
+        <tr style="background-color:#003366; color:white;height:28px;">
+            
+            <th style="text-align: center;">ID</th>
+            <th style="text-align: center;">Field Caption</th>
+            <th style="text-align: center;">User Role</th>
+            <th style="text-align: center;">Data Lock Role</th>
+
+        </tr>
+        @{
+            int a = 0;
+        }
+        @foreach (DataRow l in L.Tables[0].Rows)
+        {
+            <tr>
+
+                <td style="padding:0px;width:100px;">
+                    <input type="text" style="text-align:center;width:100%;outline:none;border:0px none;" name="columnid[@a]" value="@l["ColumnId"]" readonly/>
+                </td>
+                <td style="padding:0px;width:200px;">
+                    <input type="text" style="width:100%;outline:none;border:0px none;" name="columndisplayname[@a]" value="@l["ColumnDisplayName"]" />
+                </td>
+                <td style="padding:0px;width:200px;">
+                    @{ 
+                        var ur = ViewBag.UserRoleList;
+                    }
+                    <select style="width:100%;outline:none;border:0px none;" name="user_privilege[@a]">
+                        <option value="0"></option>
+                        @foreach (DataRow t1 in ur.Tables[0].Rows)
+                        {
+                            <option value="@t1["Object_Id"]"
+                                    @if (l["User_Privilege"].ToString() == t1["Object_Id"].ToString()) { @: selected
+
+                                        }
+                                    > @t1["Object_Name"] </option>
+                        }
+
+                    </select>
+                </td>
+                <td style="padding:0px;width:200px;">
+                    @{
+                        var dr = ViewBag.DataRoleList;
+                    }
+              
+                    <select style="width:100%;outline:none;border:0px none;" name="transpolicyid[@a]">
+                        @*<option value="0">Data Lock Role</option>*@
+                        <option value="0"> </option>
+                        @foreach (DataRow t1 in dr.Tables[0].Rows)
+                        {
+                            <option value="@t1["Trans_Policy_Id"]"
+                                    @if (l["TransPolicyId"].ToString() == t1["Trans_Policy_Id"].ToString()) { @: selected
+                                     }>
+                                @t1["Policy_Name"]
+                            </option>
+                        }
+
+                    </select>
+                </td>
+
+            </tr>
+
+            a = a + 1;
+        }
+
+
+    </table>
+
+</form>
+
+<script>
+    $('#set-role td').click(function () {
+        $('#set-role tr').css({ "background-color": "white", "color": "black" });
+        $('#set-role th').css({ "background-color": "#003366", "color": "white" });
+        $(this).parent().css({ "background-color": "#0066ff", "color": "white" });
+        //$(this).parent().css("background-color", "green");
+
+
+
+
+    });
+
+</script>

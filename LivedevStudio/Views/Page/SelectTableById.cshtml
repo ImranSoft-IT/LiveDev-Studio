@@ -1,0 +1,130 @@
+﻿
+@using System.Data
+@model DataSet
+
+
+<div class="border border-left-0 border-right-0 border-top-0  border-dark pb-2 mr-3">
+    <div id="" class="ml-4 font-weight-bold">
+        <a href="#" onclick="TableIconToggle()"><i id="TableIcon" class="fa fa-caret-down" aria-hidden="true"></i> Table </a>
+        <div class="btn-group btn-sm ml-2  ">
+            <input type="hidden" name="name" value="@ViewBag.PageName" id="pageName" />
+            <input type="hidden" name="name" value="@ViewBag.ModuleId" id="pageId" />
+
+            <button type="button" class="btn btn-info btn-sm  text-white mt-1 border"  style="margin-left:53px;"id="col1" onclick="CreateSubModule('Table')"><i class="fa fa-plus " aria-hidden="true"></i></button>
+            <button type="button" class="btn btn-info btn-sm text-dark mt-1 border " id="col1" onclick="EditTableList(@ViewBag.ModuleId,'@ViewBag.PageName')"><i class="fa fa-list " aria-hidden="true"></i></button>
+        </div>
+    </div>
+
+    <div class="p-0 m-1 ml-4" id="t1">
+        <table class="p-0 m-0 table-hover" style="border: 1px solid #CCD5F0; width:98%; background-color:white; font-size: 12px;" border="1">
+
+            <thead>
+                <tr style="background-color:white; color:black">
+                    <th>Action</th>
+                    <th>ID</th>
+                    <th>Parent Grid</th>
+                    <th>Caption </th>
+                    <th>Template</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var tableList = ViewBag.Table;
+                    foreach (DataRow t in tableList.Tables[0].Rows)
+                    {
+                                <tr>
+                                    <td>
+
+                                        <a href="#" class="btn m-0" style="padding:0px 2.2px 0px 2.2px; background-color:#CCD5F0; font-weight:200; color:black; font-size:12px; border:1px solid #5d6b99; border-radius:50%;" onclick="SelectColumnById(@t["TableId"],'@t["TableName"]',@ViewBag.ModuleId,'@t["TableCaption"]')">
+                                            <i class="fa fa-chevron-down"></i>
+                                        </a>
+
+                                        <a href="#" class="btn m-0" style="padding:0px 2.2px 0px 2px; background-color:#CCD5F0; font-weight:200; color:black; font-size:12px; border:1px solid #5d6b99; border-radius:50%;" onclick="EditTableById(@t["TableId"],'@t["TableCaption"]','@t["TableName"]')">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <a href="#" class="btn m-0 text-danger" style="padding:0px 2.2px 0px 2px; background-color:#CCD5F0; font-weight:200; color:black; font-size:12px; border:1px solid #5d6b99; border-radius:50%;" onclick="DeleteTableById(@t["TableId"],@ViewBag.ModuleId,'@ViewBag.PageName')">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </td>
+                                    <td> @t["TableId"]</td>
+                                    <td> @t["ParentGrid"]</td>
+                                    <td>
+                                        @t["TableCaption"]
+                                        @*<input type="hidden" name="tablecaption" value="@t["TableCaption"]" id="tablecaption" />*@
+                                    </td>
+
+                                    @if (t["TemplateType"].ToString() == "login")
+                                    {
+                                        <td>Log In</td>
+
+                                    }
+                                    else if (t["TemplateType"].ToString() == "trans")
+                                    {
+                                        <td>DML</td>
+
+                                    }
+                                    else if (t["TemplateType"].ToString() == "process")
+                                    {
+                                        <td>Process</td>
+
+                                    }
+                                    else if (t["TemplateType"].ToString() == "view")
+                                    {
+                                        <td>View</td>
+
+                                    }
+                                    else if (t["TemplateType"].ToString() == "edit")
+                                    {
+                                        <td>Edit</td>
+
+                                    }
+                                    else if (t["TemplateType"].ToString() == "param")
+                                    {
+                                        <td>Report Param</td>
+                                    }
+                                    else
+                                    {
+                                        <td> </td>
+                                    }
+
+
+                                </tr>
+                    }
+                }
+
+            </tbody>
+
+        </table>
+    </div>
+
+
+</div>
+<script>
+    function EditTableList(id,pageName)
+    {
+
+        var parameter = { tableId: id, pn: pageName }
+        $('#col2').hide().ready(function () {
+
+            $('#col3').removeClass("col-md-6").addClass("col-md-12").ready(function () {
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("EditTableList", "Page")',
+                            dataType: "html",
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify(parameter),
+                            success: function (result) {
+                          
+                                $('#sm').html(result);
+
+
+                            }
+
+                        });
+            });
+        });
+
+    }
+
+</script>
